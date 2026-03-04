@@ -1,0 +1,31 @@
+name: X Engagement
+
+on:
+  schedule:
+    # Every 2 hours from 7am to 9pm UTC (9am-11pm Cyprus time)
+    - cron: '0 7,9,11,13,15,17,19,21 * * *'
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  engage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run X engagement agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+        run: python x_engagement.py
