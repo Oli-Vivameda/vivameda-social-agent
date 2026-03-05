@@ -1,7 +1,7 @@
 """Vivameda brand voice for social media content."""
 
 VIVAMEDA_VOICE = """
-BRAND VOICE — VIVAMEDA
+BRAND VOICE: VIVAMEDA
 
 Tone: Authoritative but approachable. Like a sharp analyst explaining something at a dinner party.
 
@@ -20,6 +20,7 @@ DON'T:
 - Use excessive exclamation marks
 - Start with "In today's rapidly evolving..."
 - Sound like every other LinkedIn thought leader
+- NEVER use em dashes or en dashes. Use commas, semicolons, colons, or periods instead.
 
 TOPICS WE OWN:
 - Workforce data as alternative investment signals

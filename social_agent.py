@@ -63,7 +63,7 @@ except ImportError:
 TOPIC_SELECTOR_PROMPT = """You are a social media strategist for Vivameda, a company that provides 
 large-scale workforce intelligence data (250M+ records, 2010-2025, 100+ countries).
 
-Given these trending topics, select TWO different topics — one for LinkedIn and one for X (Twitter).
+Given these trending topics, select TWO different topics: one for LinkedIn and one for X (Twitter).
 They should be DIFFERENT topics, not the same topic reworded.
 
 LinkedIn audience: investment researchers, HR-tech leaders, data buyers, enterprise decision makers.
@@ -121,6 +121,7 @@ RULES:
 - Do NOT be salesy or mention Vivameda's products directly
 - Write as a thought leader sharing knowledge, not a company promoting itself
 - Use line breaks between paragraphs for readability
+- NEVER use em dashes or en dashes (— or –). Use commas, semicolons, colons, or periods instead.
 """
 
 X_PROMPT = """Write a tweet (X post) for Vivameda (workforce intelligence company).
@@ -131,13 +132,14 @@ Angle: {angle}
 {voice}
 
 RULES:
-- Maximum 280 characters
-- Punchy and provocative
-- One clear insight or hot take
+- 500-1000 characters. Develop the thought, give context, make it substantial.
+- Provocative and opinionated
+- One clear insight or hot take, backed with reasoning
 - No hashtags unless they fit naturally
 - No emojis
 - Make people want to reply or retweet
 - Do NOT mention Vivameda
+- NEVER use em dashes or en dashes (— or –). Use commas, semicolons, colons, or periods instead.
 """
 
 IMAGE_PROMPT_GENERATOR = """Generate a short DALL-E image prompt for a social media post about this topic.
@@ -175,12 +177,13 @@ def generate_content(selection: dict) -> dict:
         }],
     )
     linkedin_post = li_resp.content[0].text.strip()
+    linkedin_post = linkedin_post.replace("—", ",").replace("–", ",")
 
     # X post
     log.info(f"Generating X post on: {selection['x_topic'][:60]}...")
     x_resp = client.messages.create(
         model=BLOG_MODEL,
-        max_tokens=200,
+        max_tokens=500,
         messages=[{
             "role": "user",
             "content": X_PROMPT.format(
@@ -192,11 +195,10 @@ def generate_content(selection: dict) -> dict:
     )
     x_post = x_resp.content[0].text.strip()
 
-    if len(x_post) > 280:
-        log.warning(f"X post too long ({len(x_post)} chars), truncating...")
-        x_post = x_post[:277] + "..."
+    # Strip any em/en dashes that slipped through
+    x_post = x_post.replace("—", ",").replace("–", ",")
 
-    # Generate image prompts — one per platform
+    # Generate image prompts, one per platform
     log.info("Generating image prompts...")
     li_img_resp = client.messages.create(
         model=BLOG_MODEL,
@@ -505,7 +507,7 @@ def main():
         print(f"X — {content['x_topic']}")
         print("=" * 60)
         print(content["x"])
-        print(f"\n({len(content['x'])}/280 characters)")
+        print(f"\n({len(content['x'])} characters)")
 
     print("=" * 60)
 
