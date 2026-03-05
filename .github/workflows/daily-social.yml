@@ -26,8 +26,13 @@ jobs:
           BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_BIZ_ACCESS_TOKEN: ${{ secrets.LINKEDIN_BIZ_ACCESS_TOKEN }}
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+          X_BIZ_API_KEY: ${{ secrets.X_BIZ_API_KEY }}
+          X_BIZ_API_SECRET: ${{ secrets.X_BIZ_API_SECRET }}
+          X_BIZ_ACCESS_TOKEN: ${{ secrets.X_BIZ_ACCESS_TOKEN }}
+          X_BIZ_ACCESS_SECRET: ${{ secrets.X_BIZ_ACCESS_SECRET }}
         run: python social_agent.py
