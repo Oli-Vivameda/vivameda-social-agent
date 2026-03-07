@@ -9,6 +9,7 @@ and publishes via official APIs.
 import os
 import sys
 import json
+import random
 import logging
 import argparse
 from datetime import datetime
@@ -40,10 +41,16 @@ from config import (
     ANTHROPIC_API_KEY,
     BRAVE_API_KEY,
     LINKEDIN_ACCESS_TOKEN,
+    LINKEDIN_BIZ_ACCESS_TOKEN,
+    LINKEDIN_COMPANY_ID,
     X_API_KEY,
     X_API_SECRET,
     X_ACCESS_TOKEN,
     X_ACCESS_SECRET,
+    X_BIZ_API_KEY,
+    X_BIZ_API_SECRET,
+    X_BIZ_ACCESS_TOKEN,
+    X_BIZ_ACCESS_SECRET,
     BLOG_MODEL,
 )
 from style_guide import VIVAMEDA_VOICE
@@ -142,19 +149,75 @@ RULES:
 - NEVER use em dashes or en dashes (— or –). Use commas, semicolons, colons, or periods instead.
 """
 
-IMAGE_PROMPT_GENERATOR = """Generate a short DALL-E image prompt for a social media post about this topic.
+IMAGE_STYLES = [
+    {
+        "name": "photorealistic office",
+        "dalle_style": "natural",
+        "desc": "STYLE: Photorealistic photograph, like shot on a Canon EOS R5. A real, bright office environment with natural daylight coming through windows. Could be: a conference room with printed reports on the table, a laptop on a standing desk with a city view, hands typing on a keyboard with a bright screen, a whiteboard covered in real marker writing. WARM natural lighting. ABSOLUTELY NO dark backgrounds, NO glowing effects, NO neon colors, NO digital particles.",
+    },
+    {
+        "name": "clean bar chart",
+        "dalle_style": "natural",
+        "desc": "STYLE: A simple, clean data visualization on a WHITE or very light background. Think: a professional bar chart or line graph like you'd see in the Wall Street Journal or Financial Times. Minimal design, thin lines, clear labels, muted professional colors (navy, gray, coral, teal). Flat 2D, no 3D effects. ABSOLUTELY NO dark backgrounds, NO glowing effects, NO neon, NO abstract digital art.",
+    },
+    {
+        "name": "aerial city photograph",
+        "dalle_style": "natural",
+        "desc": "STYLE: Real aerial photograph of a major city during daytime. Golden hour or midday sun. Think: drone shot of Manhattan, London financial district, Singapore skyline, or a highway interchange from above. Sharp, high-resolution, photojournalistic quality. Colors should be natural and warm. ABSOLUTELY NO dark backgrounds, NO neon glow, NO digital overlay, NO abstract effects.",
+    },
+    {
+        "name": "flat vector infographic",
+        "dalle_style": "natural",
+        "desc": "STYLE: Flat vector illustration in the style of a consulting firm report. Think: simple people icons, pie charts, arrow diagrams, percentage circles, all on a CLEAN WHITE background. Bold flat colors like orange, teal, navy, and yellow. NO gradients, NO shadows, NO 3D. Looks like it belongs in a McKinsey presentation. ABSOLUTELY NO dark backgrounds, NO glowing effects, NO sci-fi aesthetic.",
+    },
+    {
+        "name": "cozy desk photograph",
+        "dalle_style": "natural",
+        "desc": "STYLE: Photorealistic overhead or angled shot of a real desk workspace. Think: a MacBook next to a coffee cup, a notebook with handwritten notes, printed spreadsheets with highlighter marks, a potted plant in the corner. Warm, soft, natural light from a window. Film photography feel, slightly warm color grading. ABSOLUTELY NO dark backgrounds, NO screens showing futuristic UI, NO glowing effects.",
+    },
+    {
+        "name": "whiteboard sketch",
+        "dalle_style": "natural",
+        "desc": "STYLE: A real whiteboard or paper with hand-drawn diagrams. Think: black and blue marker on a white whiteboard showing flowcharts, boxes with arrows, rough graphs, sticky notes in different colors. Slightly messy, authentic, human. Shot as a photograph with natural office lighting. ABSOLUTELY NO digital art, NO dark backgrounds, NO neon, NO glowing lines.",
+    },
+    {
+        "name": "nature landscape metaphor",
+        "dalle_style": "natural",
+        "desc": "STYLE: Breathtaking photorealistic nature photograph. Think: an aerial shot of a river delta branching out, tree rings in a cross-section of wood, a winding mountain road from above, waves crashing on geometric rock formations, a field of wheat at golden hour. National Geographic quality, stunning natural colors and light. ABSOLUTELY NO tech elements, NO screens, NO digital overlays, NO dark backgrounds.",
+    },
+    {
+        "name": "retro newspaper",
+        "dalle_style": "natural",
+        "desc": "STYLE: Vintage newspaper or printed media aesthetic. Think: a 1960s newspaper front page with columns and headlines, an old stock ticker tape, a vintage printed chart on yellowed paper, a retro business magazine cover. Sepia tones, warm faded colors, visible paper texture and grain. ABSOLUTELY NO modern tech, NO screens, NO dark backgrounds, NO neon or glowing effects.",
+    },
+    {
+        "name": "colorful geometric abstract",
+        "dalle_style": "natural",
+        "desc": "STYLE: Bold, bright geometric abstract art on a WHITE or very LIGHT background. Think: overlapping circles, triangles, and rectangles in primary colors. Inspired by Bauhaus, Mondrian, or modern corporate art. Simple, clean, striking. Two to four bold colors max. ABSOLUTELY NO dark backgrounds, NO purple glow, NO network nodes, NO particle effects, NO sci-fi look.",
+    },
+    {
+        "name": "people at work photograph",
+        "dalle_style": "natural",
+        "desc": "STYLE: Photorealistic candid photograph of people in a work setting, shot from behind or from a distance so faces are not clearly visible. Think: a team standing around a whiteboard, someone pointing at a large screen showing a chart, two people walking through a bright modern office lobby, a group working at a long table in a sunlit room. Documentary photography style, natural colors. ABSOLUTELY NO dark backgrounds, NO futuristic elements, NO glowing effects.",
+    },
+]
 
-Topic: {topic}
+IMAGE_PROMPT_GENERATOR = """Your job is to write a DALL-E image prompt. The visual style is MORE important than the topic.
 
-RULES:
-- Abstract, professional, conceptual style
-- Dark background with indigo/purple accent tones
-- Think: data visualizations, network patterns, geometric shapes, flowing lines
-- NO text, NO logos, NO faces, NO stock photo feel
+VISUAL STYLE (this is the priority, follow it exactly): {style_desc}
+
+The image should loosely relate to this subject: {topic}
+
+CRITICAL RULES:
+- The STYLE description above is the #1 priority. Follow it exactly.
+- Do NOT default to dark backgrounds with glowing blue/purple effects. This is BANNED unless the style explicitly asks for it.
+- Do NOT create abstract digital network visualizations. This is BANNED.
+- Do NOT create sci-fi or futuristic looking images. This is BANNED.
+- NO text, NO words, NO logos in the image
 - Landscape 16:9 aspect ratio
-- Should feel modern, tech-forward, premium
+- Be very specific about: exact colors, lighting direction, camera angle, materials, and textures
 
-Respond with ONLY the image prompt, nothing else. Max 100 words.
+Respond with ONLY the image prompt, nothing else. Max 120 words.
 """
 
 
@@ -198,14 +261,18 @@ def generate_content(selection: dict) -> dict:
     # Strip any em/en dashes that slipped through
     x_post = x_post.replace("—", ",").replace("–", ",")
 
-    # Generate image prompts, one per platform
-    log.info("Generating image prompts...")
+    # Generate image prompts, one per platform with different visual styles
+    li_style, x_style = random.sample(IMAGE_STYLES, 2)
+    log.info(f"Image styles: LinkedIn={li_style['name']}, X={x_style['name']}")
     li_img_resp = client.messages.create(
         model=BLOG_MODEL,
         max_tokens=200,
         messages=[{
             "role": "user",
-            "content": IMAGE_PROMPT_GENERATOR.format(topic=selection["linkedin_topic"]),
+            "content": IMAGE_PROMPT_GENERATOR.format(
+                topic=selection["linkedin_topic"],
+                style_desc=li_style["desc"],
+            ),
         }],
     )
     x_img_resp = client.messages.create(
@@ -213,7 +280,10 @@ def generate_content(selection: dict) -> dict:
         max_tokens=200,
         messages=[{
             "role": "user",
-            "content": IMAGE_PROMPT_GENERATOR.format(topic=selection["x_topic"]),
+            "content": IMAGE_PROMPT_GENERATOR.format(
+                topic=selection["x_topic"],
+                style_desc=x_style["desc"],
+            ),
         }],
     )
 
@@ -221,9 +291,11 @@ def generate_content(selection: dict) -> dict:
         "linkedin": linkedin_post,
         "linkedin_topic": selection["linkedin_topic"],
         "linkedin_image_prompt": li_img_resp.content[0].text.strip(),
+        "linkedin_dalle_style": li_style["dalle_style"],
         "x": x_post,
         "x_topic": selection["x_topic"],
         "x_image_prompt": x_img_resp.content[0].text.strip(),
+        "x_dalle_style": x_style["dalle_style"],
     }
 
 
@@ -240,10 +312,13 @@ def get_linkedin_user_id(access_token: str) -> str:
     return resp.json()["sub"]
 
 
-def post_to_linkedin(text: str, access_token: str, image_path: str = None) -> dict:
-    """Publish a post to LinkedIn, optionally with an image."""
-    user_id = get_linkedin_user_id(access_token)
-    author = f"urn:li:person:{user_id}"
+def post_to_linkedin(text: str, access_token: str, image_path: str = None, company_id: str = None) -> dict:
+    """Publish a post to LinkedIn, optionally with an image. If company_id is set, posts as company page."""
+    if company_id:
+        author = f"urn:li:organization:{company_id}"
+    else:
+        user_id = get_linkedin_user_id(access_token)
+        author = f"urn:li:person:{user_id}"
 
     if image_path:
         # Step 1: Register image upload
@@ -340,7 +415,7 @@ def post_to_linkedin(text: str, access_token: str, image_path: str = None) -> di
 # ---------------------------------------------------------------------------
 # X (Twitter) Publishing
 # ---------------------------------------------------------------------------
-def post_to_x(text: str, image_path: str = None) -> dict:
+def post_to_x(text: str, image_path: str = None, api_key: str = None, api_secret: str = None, access_token: str = None, access_secret: str = None) -> dict:
     """Publish a tweet using OAuth 1.0a, optionally with an image."""
     import hashlib
     import hmac
@@ -348,6 +423,12 @@ def post_to_x(text: str, image_path: str = None) -> dict:
     import urllib.parse
     import uuid
     import base64
+
+    # Default to personal account credentials
+    api_key = api_key or X_API_KEY
+    api_secret = api_secret or X_API_SECRET
+    access_token = access_token or X_ACCESS_TOKEN
+    access_secret = access_secret or X_ACCESS_SECRET
 
     media_id = None
 
@@ -363,11 +444,11 @@ def post_to_x(text: str, image_path: str = None) -> dict:
 
         # OAuth for upload
         oauth_params = {
-            "oauth_consumer_key": X_API_KEY,
+            "oauth_consumer_key": api_key,
             "oauth_nonce": uuid.uuid4().hex,
             "oauth_signature_method": "HMAC-SHA1",
             "oauth_timestamp": str(int(time.time())),
-            "oauth_token": X_ACCESS_TOKEN,
+            "oauth_token": access_token,
             "oauth_version": "1.0",
         }
 
@@ -379,7 +460,7 @@ def post_to_x(text: str, image_path: str = None) -> dict:
             for k, v in sorted(all_params.items())
         )
         base_string = f"POST&{urllib.parse.quote(upload_url, safe='')}&{urllib.parse.quote(params_string, safe='')}"
-        signing_key = f"{urllib.parse.quote(X_API_SECRET, safe='')}&{urllib.parse.quote(X_ACCESS_SECRET, safe='')}"
+        signing_key = f"{urllib.parse.quote(api_secret, safe='')}&{urllib.parse.quote(access_secret, safe='')}"
         signature = hmac.new(signing_key.encode(), base_string.encode(), hashlib.sha1).digest()
         oauth_params["oauth_signature"] = base64.b64encode(signature).decode()
 
@@ -402,11 +483,11 @@ def post_to_x(text: str, image_path: str = None) -> dict:
     url = "https://api.x.com/2/tweets"
 
     oauth_params = {
-        "oauth_consumer_key": X_API_KEY,
+        "oauth_consumer_key": api_key,
         "oauth_nonce": uuid.uuid4().hex,
         "oauth_signature_method": "HMAC-SHA1",
         "oauth_timestamp": str(int(time.time())),
-        "oauth_token": X_ACCESS_TOKEN,
+        "oauth_token": access_token,
         "oauth_version": "1.0",
     }
 
@@ -415,7 +496,7 @@ def post_to_x(text: str, image_path: str = None) -> dict:
         for k, v in sorted(oauth_params.items())
     )
     base_string = f"POST&{urllib.parse.quote(url, safe='')}&{urllib.parse.quote(params_string, safe='')}"
-    signing_key = f"{urllib.parse.quote(X_API_SECRET, safe='')}&{urllib.parse.quote(X_ACCESS_SECRET, safe='')}"
+    signing_key = f"{urllib.parse.quote(api_secret, safe='')}&{urllib.parse.quote(access_secret, safe='')}"
     signature = hmac.new(signing_key.encode(), base_string.encode(), hashlib.sha1).digest()
     oauth_params["oauth_signature"] = base64.b64encode(signature).decode()
 
@@ -481,7 +562,10 @@ def main():
         if post_linkedin:
             log.info("Generating LinkedIn image...")
             try:
-                li_image_path = generate_image(content["linkedin_image_prompt"])
+                li_image_path = generate_image(
+                    content["linkedin_image_prompt"],
+                    style=content.get("linkedin_dalle_style", "vivid"),
+                )
                 log.info(f"LinkedIn image saved: {li_image_path}")
             except Exception as e:
                 log.warning(f"LinkedIn image failed: {e}")
@@ -489,7 +573,10 @@ def main():
         if post_x:
             log.info("Generating X image...")
             try:
-                x_image_path = generate_image(content["x_image_prompt"])
+                x_image_path = generate_image(
+                    content["x_image_prompt"],
+                    style=content.get("x_dalle_style", "vivid"),
+                )
                 log.info(f"X image saved: {x_image_path}")
             except Exception as e:
                 log.warning(f"X image failed: {e}")
@@ -515,24 +602,55 @@ def main():
         print("\nDRY RUN — nothing posted.")
         return
 
+    # Determine account: odd day = personal, even day = business
+    day_of_year = datetime.now().timetuple().tm_yday
+    is_business_day = (day_of_year % 2 == 0)
+    account_label = "BUSINESS" if is_business_day else "PERSONAL"
+    log.info(f"Day {day_of_year} of year, posting to {account_label} accounts")
+
     # Publish
     if post_linkedin:
-        if not LINKEDIN_ACCESS_TOKEN:
-            log.warning("LINKEDIN_ACCESS_TOKEN not set — skipping LinkedIn")
+        if is_business_day:
+            token = LINKEDIN_BIZ_ACCESS_TOKEN
+            if not token:
+                log.warning("LINKEDIN_BIZ_ACCESS_TOKEN not set, skipping LinkedIn")
+            else:
+                try:
+                    post_to_linkedin(content["linkedin"], token, li_image_path, company_id=LINKEDIN_COMPANY_ID)
+                    log.info("Posted to LinkedIn COMPANY page")
+                except Exception as e:
+                    log.error(f"LinkedIn company post failed: {e}")
         else:
-            try:
-                post_to_linkedin(content["linkedin"], LINKEDIN_ACCESS_TOKEN, li_image_path)
-            except Exception as e:
-                log.error(f"LinkedIn post failed: {e}")
+            if not LINKEDIN_ACCESS_TOKEN:
+                log.warning("LINKEDIN_ACCESS_TOKEN not set, skipping LinkedIn")
+            else:
+                try:
+                    post_to_linkedin(content["linkedin"], LINKEDIN_ACCESS_TOKEN, li_image_path)
+                    log.info("Posted to LinkedIn PERSONAL profile")
+                except Exception as e:
+                    log.error(f"LinkedIn post failed: {e}")
 
     if post_x:
-        if not X_API_KEY or not X_ACCESS_TOKEN:
-            log.warning("X API credentials not set — skipping X")
+        if is_business_day:
+            if not X_BIZ_API_KEY or not X_BIZ_ACCESS_TOKEN:
+                log.warning("X business credentials not set, skipping X")
+            else:
+                try:
+                    post_to_x(content["x"], x_image_path,
+                              api_key=X_BIZ_API_KEY, api_secret=X_BIZ_API_SECRET,
+                              access_token=X_BIZ_ACCESS_TOKEN, access_secret=X_BIZ_ACCESS_SECRET)
+                    log.info("Posted to X BUSINESS account")
+                except Exception as e:
+                    log.error(f"X business post failed: {e}")
         else:
-            try:
-                post_to_x(content["x"], x_image_path)
-            except Exception as e:
-                log.error(f"X post failed: {e}")
+            if not X_API_KEY or not X_ACCESS_TOKEN:
+                log.warning("X API credentials not set, skipping X")
+            else:
+                try:
+                    post_to_x(content["x"], x_image_path)
+                    log.info("Posted to X PERSONAL account")
+                except Exception as e:
+                    log.error(f"X post failed: {e}")
 
     # Cleanup
     for path in [li_image_path, x_image_path]:
