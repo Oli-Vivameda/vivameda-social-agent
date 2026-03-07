@@ -53,7 +53,7 @@ from config import (
     X_BIZ_ACCESS_SECRET,
     BLOG_MODEL,
 )
-from style_guide import VIVAMEDA_VOICE
+from style_guide import VIVAMEDA_VOICE, OLI_PERSONAL_VOICE
 from topic_discovery import discover_topics
 
 # Optional image generation
@@ -223,6 +223,12 @@ Respond with ONLY the image prompt, nothing else. Max 120 words.
 
 def generate_content(selection: dict) -> dict:
     """Generate independent content for each platform."""
+    # Personal voice on odd days, business voice on even days
+    day_of_year = datetime.now().timetuple().tm_yday
+    is_personal = (day_of_year % 2 != 0)
+    active_voice = OLI_PERSONAL_VOICE if is_personal else VIVAMEDA_VOICE
+    log.info(f"Using {'PERSONAL (Oli)' if is_personal else 'BUSINESS (Vivameda)'} voice")
+
     client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
     # LinkedIn post
@@ -235,7 +241,7 @@ def generate_content(selection: dict) -> dict:
             "content": LINKEDIN_PROMPT.format(
                 topic=selection["linkedin_topic"],
                 angle=selection["linkedin_angle"],
-                voice=VIVAMEDA_VOICE,
+                voice=active_voice,
             ),
         }],
     )
@@ -252,7 +258,7 @@ def generate_content(selection: dict) -> dict:
             "content": X_PROMPT.format(
                 topic=selection["x_topic"],
                 angle=selection["x_angle"],
-                voice=VIVAMEDA_VOICE,
+                voice=active_voice,
             ),
         }],
     )
