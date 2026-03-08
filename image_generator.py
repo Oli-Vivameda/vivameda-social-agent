@@ -9,16 +9,17 @@ log = logging.getLogger(__name__)
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 
 
-def generate_image(prompt: str) -> str | None:
+def generate_image(prompt: str, style: str = "vivid") -> str | None:
     """
     Generate an image from a prompt using DALL-E 3.
+    style: "vivid" for bold/dramatic, "natural" for photorealistic.
     Returns the file path to the downloaded image, or None on failure.
     """
     if not OPENAI_API_KEY:
-        log.warning("OPENAI_API_KEY not set — skipping image generation")
+        log.warning("OPENAI_API_KEY not set, skipping image generation")
         return None
 
-    log.info(f"Generating image: {prompt[:80]}...")
+    log.info(f"Generating image ({style}): {prompt[:80]}...")
 
     resp = httpx.post(
         "https://api.openai.com/v1/images/generations",
@@ -26,8 +27,9 @@ def generate_image(prompt: str) -> str | None:
             "model": "dall-e-3",
             "prompt": prompt,
             "n": 1,
-            "size": "1792x1024",  # Landscape 16:9-ish
-            "quality": "standard",
+            "size": "1792x1024",
+            "quality": "hd",
+            "style": style,
         },
         headers={
             "Authorization": f"Bearer {OPENAI_API_KEY}",
