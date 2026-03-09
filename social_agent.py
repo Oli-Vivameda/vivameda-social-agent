@@ -73,6 +73,15 @@ large-scale workforce intelligence data (250M+ records, 2010-2025, 100+ countrie
 Given these trending topics, select TWO different topics: one for LinkedIn and one for X (Twitter).
 They should be DIFFERENT topics, not the same topic reworded.
 
+CRITICAL: Every post must connect the news back to what Vivameda does. The pattern is:
+1. Start with the trending news/topic as a hook
+2. Flip it into WHY workforce data, company intelligence, or longitudinal business data matters
+3. End with an insight that only someone with access to large-scale workforce data would have
+
+Vivameda provides: workforce intelligence across 250M+ professional records, company headcount tracking,
+hiring/layoff trend data, skills migration data, organizational structure analysis, and business
+intelligence datasets. The current product is a US agency intelligence dataset (46,575 decision-makers).
+
 LinkedIn audience: investment researchers, HR-tech leaders, data buyers, enterprise decision makers.
 X audience: data people, startup founders, VCs, analysts, alternative data enthusiasts.
 
@@ -82,9 +91,9 @@ Trending topics:
 Respond in JSON:
 {{
   "linkedin_topic": "...",
-  "linkedin_angle": "2-3 sentences on the LinkedIn post angle (professional, insightful)",
+  "linkedin_angle": "2-3 sentences on the LinkedIn post angle. MUST explain how this connects to workforce data or business intelligence.",
   "x_topic": "...",
-  "x_angle": "1 sentence on the X post angle (punchy, provocative)"
+  "x_angle": "1-2 sentences on the X post angle. MUST flip the news into a workforce data insight."
 }}
 """
 
@@ -121,14 +130,16 @@ Angle: {angle}
 RULES:
 - 150-250 words
 - Opening hook (first line gets people to stop scrolling)
-- Share a genuine insight about workforce data or business intelligence
+- Use the trending topic as a hook, then FLIP it into why workforce data or business intelligence matters
+- The post should demonstrate the kind of insight you can only get from tracking workforce movements at scale
+- Reference specific data points where possible (headcount shifts, hiring patterns, skills migration)
 - No hashtags in the body, add 3-5 relevant hashtags at the very end
 - Conversational but professional tone
 - End with a thought-provoking question or bold statement
 - Do NOT be salesy or mention Vivameda's products directly
 - Write as a thought leader sharing knowledge, not a company promoting itself
 - Use line breaks between paragraphs for readability
-- NEVER use em dashes or en dashes (— or –). Use commas, semicolons, colons, or periods instead.
+- NEVER use em dashes or en dashes. Use commas, semicolons, colons, or periods instead.
 """
 
 X_PROMPT = """Write a tweet (X post) for Vivameda (workforce intelligence company).
@@ -141,83 +152,74 @@ Angle: {angle}
 RULES:
 - 500-1000 characters. Develop the thought, give context, make it substantial.
 - Provocative and opinionated
+- Use the trending topic as a hook, then FLIP it into a workforce data insight
+- Show the kind of thinking that comes from tracking millions of professional records over 15 years
 - One clear insight or hot take, backed with reasoning
 - No hashtags unless they fit naturally
 - No emojis
 - Make people want to reply or retweet
 - Do NOT mention Vivameda
-- NEVER use em dashes or en dashes (— or –). Use commas, semicolons, colons, or periods instead.
+- NEVER use em dashes or en dashes. Use commas, semicolons, colons, or periods instead.
 """
 
 IMAGE_STYLES = [
     {
-        "name": "photorealistic office",
+        "name": "laptop with data on screen",
         "dalle_style": "natural",
-        "desc": "STYLE: Photorealistic photograph, like shot on a Canon EOS R5. A real, bright office environment with natural daylight coming through windows. Could be: a conference room with printed reports on the table, a laptop on a standing desk with a city view, hands typing on a keyboard with a bright screen, a whiteboard covered in real marker writing. WARM natural lighting. ABSOLUTELY NO dark backgrounds, NO glowing effects, NO neon colors, NO digital particles.",
+        "desc": "STYLE: Photorealistic photograph of a laptop or large monitor displaying data, charts, or a dashboard. The screen content should relate to the post topic (hiring trends, company data, market analysis). Shot at a slight angle with shallow depth of field. Bright, clean workspace with natural light. Think: a real photo you'd take at your desk to share on LinkedIn. NO dark rooms, NO neon.",
     },
     {
-        "name": "clean bar chart",
+        "name": "printed report on table",
         "dalle_style": "natural",
-        "desc": "STYLE: A simple, clean data visualization on a WHITE or very light background. Think: a professional bar chart or line graph like you'd see in the Wall Street Journal or Financial Times. Minimal design, thin lines, clear labels, muted professional colors (navy, gray, coral, teal). Flat 2D, no 3D effects. ABSOLUTELY NO dark backgrounds, NO glowing effects, NO neon, NO abstract digital art.",
+        "desc": "STYLE: Photorealistic overhead photograph of a printed business report or data printout on a conference table. Visible charts, tables, and numbers on paper. Maybe a pen, a coffee cup, or glasses nearby. Natural office lighting from above. Think: someone just printed the quarterly analysis and laid it out. Clean, professional, real.",
     },
     {
-        "name": "aerial city photograph",
+        "name": "team at a screen",
         "dalle_style": "natural",
-        "desc": "STYLE: Real aerial photograph of a major city during daytime. Golden hour or midday sun. Think: drone shot of Manhattan, London financial district, Singapore skyline, or a highway interchange from above. Sharp, high-resolution, photojournalistic quality. Colors should be natural and warm. ABSOLUTELY NO dark backgrounds, NO neon glow, NO digital overlay, NO abstract effects.",
+        "desc": "STYLE: Photorealistic photograph of 2-3 professionals (shot from behind or side, no clear faces) looking at a large screen or TV showing a chart, graph, or data dashboard. Bright modern office, glass walls, natural light. The screen content should loosely relate to the post topic. Think: a real meeting room photo. Documentary style.",
     },
     {
-        "name": "flat vector infographic",
+        "name": "city skyline editorial",
         "dalle_style": "natural",
-        "desc": "STYLE: Flat vector illustration in the style of a consulting firm report. Think: simple people icons, pie charts, arrow diagrams, percentage circles, all on a CLEAN WHITE background. Bold flat colors like orange, teal, navy, and yellow. NO gradients, NO shadows, NO 3D. Looks like it belongs in a McKinsey presentation. ABSOLUTELY NO dark backgrounds, NO glowing effects, NO sci-fi aesthetic.",
+        "desc": "STYLE: High-quality editorial photograph of a city skyline or financial district. Daytime or golden hour. Think: the kind of photo The Economist or Bloomberg would use as a header image. Sharp, clean, professional. Can include office buildings, a busy street, or a modern business campus. Natural colors, no filters.",
     },
     {
-        "name": "cozy desk photograph",
+        "name": "clean data visualization",
         "dalle_style": "natural",
-        "desc": "STYLE: Photorealistic overhead or angled shot of a real desk workspace. Think: a MacBook next to a coffee cup, a notebook with handwritten notes, printed spreadsheets with highlighter marks, a potted plant in the corner. Warm, soft, natural light from a window. Film photography feel, slightly warm color grading. ABSOLUTELY NO dark backgrounds, NO screens showing futuristic UI, NO glowing effects.",
+        "desc": "STYLE: A clean, professional chart or graph on a white or light background. Could be a bar chart, line chart, scatter plot, or heat map. The data should loosely relate to the post topic (workforce trends, hiring numbers, company growth). Think: a chart from a Financial Times article or a Bloomberg terminal screenshot. Muted professional colors. No 3D effects.",
     },
     {
-        "name": "whiteboard sketch",
+        "name": "hands typing with data",
         "dalle_style": "natural",
-        "desc": "STYLE: A real whiteboard or paper with hand-drawn diagrams. Think: black and blue marker on a white whiteboard showing flowcharts, boxes with arrows, rough graphs, sticky notes in different colors. Slightly messy, authentic, human. Shot as a photograph with natural office lighting. ABSOLUTELY NO digital art, NO dark backgrounds, NO neon, NO glowing lines.",
+        "desc": "STYLE: Close-up photorealistic photograph of hands on a keyboard or trackpad, with a screen in the background showing data, a spreadsheet, or an analytics tool. Shallow depth of field, warm natural light from the side. Think: a stock photo for TechCrunch or Wired, but more authentic. Clean desk, modern setup.",
     },
     {
-        "name": "nature landscape metaphor",
+        "name": "office hallway or lobby",
         "dalle_style": "natural",
-        "desc": "STYLE: Breathtaking photorealistic nature photograph. Think: an aerial shot of a river delta branching out, tree rings in a cross-section of wood, a winding mountain road from above, waves crashing on geometric rock formations, a field of wheat at golden hour. National Geographic quality, stunning natural colors and light. ABSOLUTELY NO tech elements, NO screens, NO digital overlays, NO dark backgrounds.",
+        "desc": "STYLE: Photorealistic photograph of a modern corporate office hallway, lobby, or open-plan workspace. Light, airy, lots of glass and clean lines. Maybe a few people walking in the distance (blurred, no faces). Think: the kind of photo on a tech company About page. Architectural photography feel, natural light.",
     },
     {
-        "name": "retro newspaper",
+        "name": "sticky notes and planning",
         "dalle_style": "natural",
-        "desc": "STYLE: Vintage newspaper or printed media aesthetic. Think: a 1960s newspaper front page with columns and headlines, an old stock ticker tape, a vintage printed chart on yellowed paper, a retro business magazine cover. Sepia tones, warm faded colors, visible paper texture and grain. ABSOLUTELY NO modern tech, NO screens, NO dark backgrounds, NO neon or glowing effects.",
-    },
-    {
-        "name": "colorful geometric abstract",
-        "dalle_style": "natural",
-        "desc": "STYLE: Bold, bright geometric abstract art on a WHITE or very LIGHT background. Think: overlapping circles, triangles, and rectangles in primary colors. Inspired by Bauhaus, Mondrian, or modern corporate art. Simple, clean, striking. Two to four bold colors max. ABSOLUTELY NO dark backgrounds, NO purple glow, NO network nodes, NO particle effects, NO sci-fi look.",
-    },
-    {
-        "name": "people at work photograph",
-        "dalle_style": "natural",
-        "desc": "STYLE: Photorealistic candid photograph of people in a work setting, shot from behind or from a distance so faces are not clearly visible. Think: a team standing around a whiteboard, someone pointing at a large screen showing a chart, two people walking through a bright modern office lobby, a group working at a long table in a sunlit room. Documentary photography style, natural colors. ABSOLUTELY NO dark backgrounds, NO futuristic elements, NO glowing effects.",
+        "desc": "STYLE: Photorealistic photograph of a planning session: sticky notes on a glass wall, a whiteboard with diagrams, or index cards arranged on a table. Colorful sticky notes with handwritten text (not readable). Bright office lighting. Think: a real startup strategy session. Authentic, messy, human.",
     },
 ]
 
-IMAGE_PROMPT_GENERATOR = """Your job is to write a DALL-E image prompt. The visual style is MORE important than the topic.
+IMAGE_PROMPT_GENERATOR = """Write a DALL-E image prompt for a social media post.
 
-VISUAL STYLE (this is the priority, follow it exactly): {style_desc}
+Post topic: {topic}
+Visual style to follow: {style_desc}
 
-The image should loosely relate to this subject: {topic}
-
-CRITICAL RULES:
-- The STYLE description above is the #1 priority. Follow it exactly.
-- Do NOT default to dark backgrounds with glowing blue/purple effects. This is BANNED unless the style explicitly asks for it.
-- Do NOT create abstract digital network visualizations. This is BANNED.
-- Do NOT create sci-fi or futuristic looking images. This is BANNED.
-- NO text, NO words, NO logos in the image
+RULES:
+- Make the image RELEVANT to the post topic. The image should make sense alongside the post.
+- Follow the visual style described above
+- The image must look like a REAL PHOTOGRAPH, not AI art
+- NO dark backgrounds, NO neon glow, NO purple, NO particle effects, NO sci-fi
+- NO text, words, or logos in the image
 - Landscape 16:9 aspect ratio
-- Be very specific about: exact colors, lighting direction, camera angle, materials, and textures
+- Be specific: describe exact lighting, camera angle, what is on any visible screens
 
-Respond with ONLY the image prompt, nothing else. Max 120 words.
+Respond with ONLY the image prompt. Max 120 words.
 """
 
 
