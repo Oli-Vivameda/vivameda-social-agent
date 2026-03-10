@@ -100,21 +100,36 @@ Respond in JSON:
 
 def select_topics(topics: list[str]) -> dict:
     """Use Claude to pick two different topics for each platform."""
+    from topic_discovery import load_topic_history, save_topic_history
+
     client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
     topic_list = "\n".join(f"- {t}" for t in topics)
+
+    # Include recent history so Claude avoids repeats
+    history = load_topic_history()
+    history_text = ""
+    if history:
+        recent = history[-10:]
+        history_text = "\n\nTOPICS ALREADY USED RECENTLY (do NOT pick these or anything too similar):\n"
+        history_text += "\n".join(f"- {h[:80]}" for h in recent)
 
     resp = client.messages.create(
         model=BLOG_MODEL,
         max_tokens=500,
         messages=[{
             "role": "user",
-            "content": TOPIC_SELECTOR_PROMPT.format(topics=topic_list),
+            "content": TOPIC_SELECTOR_PROMPT.format(topics=topic_list) + history_text,
         }],
     )
     text = resp.content[0].text.strip()
     if "```" in text:
         text = text.split("```")[1].replace("json", "", 1).strip()
-    return json.loads(text)
+    selection = json.loads(text)
+
+    # Save selected topics to history
+    save_topic_history([selection["linkedin_topic"], selection["x_topic"]])
+
+    return selection
 
 
 # ---------------------------------------------------------------------------
@@ -164,44 +179,64 @@ RULES:
 
 IMAGE_STYLES = [
     {
-        "name": "laptop with data on screen",
-        "dalle_style": "natural",
-        "desc": "STYLE: Photorealistic photograph of a laptop or large monitor displaying data, charts, or a dashboard. The screen content should relate to the post topic (hiring trends, company data, market analysis). Shot at a slight angle with shallow depth of field. Bright, clean workspace with natural light. Think: a real photo you'd take at your desk to share on LinkedIn. NO dark rooms, NO neon.",
+        "name": "editorial watercolor",
+        "dalle_style": "vivid",
+        "desc": "Editorial watercolor and ink illustration. Loose, expressive brushstrokes with paint drips and splashes. Washes of burnt sienna, raw umber, and deep indigo on rough textured dark paper. Hand-painted feel with visible paper grain. Like an original fine art piece in a gallery.",
     },
     {
-        "name": "printed report on table",
-        "dalle_style": "natural",
-        "desc": "STYLE: Photorealistic overhead photograph of a printed business report or data printout on a conference table. Visible charts, tables, and numbers on paper. Maybe a pen, a coffee cup, or glasses nearby. Natural office lighting from above. Think: someone just printed the quarterly analysis and laid it out. Clean, professional, real.",
+        "name": "isometric 3D diorama",
+        "dalle_style": "vivid",
+        "desc": "Stylized isometric 3D diorama. Miniature world with tiny detailed objects on a floating platform. Dark slate base with warm spotlighting from above. Tilt-shift depth of field. Colors: deep forest green, burnished gold, and charcoal. Playful yet sophisticated, like a premium product render.",
     },
     {
-        "name": "team at a screen",
-        "dalle_style": "natural",
-        "desc": "STYLE: Photorealistic photograph of 2-3 professionals (shot from behind or side, no clear faces) looking at a large screen or TV showing a chart, graph, or data dashboard. Bright modern office, glass walls, natural light. The screen content should loosely relate to the post topic. Think: a real meeting room photo. Documentary style.",
+        "name": "torn paper collage",
+        "dalle_style": "vivid",
+        "desc": "Torn paper collage with layered textures. Ripped cardboard, kraft paper, and dark fabric textures overlapping. Stamped ink marks and hand-drawn pencil sketches visible. Earth tones: raw umber, deep ochre, slate gray. Handmade craft aesthetic, tactile and analog.",
     },
     {
-        "name": "city skyline editorial",
-        "dalle_style": "natural",
-        "desc": "STYLE: High-quality editorial photograph of a city skyline or financial district. Daytime or golden hour. Think: the kind of photo The Economist or Bloomberg would use as a header image. Sharp, clean, professional. Can include office buildings, a busy street, or a modern business campus. Natural colors, no filters.",
+        "name": "abstract oil painting",
+        "dalle_style": "vivid",
+        "desc": "Abstract oil painting with thick impasto texture. Bold palette knife strokes creating ridges and valleys of paint. Colors: deep crimson, midnight blue, and metallic bronze on a near-black canvas. Museum-quality contemporary art. Richly textured surface catching dramatic side light.",
     },
     {
-        "name": "clean data visualization",
+        "name": "vintage flat-lay still life",
         "dalle_style": "natural",
-        "desc": "STYLE: A clean, professional chart or graph on a white or light background. Could be a bar chart, line chart, scatter plot, or heat map. The data should loosely relate to the post topic (workforce trends, hiring numbers, company growth). Think: a chart from a Financial Times article or a Bloomberg terminal screenshot. Muted professional colors. No 3D effects.",
+        "desc": "Overhead flat-lay arrangement on weathered dark wood surface. Vintage brass scientific instruments, aged leather-bound journals, antique maps, and dried botanical specimens. Warm candlelight atmosphere. Dutch Golden Age still life aesthetic.",
     },
     {
-        "name": "hands typing with data",
-        "dalle_style": "natural",
-        "desc": "STYLE: Close-up photorealistic photograph of hands on a keyboard or trackpad, with a screen in the background showing data, a spreadsheet, or an analytics tool. Shallow depth of field, warm natural light from the side. Think: a stock photo for TechCrunch or Wired, but more authentic. Clean desk, modern setup.",
+        "name": "linocut print",
+        "dalle_style": "vivid",
+        "desc": "Linocut print style illustration. Bold carved lines with visible wood grain texture. Limited to two ink colors: deep vermillion and dark teal on black paper. High contrast with strong graphic shapes. Folk art meets modernist design. Hand-printed imperfections visible.",
     },
     {
-        "name": "office hallway or lobby",
+        "name": "moody landscape metaphor",
         "dalle_style": "natural",
-        "desc": "STYLE: Photorealistic photograph of a modern corporate office hallway, lobby, or open-plan workspace. Light, airy, lots of glass and clean lines. Maybe a few people walking in the distance (blurred, no faces). Think: the kind of photo on a tech company About page. Architectural photography feel, natural light.",
+        "desc": "Moody landscape photograph as visual metaphor. Fog-covered ancient forest at dawn, or volcanic terrain with steam, or vast desert dunes. Single dominant warm accent against cool muted tones. Ultra-wide cinematic composition. National Geographic expedition photography quality.",
     },
     {
-        "name": "sticky notes and planning",
+        "name": "art deco poster",
+        "dalle_style": "vivid",
+        "desc": "Geometric art deco poster design. Sharp angular shapes, radiating sunburst patterns, and stepped forms. Rich jewel tones: deep emerald, sapphire blue, and antiqued gold on matte black. Roaring twenties luxury aesthetic. Ornamental borders with precision symmetry.",
+    },
+    {
+        "name": "japanese woodblock",
+        "dalle_style": "vivid",
+        "desc": "Japanese woodblock print (ukiyo-e) inspired illustration. Flowing organic lines, flat color areas, and subtle gradients. Colors: deep indigo, rust red, sage green, and warm cream on dark ground. Edo period aesthetic with contemporary subject matter. Delicate and refined.",
+    },
+    {
+        "name": "macro natural textures",
         "dalle_style": "natural",
-        "desc": "STYLE: Photorealistic photograph of a planning session: sticky notes on a glass wall, a whiteboard with diagrams, or index cards arranged on a table. Colorful sticky notes with handwritten text (not readable). Bright office lighting. Think: a real startup strategy session. Authentic, messy, human.",
+        "desc": "Macro photography of natural textures as metaphor. Extreme close-up of crystalline formations, tree bark patterns, or geological strata. Deep earth tones with occasional iridescent highlights. Scientific precision meets artistic beauty. Dark moody lighting revealing intricate detail.",
+    },
+    {
+        "name": "blueprint technical drawing",
+        "dalle_style": "vivid",
+        "desc": "Blueprint and technical drawing aesthetic. White and copper-toned linework on deep navy background. Architectural plans, engineering schematics, and hand-annotated measurements. Compass roses and cross-sections. Vintage industrial draftsmanship meets modern data visualization.",
+    },
+    {
+        "name": "scandinavian dark minimalism",
+        "dalle_style": "natural",
+        "desc": "Scandinavian dark minimalism: a single powerful symbolic object placed on a dark concrete surface. Dramatic chiaroscuro lighting from one side. Muted palette of charcoal, warm gray, and a single accent of burnt orange. Negative space dominates. Gallery photography aesthetic.",
     },
 ]
 
@@ -211,13 +246,11 @@ Post topic: {topic}
 Visual style to follow: {style_desc}
 
 RULES:
-- Make the image RELEVANT to the post topic. The image should make sense alongside the post.
-- Follow the visual style described above
-- The image must look like a REAL PHOTOGRAPH, not AI art
-- NO dark backgrounds, NO neon glow, NO purple, NO particle effects, NO sci-fi
+- Make the image a visual metaphor for the post topic
+- Follow the visual style described above exactly
 - NO text, words, or logos in the image
 - Landscape 16:9 aspect ratio
-- Be specific: describe exact lighting, camera angle, what is on any visible screens
+- Be specific about colors, textures, lighting, and composition
 
 Respond with ONLY the image prompt. Max 120 words.
 """
