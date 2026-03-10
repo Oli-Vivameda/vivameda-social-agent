@@ -650,27 +650,18 @@ def main():
     log.info(f"Day {day_of_year} of year, posting to {account_label} accounts")
 
     # Publish
+    # LinkedIn: always personal profile (business page pending API approval)
     if post_linkedin:
-        if is_business_day:
-            token = LINKEDIN_BIZ_ACCESS_TOKEN
-            if not token:
-                log.warning("LINKEDIN_BIZ_ACCESS_TOKEN not set, skipping LinkedIn")
-            else:
-                try:
-                    post_to_linkedin(content["linkedin"], token, li_image_path, company_id=LINKEDIN_COMPANY_ID)
-                    log.info("Posted to LinkedIn COMPANY page")
-                except Exception as e:
-                    log.error(f"LinkedIn company post failed: {e}")
+        if not LINKEDIN_ACCESS_TOKEN:
+            log.warning("LINKEDIN_ACCESS_TOKEN not set, skipping LinkedIn")
         else:
-            if not LINKEDIN_ACCESS_TOKEN:
-                log.warning("LINKEDIN_ACCESS_TOKEN not set, skipping LinkedIn")
-            else:
-                try:
-                    post_to_linkedin(content["linkedin"], LINKEDIN_ACCESS_TOKEN, li_image_path)
-                    log.info("Posted to LinkedIn PERSONAL profile")
-                except Exception as e:
-                    log.error(f"LinkedIn post failed: {e}")
+            try:
+                post_to_linkedin(content["linkedin"], LINKEDIN_ACCESS_TOKEN, li_image_path)
+                log.info("Posted to LinkedIn PERSONAL profile")
+            except Exception as e:
+                log.error(f"LinkedIn post failed: {e}")
 
+    # X: alternate personal/business by day
     if post_x:
         if is_business_day:
             if not X_BIZ_API_KEY or not X_BIZ_ACCESS_TOKEN:
