@@ -41,6 +41,7 @@ from config import (
     ANTHROPIC_API_KEY,
     BRAVE_API_KEY,
     LINKEDIN_ACCESS_TOKEN,
+    LINKEDIN_ACCESS_TOKEN_LISA,
     LINKEDIN_BIZ_ACCESS_TOKEN,
     LINKEDIN_COMPANY_ID,
     X_API_KEY,
@@ -643,23 +644,30 @@ def main():
         print("\nDRY RUN — nothing posted.")
         return
 
-    # Determine account: odd day = personal, even day = business
+    # Determine account: odd day = Oli personal, even day = business X + Lisa LinkedIn
     day_of_year = datetime.now().timetuple().tm_yday
     is_business_day = (day_of_year % 2 == 0)
-    account_label = "BUSINESS" if is_business_day else "PERSONAL"
-    log.info(f"Day {day_of_year} of year, posting to {account_label} accounts")
+    account_label = "LISA" if is_business_day else "OLI"
+    log.info(f"Day {day_of_year} of year, LinkedIn posting to {account_label}")
 
     # Publish
-    # LinkedIn: always personal profile (business page pending API approval)
+    # LinkedIn: alternate between Oli (odd days) and Lisa (even days)
     if post_linkedin:
-        if not LINKEDIN_ACCESS_TOKEN:
-            log.warning("LINKEDIN_ACCESS_TOKEN not set, skipping LinkedIn")
+        if is_business_day:
+            token = LINKEDIN_ACCESS_TOKEN_LISA
+            label = "Lisa"
+        else:
+            token = LINKEDIN_ACCESS_TOKEN
+            label = "Oli"
+
+        if not token:
+            log.warning(f"LinkedIn token for {label} not set, skipping LinkedIn")
         else:
             try:
-                post_to_linkedin(content["linkedin"], LINKEDIN_ACCESS_TOKEN, li_image_path)
-                log.info("Posted to LinkedIn PERSONAL profile")
+                post_to_linkedin(content["linkedin"], token, li_image_path)
+                log.info(f"Posted to LinkedIn: {label}'s profile")
             except Exception as e:
-                log.error(f"LinkedIn post failed: {e}")
+                log.error(f"LinkedIn post failed ({label}): {e}")
 
     # X: alternate personal/business by day
     if post_x:

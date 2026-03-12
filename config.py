@@ -8,8 +8,11 @@ BLOG_MODEL = os.environ.get("BLOG_MODEL", "claude-sonnet-4-5-20250929")
 # Search
 BRAVE_API_KEY = os.environ.get("BRAVE_API_KEY", "")
 
-# LinkedIn (personal profile)
+# LinkedIn (Oli personal profile)
 LINKEDIN_ACCESS_TOKEN = os.environ.get("LINKEDIN_ACCESS_TOKEN", "")
+
+# LinkedIn (Lisa personal profile)
+LINKEDIN_ACCESS_TOKEN_LISA = os.environ.get("LINKEDIN_ACCESS_TOKEN_LISA", "")
 
 # LinkedIn (company page)
 LINKEDIN_BIZ_ACCESS_TOKEN = os.environ.get("LINKEDIN_BIZ_ACCESS_TOKEN", "")

@@ -26,6 +26,7 @@ jobs:
           BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_ACCESS_TOKEN_LISA: ${{ secrets.LINKEDIN_ACCESS_TOKEN_LISA }}
           LINKEDIN_BIZ_ACCESS_TOKEN: ${{ secrets.LINKEDIN_BIZ_ACCESS_TOKEN }}
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
