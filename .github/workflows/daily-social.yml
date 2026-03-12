@@ -52,7 +52,12 @@ jobs:
             git push
           }
 
-      - name: WhatsApp alert on failure
+      - name: WhatsApp success
+        if: success()
+        run: |
+          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=VIVAMEDA:+Social+posts+published+to+LinkedIn+and+X.&apikey=5944134"
+
+      - name: WhatsApp failure
         if: failure()
         run: |
           curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=VIVAMEDA+ALERT:+Daily+Social+Posts+FAILED.+Check+GitHub+Actions.&apikey=5944134"
