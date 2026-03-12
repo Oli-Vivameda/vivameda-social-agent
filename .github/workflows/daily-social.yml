@@ -55,11 +55,11 @@ jobs:
       - name: WhatsApp success
         if: success()
         run: |
-          MSGS=("Yo+boss.+LinkedIn+and+X+are+fed.+Go+check+your+empire." "Done.+Posted+on+LinkedIn+and+X.+You+can+thank+me+later." "Your+social+media+slave+reporting+for+duty.+Posts+are+live." "Bang.+LinkedIn+and+X+just+got+blessed+with+fresh+content." "Posted.+LinkedIn.+X.+Images.+The+whole+thing.+You're+welcome.")
+          MSGS=("Vinnie+here.+LinkedIn+and+X+are+fed.+Go+check+your+empire+boss." "It's+Vinnie.+Posted+on+LinkedIn+and+X.+You+can+thank+me+later." "Vinnie+reporting.+Social+posts+are+live.+Another+day+another+banger." "Yo+it's+Vinnie.+LinkedIn+and+X+just+got+blessed.+You're+welcome." "Vinnie+done.+Posts+live.+Images+attached.+I+don't+even+need+coffee.")
           MSG=${MSGS[$RANDOM % ${#MSGS[@]}]}
           curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=$MSG&apikey=5944134"
 
       - name: WhatsApp failure
         if: failure()
         run: |
-          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=Shit.+Social+posts+broke.+Something+died.+Go+check+GitHub+Actions+before+it+gets+worse.&apikey=5944134"
+          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=Vinnie+here+and+I+messed+up.+Social+posts+broke.+Go+check+GitHub+Actions+before+I+make+it+worse.&apikey=5944134"

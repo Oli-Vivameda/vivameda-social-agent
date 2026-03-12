@@ -45,4 +45,4 @@ jobs:
       - name: WhatsApp failure
         if: failure()
         run: |
-          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=X+engagement+bot+just+face-planted.+Likes+and+follows+are+down.+Go+check+GitHub+Actions.&apikey=5944134"
+          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=Vinnie+here.+X+engagement+just+face-planted.+Likes+and+follows+are+down.+I+need+help+boss.+Check+GitHub+Actions.&apikey=5944134"
