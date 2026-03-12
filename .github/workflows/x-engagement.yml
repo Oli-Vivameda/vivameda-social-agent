@@ -2,7 +2,6 @@ name: X Engagement
 
 on:
   schedule:
-    # Every 2 hours from 7am to 9pm UTC (9am-11pm Cyprus time)
     - cron: '0 7,9,11,13,15,17,19,21 * * *'
   workflow_dispatch:  # Manual trigger
 
@@ -43,7 +42,7 @@ jobs:
             git push
           }
 
-      - name: WhatsApp alert on failure
+      - name: WhatsApp failure
         if: failure()
         run: |
-          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=VIVAMEDA+ALERT:+X+Engagement+FAILED.+Check+GitHub+Actions.&apikey=5944134"
+          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=X+engagement+bot+just+face-planted.+Likes+and+follows+are+down.+Go+check+GitHub+Actions.&apikey=5944134"

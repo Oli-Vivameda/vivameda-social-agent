@@ -55,9 +55,11 @@ jobs:
       - name: WhatsApp success
         if: success()
         run: |
-          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=VIVAMEDA:+Social+posts+published+to+LinkedIn+and+X.&apikey=5944134"
+          MSGS=("Yo+boss.+LinkedIn+and+X+are+fed.+Go+check+your+empire." "Done.+Posted+on+LinkedIn+and+X.+You+can+thank+me+later." "Your+social+media+slave+reporting+for+duty.+Posts+are+live." "Bang.+LinkedIn+and+X+just+got+blessed+with+fresh+content." "Posted.+LinkedIn.+X.+Images.+The+whole+thing.+You're+welcome.")
+          MSG=${MSGS[$RANDOM % ${#MSGS[@]}]}
+          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=$MSG&apikey=5944134"
 
       - name: WhatsApp failure
         if: failure()
         run: |
-          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=VIVAMEDA+ALERT:+Daily+Social+Posts+FAILED.+Check+GitHub+Actions.&apikey=5944134"
+          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=Shit.+Social+posts+broke.+Something+died.+Go+check+GitHub+Actions+before+it+gets+worse.&apikey=5944134"
