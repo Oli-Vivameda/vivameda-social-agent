@@ -5,6 +5,9 @@ on:
     - cron: '30 7 * * *'  # 07:30 UTC = 09:30 Cyprus time (30 min after blog)
   workflow_dispatch:  # Manual trigger
 
+permissions:
+  contents: write
+
 jobs:
   post:
     runs-on: ubuntu-latest
@@ -37,3 +40,13 @@ jobs:
           X_BIZ_ACCESS_TOKEN: ${{ secrets.X_BIZ_ACCESS_TOKEN }}
           X_BIZ_ACCESS_SECRET: ${{ secrets.X_BIZ_ACCESS_SECRET }}
         run: python social_agent.py
+
+      - name: Save history files
+        run: |
+          git config user.name "Vivameda Social Bot"
+          git config user.email "social@vivameda.com"
+          git add .topic_history.json .style_history.json 2>/dev/null || true
+          git diff --staged --quiet || {
+            git commit -m "Update topic/style history"
+            git push
+          }

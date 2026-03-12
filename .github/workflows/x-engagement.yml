@@ -6,6 +6,9 @@ on:
     - cron: '0 7,9,11,13,15,17,19,21 * * *'
   workflow_dispatch:  # Manual trigger
 
+permissions:
+  contents: write
+
 jobs:
   engage:
     runs-on: ubuntu-latest
@@ -29,3 +32,13 @@ jobs:
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
         run: python x_engagement.py
+
+      - name: Save history files
+        run: |
+          git config user.name "Vivameda Engagement Bot"
+          git config user.email "engagement@vivameda.com"
+          git add .follow_history.json .style_history.json .topic_history.json 2>/dev/null || true
+          git diff --staged --quiet || {
+            git commit -m "Update engagement history"
+            git push
+          }
