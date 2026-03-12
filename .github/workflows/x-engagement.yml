@@ -42,3 +42,8 @@ jobs:
             git commit -m "Update engagement history"
             git push
           }
+
+      - name: WhatsApp alert on failure
+        if: failure()
+        run: |
+          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=VIVAMEDA+ALERT:+X+Engagement+FAILED.+Check+GitHub+Actions.&apikey=5944134"
