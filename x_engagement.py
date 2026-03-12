@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 X (Twitter) Engagement Agent
-Searches for relevant posts, likes them, and leaves thoughtful replies.
+Searches for relevant posts, likes, replies, follows relevant accounts,
+unfollows non-followers, and curates timeline.
 Runs multiple times per day via GitHub Actions.
 """
 
@@ -17,6 +18,7 @@ import urllib.parse
 import uuid
 import random
 import argparse
+from datetime import datetime
 
 logging.basicConfig(
     level=logging.INFO,
@@ -57,14 +59,28 @@ ENGAGEMENT_SEARCHES = [
     "employee data trends",
     "hiring velocity",
     "company headcount",
+    "skills gap data",
+    "talent acquisition data",
+    "organizational restructuring",
+    "hiring freeze layoffs data",
+    "workforce planning AI",
+    "business intelligence B2B data",
+    "alternative data hedge fund",
+    "human capital analytics",
 ]
 
-# How many tweets to engage with per run
-LIKES_PER_RUN = 8
-REPLIES_PER_RUN = 3
+# Per-run limits
+LIKES_PER_RUN = 25
+REPLIES_PER_RUN = 8
+FOLLOWS_PER_RUN = 20
+UNFOLLOWS_PER_RUN = 15
 
-# Minimum followers for accounts we engage with (avoid bots/spam)
+# Quality filters
 MIN_FOLLOWERS = 100
+MIN_FOLLOWERS_TO_FOLLOW = 500
+
+# Files for tracking
+FOLLOW_HISTORY_FILE = ".follow_history.json"
 
 
 # ---------------------------------------------------------------------------
@@ -109,6 +125,29 @@ def _get_my_user_id() -> str:
 
 
 # ---------------------------------------------------------------------------
+# Follow history management
+# ---------------------------------------------------------------------------
+def load_follow_history() -> dict:
+    """Load follow tracking data."""
+    if os.path.exists(FOLLOW_HISTORY_FILE):
+        try:
+            with open(FOLLOW_HISTORY_FILE) as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {"followed": {}, "unfollowed": [], "last_unfollow_check": ""}
+
+
+def save_follow_history(data: dict):
+    """Save follow tracking data."""
+    try:
+        with open(FOLLOW_HISTORY_FILE, "w") as f:
+            json.dump(data, f)
+    except Exception as e:
+        log.warning(f"Could not save follow history: {e}")
+
+
+# ---------------------------------------------------------------------------
 # Search for relevant tweets
 # ---------------------------------------------------------------------------
 def search_relevant_tweets(query: str, max_results: int = 10) -> list[dict]:
@@ -119,14 +158,14 @@ def search_relevant_tweets(query: str, max_results: int = 10) -> list[dict]:
         "max_results": min(max_results, 10),
         "tweet.fields": "author_id,created_at,public_metrics,text",
         "expansions": "author_id",
-        "user.fields": "public_metrics,username,name",
+        "user.fields": "public_metrics,username,name,description",
     }
 
     auth = _oauth_header("GET", url, params)
     resp = httpx.get(url, params=params, headers={"Authorization": auth})
 
     if resp.status_code == 429:
-        log.warning("Rate limited on search — backing off")
+        log.warning("Rate limited on search, backing off")
         return []
 
     resp.raise_for_status()
@@ -149,7 +188,9 @@ def search_relevant_tweets(query: str, max_results: int = 10) -> list[dict]:
             "author_id": tweet["author_id"],
             "author_username": author.get("username", "unknown"),
             "author_name": author.get("name", "Unknown"),
+            "author_bio": author.get("description", ""),
             "followers": followers,
+            "following": author.get("public_metrics", {}).get("following_count", 0),
             "likes": tweet.get("public_metrics", {}).get("like_count", 0),
             "retweets": tweet.get("public_metrics", {}).get("retweet_count", 0),
         })
@@ -172,7 +213,7 @@ def like_tweet(tweet_id: str, my_user_id: str) -> bool:
     )
 
     if resp.status_code == 429:
-        log.warning("Rate limited on likes — stopping")
+        log.warning("Rate limited on likes, stopping")
         return False
     if resp.status_code == 200:
         return True
@@ -182,23 +223,113 @@ def like_tweet(tweet_id: str, my_user_id: str) -> bool:
 
 
 # ---------------------------------------------------------------------------
+# Follow a user
+# ---------------------------------------------------------------------------
+def follow_user(user_id: str, my_user_id: str) -> bool:
+    """Follow a user."""
+    url = f"https://api.x.com/2/users/{my_user_id}/following"
+    auth = _oauth_header("POST", url)
+
+    resp = httpx.post(
+        url,
+        json={"target_user_id": user_id},
+        headers={"Authorization": auth, "Content-Type": "application/json"},
+    )
+
+    if resp.status_code == 429:
+        log.warning("Rate limited on follows, stopping")
+        return False
+    if resp.status_code == 200:
+        return True
+
+    log.warning(f"Follow failed ({resp.status_code}): {resp.text[:100]}")
+    return False
+
+
+# ---------------------------------------------------------------------------
+# Unfollow a user
+# ---------------------------------------------------------------------------
+def unfollow_user(user_id: str, my_user_id: str) -> bool:
+    """Unfollow a user."""
+    url = f"https://api.x.com/2/users/{my_user_id}/following/{user_id}"
+    auth = _oauth_header("DELETE", url)
+
+    resp = httpx.delete(
+        url,
+        headers={"Authorization": auth},
+    )
+
+    if resp.status_code == 429:
+        log.warning("Rate limited on unfollows, stopping")
+        return False
+    if resp.status_code == 200:
+        return True
+
+    log.warning(f"Unfollow failed ({resp.status_code}): {resp.text[:100]}")
+    return False
+
+
+# ---------------------------------------------------------------------------
+# Get following list (people I follow)
+# ---------------------------------------------------------------------------
+def get_my_following(my_user_id: str, max_results: int = 100) -> list[dict]:
+    """Get list of users I follow."""
+    url = f"https://api.x.com/2/users/{my_user_id}/following"
+    params = {
+        "max_results": min(max_results, 1000),
+        "user.fields": "public_metrics,username,name,description,created_at",
+    }
+    auth = _oauth_header("GET", url, params)
+    resp = httpx.get(url, params=params, headers={"Authorization": auth})
+
+    if resp.status_code == 429:
+        log.warning("Rate limited on following list")
+        return []
+
+    resp.raise_for_status()
+    return resp.json().get("data", [])
+
+
+# ---------------------------------------------------------------------------
+# Get followers (people who follow me)
+# ---------------------------------------------------------------------------
+def get_my_followers(my_user_id: str, max_results: int = 100) -> list[dict]:
+    """Get list of my followers."""
+    url = f"https://api.x.com/2/users/{my_user_id}/followers"
+    params = {
+        "max_results": min(max_results, 1000),
+        "user.fields": "public_metrics,username,name",
+    }
+    auth = _oauth_header("GET", url, params)
+    resp = httpx.get(url, params=params, headers={"Authorization": auth})
+
+    if resp.status_code == 429:
+        log.warning("Rate limited on followers list")
+        return []
+
+    resp.raise_for_status()
+    return resp.json().get("data", [])
+
+
+# ---------------------------------------------------------------------------
 # Generate and post a reply
 # ---------------------------------------------------------------------------
 REPLY_PROMPT = """You are engaging on X (Twitter) as a workforce data expert.
 
 Someone posted this tweet:
 "{tweet_text}"
-— @{author_username} ({author_name}, {followers} followers)
+-- @{author_username} ({author_name}, {followers} followers)
 
 Write a thoughtful reply that:
 - Adds genuine value or a new perspective
 - Shows expertise in workforce data, business intelligence, or alternative data
 - Feels natural and conversational (NOT promotional)
-- Maximum 200 characters
+- Maximum 280 characters
 - No hashtags, no emojis
 - Do NOT mention Vivameda or any company
 - Do NOT be sycophantic ("Great post!", "Love this!")
 - Start with a substantive point, not a compliment
+- NEVER use em dashes or en dashes
 
 Respond with ONLY the reply text, nothing else.
 """
@@ -222,6 +353,7 @@ def generate_reply(tweet: dict) -> str:
         }],
     )
     reply = resp.content[0].text.strip().strip('"')
+    reply = reply.replace("\u2014", ",").replace("\u2013", ",")
 
     if len(reply) > 280:
         reply = reply[:277] + "..."
@@ -244,7 +376,7 @@ def post_reply(tweet_id: str, text: str) -> bool:
     )
 
     if resp.status_code == 429:
-        log.warning("Rate limited on replies — stopping")
+        log.warning("Rate limited on replies, stopping")
         return False
     if resp.status_code in (200, 201):
         return True
@@ -254,13 +386,12 @@ def post_reply(tweet_id: str, text: str) -> bool:
 
 
 # ---------------------------------------------------------------------------
-# Engagement scoring — prioritize high-value tweets
+# Engagement scoring
 # ---------------------------------------------------------------------------
 def score_tweet(tweet: dict) -> float:
     """Score a tweet for engagement priority."""
     score = 0.0
 
-    # More followers = more visibility for our reply
     if tweet["followers"] > 10000:
         score += 3
     elif tweet["followers"] > 1000:
@@ -268,18 +399,30 @@ def score_tweet(tweet: dict) -> float:
     else:
         score += 1
 
-    # Some engagement but not viral (we can still add value)
     likes = tweet["likes"]
     if 5 <= likes <= 100:
         score += 2
     elif likes < 5:
         score += 1
 
-    # Longer tweets tend to be more substantive
     if len(tweet["text"]) > 150:
         score += 1
 
     return score
+
+
+def is_relevant_account(user: dict) -> bool:
+    """Check if a user's bio suggests they're in our target audience."""
+    bio = (user.get("description") or user.get("author_bio") or "").lower()
+    keywords = [
+        "data", "analytics", "intelligence", "workforce", "hiring",
+        "talent", "hr tech", "investment", "venture", "startup",
+        "founder", "ceo", "cto", "research", "alternative data",
+        "fintech", "saas", "b2b", "machine learning", "ai ",
+        "hedge fund", "private equity", "recruiting", "headcount",
+        "people ops", "chief", "director", "vp ", "head of",
+    ]
+    return any(kw in bio for kw in keywords)
 
 
 # ---------------------------------------------------------------------------
@@ -288,21 +431,22 @@ def score_tweet(tweet: dict) -> float:
 def main():
     parser = argparse.ArgumentParser(description="X Engagement Agent")
     parser.add_argument("--dry-run", action="store_true", help="Preview without engaging")
-    parser.add_argument("--likes-only", action="store_true", help="Only like, don't reply")
-    parser.add_argument("--max-likes", type=int, default=LIKES_PER_RUN, help="Max likes per run")
-    parser.add_argument("--max-replies", type=int, default=REPLIES_PER_RUN, help="Max replies per run")
+    parser.add_argument("--likes-only", action="store_true", help="Only like, don't reply or follow")
+    parser.add_argument("--no-follow", action="store_true", help="Skip follow/unfollow")
     args = parser.parse_args()
 
     if not X_API_KEY or not X_ACCESS_TOKEN:
         log.error("X API credentials not configured")
         sys.exit(1)
 
-    # Get my user ID
     my_user_id = _get_my_user_id()
     log.info(f"Authenticated as user: {my_user_id}")
 
-    # Pick 2-3 random search queries per run for variety
-    queries = random.sample(ENGAGEMENT_SEARCHES, min(3, len(ENGAGEMENT_SEARCHES)))
+    # Load follow history
+    history = load_follow_history()
+
+    # Pick 4 random search queries per run for variety
+    queries = random.sample(ENGAGEMENT_SEARCHES, min(4, len(ENGAGEMENT_SEARCHES)))
 
     # Collect candidate tweets
     all_tweets = []
@@ -315,73 +459,191 @@ def main():
             if t["id"] not in seen_ids:
                 seen_ids.add(t["id"])
                 all_tweets.append(t)
-
-        # Respect rate limits
         time.sleep(2)
 
     log.info(f"Found {len(all_tweets)} candidate tweets")
 
     if not all_tweets:
-        log.info("No relevant tweets found — done")
+        log.info("No relevant tweets found, done")
         return
 
     # Score and sort
     all_tweets.sort(key=score_tweet, reverse=True)
 
-    # --- LIKES ---
+    # ═══════════════════════════════════════════
+    # LIKES
+    # ═══════════════════════════════════════════
     liked = 0
     for tweet in all_tweets:
-        if liked >= args.max_likes:
+        if liked >= LIKES_PER_RUN:
             break
 
         if args.dry_run:
-            log.info(f"[DRY RUN] Would like: @{tweet['author_username']}: {tweet['text'][:80]}...")
+            log.info(f"[DRY] Would like: @{tweet['author_username']}: {tweet['text'][:80]}...")
             liked += 1
             continue
 
         if like_tweet(tweet["id"], my_user_id):
             log.info(f"Liked: @{tweet['author_username']}: {tweet['text'][:60]}...")
             liked += 1
-            # Random delay between actions (3-8 seconds)
-            time.sleep(random.uniform(3, 8))
+            time.sleep(random.uniform(2, 5))
         else:
-            break  # Rate limited, stop
+            break
 
     log.info(f"Liked {liked} tweets")
 
-    # --- REPLIES ---
-    if args.likes_only:
-        log.info("Likes only mode — skipping replies")
-        return
+    # ═══════════════════════════════════════════
+    # REPLIES
+    # ═══════════════════════════════════════════
+    if not args.likes_only:
+        replied = 0
+        reply_candidates = all_tweets[:REPLIES_PER_RUN * 2]
 
-    replied = 0
-    # Only reply to top-scored tweets
-    reply_candidates = all_tweets[:args.max_replies * 2]
+        for tweet in reply_candidates:
+            if replied >= REPLIES_PER_RUN:
+                break
 
-    for tweet in reply_candidates:
-        if replied >= args.max_replies:
-            break
+            log.info(f"Generating reply for @{tweet['author_username']}...")
+            reply_text = generate_reply(tweet)
 
-        log.info(f"Generating reply for @{tweet['author_username']}...")
-        reply_text = generate_reply(tweet)
+            if args.dry_run:
+                log.info(f"[DRY] Would reply to @{tweet['author_username']}: {reply_text}")
+                replied += 1
+                continue
 
-        if args.dry_run:
-            log.info(f"[DRY RUN] Would reply to @{tweet['author_username']}:")
-            log.info(f"  Original: {tweet['text'][:80]}...")
-            log.info(f"  Reply: {reply_text}")
-            replied += 1
-            continue
+            if post_reply(tweet["id"], reply_text):
+                log.info(f"Replied to @{tweet['author_username']}: {reply_text[:60]}...")
+                replied += 1
+                time.sleep(random.uniform(10, 25))
+            else:
+                break
 
-        if post_reply(tweet["id"], reply_text):
-            log.info(f"Replied to @{tweet['author_username']}: {reply_text[:60]}...")
-            replied += 1
-            # Longer delay between replies (15-30 seconds)
-            time.sleep(random.uniform(15, 30))
-        else:
-            break  # Rate limited, stop
+        log.info(f"Replied to {replied} tweets")
 
-    log.info(f"Replied to {replied} tweets")
-    print(f"\nDone! Liked: {liked}, Replied: {replied}")
+    # ═══════════════════════════════════════════
+    # FOLLOW relevant accounts from search results
+    # ═══════════════════════════════════════════
+    if not args.likes_only and not args.no_follow:
+        followed = 0
+        already_followed = set(history.get("followed", {}).keys())
+
+        # Find relevant accounts from today's search that we don't follow yet
+        follow_candidates = []
+        for tweet in all_tweets:
+            uid = tweet["author_id"]
+            if uid in already_followed or uid == my_user_id:
+                continue
+            if tweet["followers"] < MIN_FOLLOWERS_TO_FOLLOW:
+                continue
+            if is_relevant_account(tweet):
+                follow_candidates.append(tweet)
+
+        # Deduplicate by author
+        seen_authors = set()
+        unique_candidates = []
+        for t in follow_candidates:
+            if t["author_id"] not in seen_authors:
+                seen_authors.add(t["author_id"])
+                unique_candidates.append(t)
+
+        random.shuffle(unique_candidates)
+
+        for tweet in unique_candidates[:FOLLOWS_PER_RUN]:
+            if followed >= FOLLOWS_PER_RUN:
+                break
+
+            if args.dry_run:
+                log.info(f"[DRY] Would follow: @{tweet['author_username']} ({tweet['followers']} followers)")
+                followed += 1
+                continue
+
+            if follow_user(tweet["author_id"], my_user_id):
+                log.info(f"Followed: @{tweet['author_username']} ({tweet['followers']} followers)")
+                history["followed"][tweet["author_id"]] = {
+                    "username": tweet["author_username"],
+                    "date": datetime.now().isoformat(),
+                    "followers": tweet["followers"],
+                }
+                followed += 1
+                time.sleep(random.uniform(5, 15))
+            else:
+                break
+
+        log.info(f"Followed {followed} new accounts")
+
+        # ═══════════════════════════════════════════
+        # UNFOLLOW non-followers (once per day, first run only)
+        # ═══════════════════════════════════════════
+        today = datetime.now().strftime("%Y-%m-%d")
+        if history.get("last_unfollow_check") != today:
+            log.info("Running daily unfollow check...")
+            history["last_unfollow_check"] = today
+
+            try:
+                following_list = get_my_following(my_user_id, max_results=200)
+                time.sleep(2)
+                followers_list = get_my_followers(my_user_id, max_results=200)
+
+                follower_ids = {u["id"] for u in followers_list}
+                following_ids = {u["id"]: u for u in following_list}
+
+                # Find accounts we follow that don't follow back
+                # Only unfollow if we followed them > 3 days ago
+                unfollow_candidates = []
+                for uid, user in following_ids.items():
+                    if uid in follower_ids:
+                        continue  # They follow back, keep
+                    if uid == my_user_id:
+                        continue
+
+                    # Check if we followed recently (give them time to follow back)
+                    follow_record = history.get("followed", {}).get(uid, {})
+                    follow_date = follow_record.get("date", "2020-01-01")
+                    try:
+                        days_since = (datetime.now() - datetime.fromisoformat(follow_date)).days
+                    except Exception:
+                        days_since = 999
+
+                    if days_since < 3:
+                        continue  # Too soon, give them time
+
+                    # Don't unfollow high-value accounts (they're worth following regardless)
+                    followers = user.get("public_metrics", {}).get("followers_count", 0)
+                    if followers > 50000:
+                        continue  # Keep following big accounts
+
+                    unfollow_candidates.append({
+                        "id": uid,
+                        "username": user.get("username", "unknown"),
+                        "followers": followers,
+                    })
+
+                random.shuffle(unfollow_candidates)
+                unfollowed = 0
+
+                for candidate in unfollow_candidates[:UNFOLLOWS_PER_RUN]:
+                    if args.dry_run:
+                        log.info(f"[DRY] Would unfollow: @{candidate['username']} (doesn't follow back)")
+                        unfollowed += 1
+                        continue
+
+                    if unfollow_user(candidate["id"], my_user_id):
+                        log.info(f"Unfollowed: @{candidate['username']} (doesn't follow back)")
+                        history.get("followed", {}).pop(candidate["id"], None)
+                        unfollowed += 1
+                        time.sleep(random.uniform(5, 12))
+                    else:
+                        break
+
+                log.info(f"Unfollowed {unfollowed} non-followers")
+
+            except Exception as e:
+                log.warning(f"Unfollow check failed: {e}")
+
+    # Save follow history
+    save_follow_history(history)
+
+    log.info("Done!")
 
 
 if __name__ == "__main__":
