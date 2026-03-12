@@ -182,79 +182,66 @@ IMAGE_STYLES = [
     {
         "name": "editorial watercolor",
         "dalle_style": "vivid",
-        "desc": "Editorial watercolor and ink illustration. Loose, expressive brushstrokes with paint drips and splashes. Washes of burnt sienna, raw umber, and deep indigo on rough textured dark paper. Hand-painted feel with visible paper grain. Like an original fine art piece in a gallery.",
+        "prompt": "Editorial watercolor and ink illustration depicting {topic}. Loose, expressive brushstrokes with paint drips and splashes. Washes of burnt sienna, raw umber, and deep indigo on rough textured dark paper. Hand-painted feel with visible paper grain. Like an original fine art piece in a gallery. Landscape 16:9. No text or words.",
     },
     {
         "name": "isometric 3D diorama",
         "dalle_style": "vivid",
-        "desc": "Stylized isometric 3D diorama. Miniature world with tiny detailed objects on a floating platform. Dark slate base with warm spotlighting from above. Tilt-shift depth of field. Colors: deep forest green, burnished gold, and charcoal. Playful yet sophisticated, like a premium product render.",
+        "prompt": "Stylized isometric 3D diorama related to {topic}. Miniature world with tiny detailed objects on a floating platform. Dark slate base with warm spotlighting from above. Tilt-shift depth of field. Colors: deep forest green, burnished gold, and charcoal. Playful yet sophisticated, like a premium product render. Landscape 16:9. No text or words.",
     },
     {
         "name": "torn paper collage",
         "dalle_style": "vivid",
-        "desc": "Torn paper collage with layered textures. Ripped cardboard, kraft paper, and dark fabric textures overlapping. Stamped ink marks and hand-drawn pencil sketches visible. Earth tones: raw umber, deep ochre, slate gray. Handmade craft aesthetic, tactile and analog.",
+        "prompt": "Torn paper collage with layered textures about {topic}. Ripped cardboard, kraft paper, and dark fabric textures overlapping. Stamped ink marks and hand-drawn pencil sketches visible. Earth tones: raw umber, deep ochre, slate gray. Handmade craft aesthetic, tactile and analog. Landscape 16:9. No text or words.",
     },
     {
         "name": "abstract oil painting",
         "dalle_style": "vivid",
-        "desc": "Abstract oil painting with thick impasto texture. Bold palette knife strokes creating ridges and valleys of paint. Colors: deep crimson, midnight blue, and metallic bronze on a near-black canvas. Museum-quality contemporary art. Richly textured surface catching dramatic side light.",
+        "prompt": "Abstract oil painting with thick impasto texture evoking {topic}. Bold palette knife strokes creating ridges and valleys of paint. Colors: deep crimson, midnight blue, and metallic bronze on a near-black canvas. Museum-quality contemporary art. Richly textured surface catching dramatic side light. Landscape 16:9. No text or words.",
     },
     {
         "name": "vintage flat-lay still life",
         "dalle_style": "natural",
-        "desc": "Overhead flat-lay arrangement on weathered dark wood surface. Vintage brass scientific instruments, aged leather-bound journals, antique maps, and dried botanical specimens. Warm candlelight atmosphere. Dutch Golden Age still life aesthetic.",
+        "prompt": "Overhead flat-lay arrangement on weathered dark wood surface relating metaphorically to {topic}. Vintage brass scientific instruments, aged leather-bound journals, antique maps, and dried botanical specimens. Warm candlelight atmosphere. Dutch Golden Age still life aesthetic. Landscape 16:9. No text or words.",
     },
     {
         "name": "linocut print",
         "dalle_style": "vivid",
-        "desc": "Linocut print style illustration. Bold carved lines with visible wood grain texture. Limited to two ink colors: deep vermillion and dark teal on black paper. High contrast with strong graphic shapes. Folk art meets modernist design. Hand-printed imperfections visible.",
+        "prompt": "Linocut print style illustration about {topic}. Bold carved lines with visible wood grain texture. Limited to two ink colors: deep vermillion and dark teal on black paper. High contrast with strong graphic shapes. Folk art meets modernist design. Hand-printed imperfections visible. Landscape 16:9. No text or words.",
     },
     {
         "name": "moody landscape metaphor",
         "dalle_style": "natural",
-        "desc": "Moody landscape photograph as visual metaphor. Fog-covered ancient forest at dawn, or volcanic terrain with steam, or vast desert dunes. Single dominant warm accent against cool muted tones. Ultra-wide cinematic composition. National Geographic expedition photography quality.",
+        "prompt": "Moody landscape photograph as visual metaphor for {topic}. Fog-covered ancient forest at dawn, or volcanic terrain with steam, or vast desert dunes. Single dominant warm accent against cool muted tones. Ultra-wide cinematic composition. National Geographic expedition photography quality. Landscape 16:9. No text or words.",
     },
     {
         "name": "art deco poster",
         "dalle_style": "vivid",
-        "desc": "Geometric art deco poster design. Sharp angular shapes, radiating sunburst patterns, and stepped forms. Rich jewel tones: deep emerald, sapphire blue, and antiqued gold on matte black. Roaring twenties luxury aesthetic. Ornamental borders with precision symmetry.",
+        "prompt": "Geometric art deco poster design about {topic}. Sharp angular shapes, radiating sunburst patterns, and stepped forms. Rich jewel tones: deep emerald, sapphire blue, and antiqued gold on matte black. Roaring twenties luxury aesthetic. Ornamental borders with precision symmetry. Landscape 16:9. No text or words.",
     },
     {
         "name": "japanese woodblock",
         "dalle_style": "vivid",
-        "desc": "Japanese woodblock print (ukiyo-e) inspired illustration. Flowing organic lines, flat color areas, and subtle gradients. Colors: deep indigo, rust red, sage green, and warm cream on dark ground. Edo period aesthetic with contemporary subject matter. Delicate and refined.",
+        "prompt": "Japanese woodblock print (ukiyo-e) inspired illustration of {topic}. Flowing organic lines, flat color areas, and subtle gradients. Colors: deep indigo, rust red, sage green, and warm cream on dark ground. Edo period aesthetic with contemporary subject matter. Delicate and refined. Landscape 16:9. No text or words.",
     },
     {
         "name": "macro natural textures",
         "dalle_style": "natural",
-        "desc": "Macro photography of natural textures as metaphor. Extreme close-up of crystalline formations, tree bark patterns, or geological strata. Deep earth tones with occasional iridescent highlights. Scientific precision meets artistic beauty. Dark moody lighting revealing intricate detail.",
+        "prompt": "Macro photography of natural textures as metaphor for {topic}. Extreme close-up of crystalline formations, tree bark patterns, or geological strata. Deep earth tones with occasional iridescent highlights. Scientific precision meets artistic beauty. Dark moody lighting revealing intricate detail. Landscape 16:9. No text or words.",
     },
     {
         "name": "blueprint technical drawing",
         "dalle_style": "vivid",
-        "desc": "Blueprint and technical drawing aesthetic. White and copper-toned linework on deep navy background. Architectural plans, engineering schematics, and hand-annotated measurements. Compass roses and cross-sections. Vintage industrial draftsmanship meets modern data visualization.",
+        "prompt": "Blueprint and technical drawing aesthetic about {topic}. White and copper-toned linework on deep navy background. Architectural plans, engineering schematics, and hand-annotated measurements. Compass roses and cross-sections. Vintage industrial draftsmanship meets modern data visualization. Landscape 16:9. No text or words.",
     },
     {
         "name": "scandinavian dark minimalism",
         "dalle_style": "natural",
-        "desc": "Scandinavian dark minimalism: a single powerful symbolic object placed on a dark concrete surface. Dramatic chiaroscuro lighting from one side. Muted palette of charcoal, warm gray, and a single accent of burnt orange. Negative space dominates. Gallery photography aesthetic.",
+        "prompt": "Scandinavian dark minimalism: a single powerful symbolic object related to {topic} placed on a dark concrete surface. Dramatic chiaroscuro lighting from one side. Muted palette of charcoal, warm gray, and a single accent of burnt orange. Negative space dominates. Gallery photography aesthetic. Landscape 16:9. No text or words.",
     },
 ]
 
-IMAGE_PROMPT_GENERATOR = """Write a DALL-E image prompt for a social media post.
-
-Post topic: {topic}
-Visual style to follow: {style_desc}
-
-RULES:
-- Make the image a visual metaphor for the post topic
-- Follow the visual style described above exactly
-- NO text, words, or logos in the image
-- Landscape 16:9 aspect ratio
-- Be specific about colors, textures, lighting, and composition
-
-Respond with ONLY the image prompt. Max 120 words.
-"""
+STYLE_HISTORY_FILE = ".style_history.json"
 
 
 def generate_content(selection: dict) -> dict:
@@ -303,40 +290,45 @@ def generate_content(selection: dict) -> dict:
     # Strip any em/en dashes that slipped through
     x_post = x_post.replace("—", ",").replace("–", ",")
 
-    # Generate image prompts, one per platform with different visual styles
-    li_style, x_style = random.sample(IMAGE_STYLES, 2)
+    # Generate image prompts directly (no Claude middleman)
+    # Load style history to avoid repeats
+    import json as _json
+    style_history = []
+    if os.path.exists(STYLE_HISTORY_FILE):
+        try:
+            with open(STYLE_HISTORY_FILE) as _f:
+                style_history = _json.load(_f).get("styles", [])[-8:]
+        except Exception:
+            pass
+
+    # Filter out recently used styles
+    available = [s for s in IMAGE_STYLES if s["name"] not in style_history]
+    if len(available) < 2:
+        available = IMAGE_STYLES  # Reset if we've used them all
+
+    li_style, x_style = random.sample(available, 2)
     log.info(f"Image styles: LinkedIn={li_style['name']}, X={x_style['name']}")
-    li_img_resp = client.messages.create(
-        model=BLOG_MODEL,
-        max_tokens=200,
-        messages=[{
-            "role": "user",
-            "content": IMAGE_PROMPT_GENERATOR.format(
-                topic=selection["linkedin_topic"],
-                style_desc=li_style["desc"],
-            ),
-        }],
-    )
-    x_img_resp = client.messages.create(
-        model=BLOG_MODEL,
-        max_tokens=200,
-        messages=[{
-            "role": "user",
-            "content": IMAGE_PROMPT_GENERATOR.format(
-                topic=selection["x_topic"],
-                style_desc=x_style["desc"],
-            ),
-        }],
-    )
+
+    # Save to history
+    style_history.extend([li_style["name"], x_style["name"]])
+    try:
+        with open(STYLE_HISTORY_FILE, "w") as _f:
+            _json.dump({"styles": style_history[-12:]}, _f)
+    except Exception:
+        pass
+
+    # Build prompts directly with topic inserted
+    li_image_prompt = li_style["prompt"].format(topic=selection["linkedin_topic"][:80])
+    x_image_prompt = x_style["prompt"].format(topic=selection["x_topic"][:80])
 
     return {
         "linkedin": linkedin_post,
         "linkedin_topic": selection["linkedin_topic"],
-        "linkedin_image_prompt": li_img_resp.content[0].text.strip(),
+        "linkedin_image_prompt": li_image_prompt,
         "linkedin_dalle_style": li_style["dalle_style"],
         "x": x_post,
         "x_topic": selection["x_topic"],
-        "x_image_prompt": x_img_resp.content[0].text.strip(),
+        "x_image_prompt": x_image_prompt,
         "x_dalle_style": x_style["dalle_style"],
     }
 
