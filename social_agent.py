@@ -54,7 +54,7 @@ from config import (
     X_BIZ_ACCESS_SECRET,
     BLOG_MODEL,
 )
-from style_guide import VIVAMEDA_VOICE, OLI_PERSONAL_VOICE
+from style_guide import VIVAMEDA_VOICE, OLI_PERSONAL_VOICE, LISA_PERSONAL_VOICE
 from topic_discovery import discover_topics
 
 # Optional image generation
@@ -249,8 +249,9 @@ def generate_content(selection: dict) -> dict:
     # Personal voice on odd days, business voice on even days
     day_of_year = datetime.now().timetuple().tm_yday
     is_personal = (day_of_year % 2 != 0)
-    active_voice = OLI_PERSONAL_VOICE if is_personal else VIVAMEDA_VOICE
-    log.info(f"Using {'PERSONAL (Oli)' if is_personal else 'BUSINESS (Vivameda)'} voice")
+    linkedin_voice = OLI_PERSONAL_VOICE if is_personal else LISA_PERSONAL_VOICE
+    x_voice = OLI_PERSONAL_VOICE if is_personal else VIVAMEDA_VOICE
+    log.info(f"LinkedIn voice: {'OLI' if is_personal else 'LISA'}, X voice: {'OLI' if is_personal else 'VIVAMEDA'}")
 
     client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
@@ -264,7 +265,7 @@ def generate_content(selection: dict) -> dict:
             "content": LINKEDIN_PROMPT.format(
                 topic=selection["linkedin_topic"],
                 angle=selection["linkedin_angle"],
-                voice=active_voice,
+                voice=linkedin_voice,
             ),
         }],
     )
@@ -281,7 +282,7 @@ def generate_content(selection: dict) -> dict:
             "content": X_PROMPT.format(
                 topic=selection["x_topic"],
                 angle=selection["x_angle"],
-                voice=active_voice,
+                voice=x_voice,
             ),
         }],
     )
