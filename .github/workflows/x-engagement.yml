@@ -33,10 +33,11 @@ jobs:
         run: python x_engagement.py
 
       - name: Save history files
+        if: always()
         run: |
           git config user.name "Vivameda Engagement Bot"
           git config user.email "engagement@vivameda.com"
-          git add .follow_history.json .style_history.json .topic_history.json 2>/dev/null || true
+          git add .follow_history.json .style_history.json .topic_history.json .credits_empty 2>/dev/null || true
           git diff --staged --quiet || {
             git commit -m "Update engagement history"
             git push

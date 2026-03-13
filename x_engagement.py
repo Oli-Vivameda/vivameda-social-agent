@@ -44,6 +44,42 @@ from config import (
 )
 
 # ---------------------------------------------------------------------------
+# WhatsApp alert via Vinnie
+# ---------------------------------------------------------------------------
+_vinnie_alerted = set()
+
+def _vinnie_alert(msg: str):
+    """Send a WhatsApp alert via CallMeBot. Only sends each message once per run."""
+    if msg in _vinnie_alerted:
+        return
+    _vinnie_alerted.add(msg)
+    try:
+        httpx.get(f"https://api.callmebot.com/whatsapp.php?phone=4915129005414&text={msg}&apikey=5944134", timeout=10)
+        log.info("Vinnie alert sent")
+    except Exception:
+        log.warning("Failed to send Vinnie alert")
+
+CREDIT_EMPTY_FLAG = ".credits_empty"
+
+def _flag_credits_empty():
+    """Mark that credits ran out."""
+    if not os.path.exists(CREDIT_EMPTY_FLAG):
+        with open(CREDIT_EMPTY_FLAG, "w") as f:
+            f.write(datetime.now().isoformat())
+
+def _check_credits_recovered():
+    """If credits were empty last run but work now, Vinnie reports the recharge."""
+    if os.path.exists(CREDIT_EMPTY_FLAG):
+        try:
+            with open(CREDIT_EMPTY_FLAG) as f:
+                empty_since = f.read().strip()
+            os.remove(CREDIT_EMPTY_FLAG)
+            _vinnie_alert(f"Vinnie+here.+X+API+credits+recharged.+Was+empty+since+{empty_since[:16].replace(':', '%3A')}.+Back+in+business+boss.")
+            log.info("Credits recovered, flag cleared")
+        except Exception:
+            pass
+
+# ---------------------------------------------------------------------------
 # Search queries to find relevant conversations
 # ---------------------------------------------------------------------------
 ENGAGEMENT_SEARCHES = [
@@ -170,6 +206,8 @@ def search_relevant_tweets(query: str, max_results: int = 10) -> list[dict]:
 
     if resp.status_code == 402:
         log.warning("X API payment required, search quota may be exceeded")
+        _vinnie_alert("Vinnie+here.+X+API+credits+just+ran+out.+Auto-recharge+should+kick+in+but+check+developer.x.com+to+be+sure.")
+        _flag_credits_empty()
         return []
 
     if resp.status_code >= 400:
@@ -222,6 +260,10 @@ def like_tweet(tweet_id: str, my_user_id: str) -> bool:
     if resp.status_code == 429:
         log.warning("Rate limited on likes, stopping")
         return False
+    if resp.status_code == 402:
+        _vinnie_alert("Vinnie+here.+X+API+credits+ran+out+while+liking.+Check+developer.x.com.")
+        _flag_credits_empty()
+        return False
     if resp.status_code == 200:
         return True
 
@@ -245,6 +287,10 @@ def follow_user(user_id: str, my_user_id: str) -> bool:
 
     if resp.status_code == 429:
         log.warning("Rate limited on follows, stopping")
+        return False
+    if resp.status_code == 402:
+        _vinnie_alert("Vinnie+here.+X+API+credits+ran+out+while+following.+Check+developer.x.com.")
+        _flag_credits_empty()
         return False
     if resp.status_code == 200:
         return True
@@ -385,6 +431,10 @@ def post_reply(tweet_id: str, text: str) -> bool:
     if resp.status_code == 429:
         log.warning("Rate limited on replies, stopping")
         return False
+    if resp.status_code == 402:
+        _vinnie_alert("Vinnie+here.+X+API+credits+ran+out+while+replying.+Check+developer.x.com.")
+        _flag_credits_empty()
+        return False
     if resp.status_code in (200, 201):
         return True
 
@@ -469,6 +519,10 @@ def main():
         time.sleep(2)
 
     log.info(f"Found {len(all_tweets)} candidate tweets")
+
+    # If we found tweets, searches worked. Check if credits were previously empty.
+    if all_tweets:
+        _check_credits_recovered()
 
     if not all_tweets:
         log.info("No relevant tweets found, done")
