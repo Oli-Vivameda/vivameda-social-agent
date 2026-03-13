@@ -182,62 +182,62 @@ IMAGE_STYLES = [
     {
         "name": "editorial watercolor",
         "dalle_style": "vivid",
-        "prompt": "Editorial watercolor and ink illustration depicting {topic}. Loose, expressive brushstrokes with paint drips and splashes. Washes of burnt sienna, raw umber, and deep indigo on rough textured dark paper. Hand-painted feel with visible paper grain. Like an original fine art piece in a gallery. Landscape 16:9. No text or words.",
+        "prompt": "Editorial watercolor and ink illustration depicting {topic}. Loose, expressive brushstrokes with paint drips and splashes. Washes of burnt sienna, raw umber, and deep indigo on rough textured dark paper. Hand-painted feel with visible paper grain. Like an original fine art piece in a gallery. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
     },
     {
         "name": "isometric 3D diorama",
         "dalle_style": "vivid",
-        "prompt": "Stylized isometric 3D diorama related to {topic}. Miniature world with tiny detailed objects on a floating platform. Dark slate base with warm spotlighting from above. Tilt-shift depth of field. Colors: deep forest green, burnished gold, and charcoal. Playful yet sophisticated, like a premium product render. Landscape 16:9. No text or words.",
+        "prompt": "Stylized isometric 3D diorama related to {topic}. Miniature world with tiny detailed objects on a floating platform. Dark slate base with warm spotlighting from above. Tilt-shift depth of field. Colors: deep forest green, burnished gold, and charcoal. Playful yet sophisticated, like a premium product render. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
     },
     {
         "name": "torn paper collage",
         "dalle_style": "vivid",
-        "prompt": "Torn paper collage with layered textures about {topic}. Ripped cardboard, kraft paper, and dark fabric textures overlapping. Stamped ink marks and hand-drawn pencil sketches visible. Earth tones: raw umber, deep ochre, slate gray. Handmade craft aesthetic, tactile and analog. Landscape 16:9. No text or words.",
+        "prompt": "Torn paper collage with layered textures about {topic}. Ripped cardboard, kraft paper, and dark fabric textures overlapping. Stamped ink marks and hand-drawn pencil sketches visible. Earth tones: raw umber, deep ochre, slate gray. Handmade craft aesthetic, tactile and analog. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
     },
     {
         "name": "abstract oil painting",
         "dalle_style": "vivid",
-        "prompt": "Abstract oil painting with thick impasto texture evoking {topic}. Bold palette knife strokes creating ridges and valleys of paint. Colors: deep crimson, midnight blue, and metallic bronze on a near-black canvas. Museum-quality contemporary art. Richly textured surface catching dramatic side light. Landscape 16:9. No text or words.",
+        "prompt": "Abstract oil painting with thick impasto texture evoking {topic}. Bold palette knife strokes creating ridges and valleys of paint. Colors: deep crimson, midnight blue, and metallic bronze on a near-black canvas. Museum-quality contemporary art. Richly textured surface catching dramatic side light. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
     },
     {
         "name": "vintage flat-lay still life",
         "dalle_style": "natural",
-        "prompt": "Overhead flat-lay arrangement on weathered dark wood surface relating metaphorically to {topic}. Vintage brass scientific instruments, aged leather-bound journals, antique maps, and dried botanical specimens. Warm candlelight atmosphere. Dutch Golden Age still life aesthetic. Landscape 16:9. No text or words.",
+        "prompt": "Overhead flat-lay arrangement on weathered dark wood surface relating metaphorically to {topic}. Vintage brass scientific instruments, aged leather-bound journals, antique maps, and dried botanical specimens. Warm candlelight atmosphere. Dutch Golden Age still life aesthetic. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
     },
     {
         "name": "linocut print",
         "dalle_style": "vivid",
-        "prompt": "Linocut print style illustration about {topic}. Bold carved lines with visible wood grain texture. Limited to two ink colors: deep vermillion and dark teal on black paper. High contrast with strong graphic shapes. Folk art meets modernist design. Hand-printed imperfections visible. Landscape 16:9. No text or words.",
+        "prompt": "Linocut style illustration about {topic}. Bold carved lines with visible wood grain texture. Limited to two ink colors: deep vermillion and dark teal on black paper. High contrast with strong graphic shapes. Folk art meets modernist design. Hand-carved imperfections visible. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
     },
     {
         "name": "moody landscape metaphor",
         "dalle_style": "natural",
-        "prompt": "Moody landscape photograph as visual metaphor for {topic}. Fog-covered ancient forest at dawn, or volcanic terrain with steam, or vast desert dunes. Single dominant warm accent against cool muted tones. Ultra-wide cinematic composition. National Geographic expedition photography quality. Landscape 16:9. No text or words.",
+        "prompt": "Moody landscape photograph as visual metaphor for {topic}. Fog-covered ancient forest at dawn, or volcanic terrain with steam, or vast desert dunes. Single dominant warm accent against cool muted tones. Ultra-wide cinematic composition. National Geographic expedition photography quality. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
     },
     {
         "name": "art deco poster",
         "dalle_style": "vivid",
-        "prompt": "Geometric art deco poster design about {topic}. Sharp angular shapes, radiating sunburst patterns, and stepped forms. Rich jewel tones: deep emerald, sapphire blue, and antiqued gold on matte black. Roaring twenties luxury aesthetic. Ornamental borders with precision symmetry. Landscape 16:9. No text or words.",
+        "prompt": "Geometric art deco abstract composition about {topic}. Sharp angular shapes, radiating sunburst patterns, and stepped forms. Rich jewel tones: deep emerald, sapphire blue, and antiqued gold on matte black. Roaring twenties luxury aesthetic. Ornamental borders with precision symmetry. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
     },
     {
         "name": "japanese woodblock",
         "dalle_style": "vivid",
-        "prompt": "Japanese woodblock print (ukiyo-e) inspired illustration of {topic}. Flowing organic lines, flat color areas, and subtle gradients. Colors: deep indigo, rust red, sage green, and warm cream on dark ground. Edo period aesthetic with contemporary subject matter. Delicate and refined. Landscape 16:9. No text or words.",
+        "prompt": "Japanese woodblock print (ukiyo-e) inspired illustration of {topic}. Flowing organic lines, flat color areas, and subtle gradients. Colors: deep indigo, rust red, sage green, and warm cream on dark ground. Edo period aesthetic with contemporary subject matter. Delicate and refined. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
     },
     {
         "name": "macro natural textures",
         "dalle_style": "natural",
-        "prompt": "Macro photography of natural textures as metaphor for {topic}. Extreme close-up of crystalline formations, tree bark patterns, or geological strata. Deep earth tones with occasional iridescent highlights. Scientific precision meets artistic beauty. Dark moody lighting revealing intricate detail. Landscape 16:9. No text or words.",
+        "prompt": "Macro photography of natural textures as metaphor for {topic}. Extreme close-up of crystalline formations, tree bark patterns, or geological strata. Deep earth tones with occasional iridescent highlights. Scientific precision meets artistic beauty. Dark moody lighting revealing intricate detail. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
     },
     {
         "name": "blueprint technical drawing",
         "dalle_style": "vivid",
-        "prompt": "Blueprint and technical drawing aesthetic about {topic}. White and copper-toned linework on deep navy background. Architectural plans, engineering schematics, and hand-annotated measurements. Compass roses and cross-sections. Vintage industrial draftsmanship meets modern data visualization. Landscape 16:9. No text or words.",
+        "prompt": "Blueprint and technical drawing aesthetic about {topic}. White and copper-toned linework on deep navy background. Architectural plans, engineering schematics, geometric patterns. Compass roses and cross-sections. Vintage industrial draftsmanship meets modern data visualization. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS, NO ANNOTATIONS, NO MEASUREMENTS anywhere in the image. Pure visual linework only.",
     },
     {
         "name": "scandinavian dark minimalism",
         "dalle_style": "natural",
-        "prompt": "Scandinavian dark minimalism: a single powerful symbolic object related to {topic} placed on a dark concrete surface. Dramatic chiaroscuro lighting from one side. Muted palette of charcoal, warm gray, and a single accent of burnt orange. Negative space dominates. Gallery photography aesthetic. Landscape 16:9. No text or words.",
+        "prompt": "Scandinavian dark minimalism: a single powerful symbolic object related to {topic} placed on a dark concrete surface. Dramatic chiaroscuro lighting from one side. Muted palette of charcoal, warm gray, and a single accent of burnt orange. Negative space dominates. Gallery photography aesthetic. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
     },
 ]
 
