@@ -39,8 +39,9 @@ jobs:
           git config user.email "engagement@vivameda.com"
           git add .follow_history.json .style_history.json .topic_history.json .credits_empty 2>/dev/null || true
           git diff --staged --quiet || {
+            git pull --rebase origin main || true
             git commit -m "Update engagement history"
-            git push
+            git push || true
           }
 
       - name: WhatsApp failure

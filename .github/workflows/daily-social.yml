@@ -2,7 +2,7 @@ name: Daily Social Posts
 
 on:
   schedule:
-    - cron: '30 7 * * *'  # 07:30 UTC = 09:30 Cyprus time (30 min after blog)
+    - cron: '30 7 * * *'
   workflow_dispatch:  # Manual trigger
 
 permissions:
@@ -48,8 +48,9 @@ jobs:
           git config user.email "social@vivameda.com"
           git add .topic_history.json .style_history.json 2>/dev/null || true
           git diff --staged --quiet || {
+            git pull --rebase origin main || true
             git commit -m "Update topic/style history"
-            git push
+            git push || true
           }
 
       - name: WhatsApp success
