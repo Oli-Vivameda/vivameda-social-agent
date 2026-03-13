@@ -168,7 +168,14 @@ def search_relevant_tweets(query: str, max_results: int = 10) -> list[dict]:
         log.warning("Rate limited on search, backing off")
         return []
 
-    resp.raise_for_status()
+    if resp.status_code == 402:
+        log.warning("X API payment required, search quota may be exceeded")
+        return []
+
+    if resp.status_code >= 400:
+        log.warning(f"Search failed ({resp.status_code}): {resp.text[:100]}")
+        return []
+
     data = resp.json()
 
     tweets = data.get("data", [])
