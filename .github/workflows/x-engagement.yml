@@ -3,7 +3,7 @@ name: X Engagement
 on:
   schedule:
     - cron: '0 7,9,11,13,15,17,19,21 * * *'
-  workflow_dispatch:  # Manual trigger
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -38,11 +38,11 @@ jobs:
           git config user.name "Vivameda Engagement Bot"
           git config user.email "engagement@vivameda.com"
           git add .follow_history.json .style_history.json .topic_history.json .credits_empty 2>/dev/null || true
-          git diff --staged --quiet || {
-            git pull --rebase origin main || true
+          if ! git diff --staged --quiet; then
             git commit -m "Update engagement history"
+            git pull --rebase origin main || true
             git push || true
-          }
+          fi
 
       - name: WhatsApp failure
         if: failure()

@@ -3,7 +3,7 @@ name: Daily Social Posts
 on:
   schedule:
     - cron: '30 7 * * *'
-  workflow_dispatch:  # Manual trigger
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -24,7 +24,6 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run social media agent
-        id: post
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
@@ -47,11 +46,11 @@ jobs:
           git config user.name "Vivameda Social Bot"
           git config user.email "social@vivameda.com"
           git add .topic_history.json .style_history.json 2>/dev/null || true
-          git diff --staged --quiet || {
-            git pull --rebase origin main || true
+          if ! git diff --staged --quiet; then
             git commit -m "Update topic/style history"
+            git pull --rebase origin main || true
             git push || true
-          }
+          fi
 
       - name: WhatsApp success
         if: success()
