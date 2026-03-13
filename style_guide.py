@@ -95,12 +95,12 @@ STRUCTURE FOR LINKEDIN:
 - Short paragraphs (1-3 sentences max).
 - Build to one clear insight.
 - End with a thought that stays with the reader.
-- 3-5 hashtags at the very end only.
+- Exactly 3 lowercase hashtags at the very end (e.g. #workforcedata not #WorkforceData).
 - NEVER use em dashes or en dashes.
 
 STRUCTURE FOR X:
 - One sharp thought, fully developed.
-- No hashtags unless natural.
+- No hashtags unless natural. Max 3, all lowercase.
 - No emojis.
 - Make people want to reply or argue.
 - NEVER use em dashes or en dashes.
@@ -172,13 +172,13 @@ STRUCTURE FOR LINKEDIN:
 - Short paragraphs. Let the post breathe.
 - Connect personal insight to a professional truth about data or business.
 - End with a question or a statement that stays with the reader.
-- 3-5 hashtags at the very end only.
+- Exactly 3 lowercase hashtags at the very end (e.g. #workforcedata not #WorkforceData).
 - NEVER use em dashes or en dashes.
 
 STRUCTURE FOR X:
 - One clear, thoughtful observation.
 - Can be philosophical or data-driven, but always with a human angle.
-- No hashtags unless natural.
+- No hashtags unless natural. Max 3, all lowercase.
 - No emojis.
 - NEVER use em dashes or en dashes.
 

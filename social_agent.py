@@ -149,7 +149,7 @@ RULES:
 - Use the trending topic as a hook, then FLIP it into why workforce data or business intelligence matters
 - The post should demonstrate the kind of insight you can only get from tracking workforce movements at scale
 - Reference specific data points where possible (headcount shifts, hiring patterns, skills migration)
-- No hashtags in the body, add 3-5 relevant hashtags at the very end
+- No hashtags in the body, add exactly 3 lowercase hashtags at the very end (e.g. #workforcedata not #WorkforceData)
 - Conversational but professional tone
 - End with a thought-provoking question or bold statement
 - Do NOT be salesy or mention Vivameda's products directly
@@ -171,7 +171,7 @@ RULES:
 - Use the trending topic as a hook, then FLIP it into a workforce data insight
 - Show the kind of thinking that comes from tracking millions of professional records over 15 years
 - One clear insight or hot take, backed with reasoning
-- No hashtags unless they fit naturally
+- No hashtags unless they fit naturally. Max 3, all lowercase (e.g. #workforcedata not #WorkforceData)
 - No emojis
 - Make people want to reply or retweet
 - Do NOT mention Vivameda
