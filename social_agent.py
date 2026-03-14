@@ -635,6 +635,10 @@ def main():
     # Step 3: Generate content
     content = generate_content(selection)
 
+    # Determine if today is a personal (Oli) day
+    day_of_year = datetime.now().timetuple().tm_yday
+    is_personal = (day_of_year % 2 != 0)
+
     # Step 4: Generate images
     li_image_path = None
     x_image_path = None
