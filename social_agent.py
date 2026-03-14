@@ -429,9 +429,23 @@ def post_to_linkedin(text: str, access_token: str, image_path: str = None, compa
         ]["uploadUrl"]
         asset = reg_data["value"]["asset"]
 
-        # Step 2: Upload the image binary
-        with open(image_path, "rb") as f:
-            image_bytes = f.read()
+        # Step 2: Upload the image binary (strip EXIF/metadata to avoid AI detection)
+        from PIL import Image
+        import io
+
+        try:
+            img = Image.open(image_path)
+            clean = Image.new(img.mode, img.size)
+            clean.putdata(list(img.getdata()))
+            buf = io.BytesIO()
+            fmt = "PNG" if image_path.lower().endswith(".png") else "JPEG"
+            clean.save(buf, format=fmt, quality=95)
+            image_bytes = buf.getvalue()
+            log.info("Stripped image metadata for LinkedIn upload")
+        except Exception as e:
+            log.warning(f"Could not strip metadata ({e}), uploading raw")
+            with open(image_path, "rb") as f:
+                image_bytes = f.read()
 
         upload_resp = httpx.put(
             upload_url,
@@ -517,8 +531,23 @@ def post_to_x(text: str, image_path: str = None, api_key: str = None, api_secret
         log.info("Uploading image to X...")
         upload_url = "https://upload.twitter.com/1.1/media/upload.json"
 
-        with open(image_path, "rb") as f:
-            image_bytes = f.read()
+        # Strip EXIF/metadata to avoid AI detection
+        from PIL import Image
+        import io
+
+        try:
+            img = Image.open(image_path)
+            clean = Image.new(img.mode, img.size)
+            clean.putdata(list(img.getdata()))
+            buf = io.BytesIO()
+            fmt = "PNG" if image_path.lower().endswith(".png") else "JPEG"
+            clean.save(buf, format=fmt, quality=95)
+            image_bytes = buf.getvalue()
+            log.info("Stripped image metadata for X upload")
+        except Exception as e:
+            log.warning(f"Could not strip metadata ({e}), uploading raw")
+            with open(image_path, "rb") as f:
+                image_bytes = f.read()
 
         media_b64 = base64.b64encode(image_bytes).decode()
 
