@@ -242,6 +242,50 @@ IMAGE_STYLES = [
 ]
 
 STYLE_HISTORY_FILE = ".style_history.json"
+CUSTOM_IMAGES_DIR = "images"
+CUSTOM_IMAGE_CHANCE = 0.5  # 50% chance to use custom image for LinkedIn
+USED_IMAGES_FILE = ".used_images.json"
+
+
+def pick_custom_image() -> str | None:
+    """Pick a random unused custom image from images/ folder. Returns path or None."""
+    if not os.path.isdir(CUSTOM_IMAGES_DIR):
+        return None
+
+    all_images = [
+        f for f in os.listdir(CUSTOM_IMAGES_DIR)
+        if f.lower().endswith((".jpg", ".jpeg", ".png", ".webp"))
+    ]
+    if not all_images:
+        return None
+
+    # Load used images history
+    used = []
+    try:
+        if os.path.exists(USED_IMAGES_FILE):
+            with open(USED_IMAGES_FILE) as f:
+                used = json.load(f).get("used", [])
+    except Exception:
+        pass
+
+    # Filter out recently used
+    available = [img for img in all_images if img not in used]
+    if not available:
+        # All used, reset
+        available = all_images
+        used = []
+
+    chosen = random.choice(available)
+    used.append(chosen)
+
+    # Save used history
+    try:
+        with open(USED_IMAGES_FILE, "w") as f:
+            json.dump({"used": used[-50:]}, f)
+    except Exception:
+        pass
+
+    return os.path.join(CUSTOM_IMAGES_DIR, chosen)
 
 
 def generate_content(selection: dict) -> dict:
@@ -593,19 +637,28 @@ def main():
     # Step 4: Generate images
     li_image_path = None
     x_image_path = None
-    if HAS_IMAGE_GEN and not args.dry_run:
+    if not args.dry_run:
+        # LinkedIn: 50% chance to use custom image if available
         if post_linkedin:
-            log.info("Generating LinkedIn image...")
-            try:
-                li_image_path = generate_image(
-                    content["linkedin_image_prompt"],
-                    style=content.get("linkedin_dalle_style", "vivid"),
-                )
-                log.info(f"LinkedIn image saved: {li_image_path}")
-            except Exception as e:
-                log.warning(f"LinkedIn image failed: {e}")
+            custom = None
+            if random.random() < CUSTOM_IMAGE_CHANCE:
+                custom = pick_custom_image()
+            if custom:
+                li_image_path = custom
+                log.info(f"Using custom image for LinkedIn: {li_image_path}")
+            elif HAS_IMAGE_GEN:
+                log.info("Generating LinkedIn image with DALL-E...")
+                try:
+                    li_image_path = generate_image(
+                        content["linkedin_image_prompt"],
+                        style=content.get("linkedin_dalle_style", "vivid"),
+                    )
+                    log.info(f"LinkedIn image saved: {li_image_path}")
+                except Exception as e:
+                    log.warning(f"LinkedIn image failed: {e}")
 
-        if post_x:
+        # X: Always DALL-E
+        if post_x and HAS_IMAGE_GEN:
             log.info("Generating X image...")
             try:
                 x_image_path = generate_image(
