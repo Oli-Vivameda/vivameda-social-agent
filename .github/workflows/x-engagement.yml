@@ -2,7 +2,7 @@ name: X Engagement
 
 on:
   schedule:
-    - cron: '0 7,9,11,13,15,17,19,21 * * *'
+    - cron: '0 7,9,11,13,15,17,19,21 * * 1-5'  # Mon-Fri, every 2h
   workflow_dispatch:
 
 permissions:

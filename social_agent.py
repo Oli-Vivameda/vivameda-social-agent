@@ -243,7 +243,8 @@ IMAGE_STYLES = [
 
 STYLE_HISTORY_FILE = ".style_history.json"
 CUSTOM_IMAGES_DIR = "images"
-CUSTOM_IMAGE_CHANCE = 0.5  # 50% chance to use custom image for LinkedIn
+CUSTOM_IMAGE_CHANCE_LINKEDIN = 0.67  # ~2 out of 3 for LinkedIn
+CUSTOM_IMAGE_CHANCE_X = 0.33  # ~1 out of 3 for X
 USED_IMAGES_FILE = ".used_images.json"
 
 
@@ -638,10 +639,10 @@ def main():
     li_image_path = None
     x_image_path = None
     if not args.dry_run:
-        # LinkedIn: 50% chance to use custom image if available
+        # LinkedIn: custom images ~2/3 on personal (Oli) days only
         if post_linkedin:
             custom = None
-            if random.random() < CUSTOM_IMAGE_CHANCE:
+            if is_personal and random.random() < CUSTOM_IMAGE_CHANCE_LINKEDIN:
                 custom = pick_custom_image()
             if custom:
                 li_image_path = custom
@@ -657,17 +658,24 @@ def main():
                 except Exception as e:
                     log.warning(f"LinkedIn image failed: {e}")
 
-        # X: Always DALL-E
-        if post_x and HAS_IMAGE_GEN:
-            log.info("Generating X image...")
-            try:
-                x_image_path = generate_image(
-                    content["x_image_prompt"],
-                    style=content.get("x_dalle_style", "vivid"),
-                )
-                log.info(f"X image saved: {x_image_path}")
-            except Exception as e:
-                log.warning(f"X image failed: {e}")
+        # X: custom images ~1/3 on personal (Oli) days only
+        if post_x:
+            custom = None
+            if is_personal and random.random() < CUSTOM_IMAGE_CHANCE_X:
+                custom = pick_custom_image()
+            if custom:
+                x_image_path = custom
+                log.info(f"Using custom image for X: {x_image_path}")
+            elif HAS_IMAGE_GEN:
+                log.info("Generating X image with DALL-E...")
+                try:
+                    x_image_path = generate_image(
+                        content["x_image_prompt"],
+                        style=content.get("x_dalle_style", "vivid"),
+                    )
+                    log.info(f"X image saved: {x_image_path}")
+                except Exception as e:
+                    log.warning(f"X image failed: {e}")
 
     # Step 5: Preview or publish
     if post_linkedin:
