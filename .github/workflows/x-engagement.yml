@@ -23,26 +23,43 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run X engagement agent
+      - name: Run personal X engagement
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
-        run: python x_engagement.py
+          X_BIZ_API_KEY: ${{ secrets.X_BIZ_API_KEY }}
+          X_BIZ_API_SECRET: ${{ secrets.X_BIZ_API_SECRET }}
+          X_BIZ_ACCESS_TOKEN: ${{ secrets.X_BIZ_ACCESS_TOKEN }}
+          X_BIZ_ACCESS_SECRET: ${{ secrets.X_BIZ_ACCESS_SECRET }}
+        run: python x_engagement.py --account personal
+
+      - name: Run business X engagement
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+          X_BIZ_API_KEY: ${{ secrets.X_BIZ_API_KEY }}
+          X_BIZ_API_SECRET: ${{ secrets.X_BIZ_API_SECRET }}
+          X_BIZ_ACCESS_TOKEN: ${{ secrets.X_BIZ_ACCESS_TOKEN }}
+          X_BIZ_ACCESS_SECRET: ${{ secrets.X_BIZ_ACCESS_SECRET }}
+        run: python x_engagement.py --account business
 
       - name: Save history files
         if: always()
         run: |
           git config user.name "Vivameda Engagement Bot"
           git config user.email "engagement@vivameda.com"
-          git add .follow_history.json .style_history.json .topic_history.json .credits_empty 2>/dev/null || true
-          if ! git diff --staged --quiet; then
+          git add .follow_history.json .follow_history_biz.json .style_history.json .topic_history.json .credits_empty .credits_empty_biz 2>/dev/null || true
+          git diff --staged --quiet || {
             git commit -m "Update engagement history"
             git pull --rebase origin main || true
             git push || true
-          fi
+          }
 
       - name: WhatsApp failure
         if: failure()
