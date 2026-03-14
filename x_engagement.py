@@ -41,7 +41,34 @@ from config import (
     X_API_SECRET,
     X_ACCESS_TOKEN,
     X_ACCESS_SECRET,
+    X_BIZ_API_KEY,
+    X_BIZ_API_SECRET,
+    X_BIZ_ACCESS_TOKEN,
+    X_BIZ_ACCESS_SECRET,
 )
+
+# Active credentials (swapped between personal and business)
+_active_api_key = X_API_KEY
+_active_api_secret = X_API_SECRET
+_active_access_token = X_ACCESS_TOKEN
+_active_access_secret = X_ACCESS_SECRET
+_active_account = "personal"
+
+
+def _set_account(account: str):
+    """Switch between personal and business X credentials."""
+    global _active_api_key, _active_api_secret, _active_access_token, _active_access_secret, _active_account
+    if account == "business":
+        _active_api_key = X_BIZ_API_KEY
+        _active_api_secret = X_BIZ_API_SECRET
+        _active_access_token = X_BIZ_ACCESS_TOKEN
+        _active_access_secret = X_BIZ_ACCESS_SECRET
+    else:
+        _active_api_key = X_API_KEY
+        _active_api_secret = X_API_SECRET
+        _active_access_token = X_ACCESS_TOKEN
+        _active_access_secret = X_ACCESS_SECRET
+    _active_account = account
 
 # ---------------------------------------------------------------------------
 # WhatsApp alert via Vinnie
@@ -58,8 +85,6 @@ def _vinnie_alert(msg: str):
         log.info("Vinnie alert sent")
     except Exception:
         log.warning("Failed to send Vinnie alert")
-
-CREDIT_EMPTY_FLAG = ".credits_empty"
 
 def _flag_credits_empty():
     """Mark that credits ran out."""
@@ -117,6 +142,14 @@ MIN_FOLLOWERS_TO_FOLLOW = 500
 
 # Files for tracking
 FOLLOW_HISTORY_FILE = ".follow_history.json"
+CREDIT_EMPTY_FLAG = ".credits_empty"
+
+def _init_file_paths():
+    """Set file paths based on active account."""
+    global FOLLOW_HISTORY_FILE, CREDIT_EMPTY_FLAG
+    if _active_account == "business":
+        FOLLOW_HISTORY_FILE = ".follow_history_biz.json"
+        CREDIT_EMPTY_FLAG = ".credits_empty_biz"
 
 
 # ---------------------------------------------------------------------------
@@ -125,11 +158,11 @@ FOLLOW_HISTORY_FILE = ".follow_history.json"
 def _oauth_header(method: str, url: str, extra_params: dict = None) -> str:
     """Build OAuth 1.0a Authorization header."""
     oauth_params = {
-        "oauth_consumer_key": X_API_KEY,
+        "oauth_consumer_key": _active_api_key,
         "oauth_nonce": uuid.uuid4().hex,
         "oauth_signature_method": "HMAC-SHA1",
         "oauth_timestamp": str(int(time.time())),
-        "oauth_token": X_ACCESS_TOKEN,
+        "oauth_token": _active_access_token,
         "oauth_version": "1.0",
     }
 
@@ -142,7 +175,7 @@ def _oauth_header(method: str, url: str, extra_params: dict = None) -> str:
         for k, v in sorted(all_params.items())
     )
     base_string = f"{method}&{urllib.parse.quote(url, safe='')}&{urllib.parse.quote(params_string, safe='')}"
-    signing_key = f"{urllib.parse.quote(X_API_SECRET, safe='')}&{urllib.parse.quote(X_ACCESS_SECRET, safe='')}"
+    signing_key = f"{urllib.parse.quote(_active_api_secret, safe='')}&{urllib.parse.quote(_active_access_secret, safe='')}"
     signature = hmac.new(signing_key.encode(), base_string.encode(), hashlib.sha1).digest()
     oauth_params["oauth_signature"] = base64.b64encode(signature).decode()
 
@@ -367,7 +400,7 @@ def get_my_followers(my_user_id: str, max_results: int = 100) -> list[dict]:
 # ---------------------------------------------------------------------------
 # Generate and post a reply
 # ---------------------------------------------------------------------------
-REPLY_PROMPT = """You are engaging on X (Twitter) as a workforce data expert.
+REPLY_PROMPT_PERSONAL = """You are engaging on X (Twitter) as a workforce data expert.
 
 Someone posted this tweet:
 "{tweet_text}"
@@ -387,17 +420,38 @@ Write a thoughtful reply that:
 Respond with ONLY the reply text, nothing else.
 """
 
+REPLY_PROMPT_BUSINESS = """You are engaging on X (Twitter) as Vivameda, a workforce intelligence company.
+
+Someone posted this tweet:
+"{tweet_text}"
+-- @{author_username} ({author_name}, {followers} followers)
+
+Write a thoughtful reply that:
+- Adds genuine value from a workforce data perspective
+- Shows Vivameda's expertise in tracking workforce movements at scale
+- Feels authoritative but conversational
+- Maximum 280 characters
+- No hashtags, no emojis
+- You CAN mention Vivameda naturally if it fits, but don't force it
+- Do NOT be sycophantic ("Great post!", "Love this!")
+- Start with a substantive point, not a compliment
+- NEVER use em dashes or en dashes
+
+Respond with ONLY the reply text, nothing else.
+"""
+
 
 def generate_reply(tweet: dict) -> str:
     """Use Claude to generate a contextual reply."""
     client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    prompt = REPLY_PROMPT_BUSINESS if _active_account == "business" else REPLY_PROMPT_PERSONAL
 
     resp = client.messages.create(
         model=BLOG_MODEL,
         max_tokens=100,
         messages=[{
             "role": "user",
-            "content": REPLY_PROMPT.format(
+            "content": prompt.format(
                 tweet_text=tweet["text"][:500],
                 author_username=tweet["author_username"],
                 author_name=tweet["author_name"],
@@ -490,9 +544,15 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="Preview without engaging")
     parser.add_argument("--likes-only", action="store_true", help="Only like, don't reply or follow")
     parser.add_argument("--no-follow", action="store_true", help="Skip follow/unfollow")
+    parser.add_argument("--account", choices=["personal", "business"], default="personal", help="Which X account to use")
     args = parser.parse_args()
 
-    if not X_API_KEY or not X_ACCESS_TOKEN:
+    # Switch to the right account
+    _set_account(args.account)
+    _init_file_paths()
+    log.info(f"Running as {args.account} account")
+
+    if not _active_api_key or not _active_access_token:
         log.error("X API credentials not configured")
         sys.exit(1)
 
