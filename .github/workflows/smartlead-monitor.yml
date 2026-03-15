@@ -1,0 +1,26 @@
+name: Smartlead Bounce Monitor
+
+on:
+  schedule:
+    - cron: '0 8,12,16 * * 1-5'  # Mon-Fri at 10:00, 14:00, 18:00 Cyprus
+  workflow_dispatch:
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install httpx
+
+      - name: Check bounce rates
+        env:
+          SMARTLEAD_API_KEY: ${{ secrets.SMARTLEAD_API_KEY }}
+        run: python smartlead_monitor.py
