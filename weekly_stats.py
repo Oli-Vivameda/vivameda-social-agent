@@ -1,309 +1,252 @@
 #!/usr/bin/env python3
 """
-Vivameda Weekly Engagement Stats
-Pulls stats from LinkedIn and X, compiles a weekly report.
-Vinnie sends a WhatsApp summary every Friday afternoon.
-Also emails the full report to oli@vivameda.com.
+Vivameda Weekly Stats Agent
+Runs every Friday at 16:00 Cyprus time
+Tracks: X followers, LinkedIn token health, lead pipelines (agency + BI), emails report, Vinnie WhatsApp summary
 """
 
 import os
-import sys
-import json
 import csv
-import logging
-import hashlib
-import hmac
-import time
-import base64
-import urllib.parse
-import uuid
+import json
+import requests
 import smtplib
-from datetime import datetime, timedelta
-from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from datetime import datetime, timedelta
+from urllib.parse import quote
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
-log = logging.getLogger(__name__)
+# ============================================================
+# CONFIG
+# ============================================================
+GMAIL_USER = "nold.oliver@gmail.com"
+GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "")
+REPORT_TO = "oli@vivameda.com"
 
-try:
-    import httpx
-except ImportError:
-    log.error("Missing httpx. Run: pip install httpx")
-    sys.exit(1)
-
-# Credentials
 X_API_KEY = os.environ.get("X_API_KEY", "")
 X_API_SECRET = os.environ.get("X_API_SECRET", "")
 X_ACCESS_TOKEN = os.environ.get("X_ACCESS_TOKEN", "")
 X_ACCESS_SECRET = os.environ.get("X_ACCESS_SECRET", "")
+
 X_BIZ_API_KEY = os.environ.get("X_BIZ_API_KEY", "")
 X_BIZ_API_SECRET = os.environ.get("X_BIZ_API_SECRET", "")
 X_BIZ_ACCESS_TOKEN = os.environ.get("X_BIZ_ACCESS_TOKEN", "")
 X_BIZ_ACCESS_SECRET = os.environ.get("X_BIZ_ACCESS_SECRET", "")
+
 LINKEDIN_ACCESS_TOKEN = os.environ.get("LINKEDIN_ACCESS_TOKEN", "")
 LINKEDIN_ACCESS_TOKEN_LISA = os.environ.get("LINKEDIN_ACCESS_TOKEN_LISA", "")
-GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "")
 
 VINNIE_PHONE = "4915129005414"
-VINNIE_APIKEY = "5944134"
+VINNIE_API_KEY = "5944134"
 
 STATS_DIR = "stats"
-STATS_FILE = os.path.join(STATS_DIR, "weekly_stats.csv")
+STATS_CSV = os.path.join(STATS_DIR, "weekly_stats.csv")
+AGENCY_PIPELINE = "leads/pipeline.csv"
+AGENCY_HISTORY = "leads/.lead_history.json"
+BI_PIPELINE = "leads_bi/pipeline.csv"
+BI_HISTORY = "leads_bi/.lead_history.json"
 
 
-def vinnie_alert(msg: str):
+def send_vinnie(message):
     try:
-        httpx.get(
-            f"https://api.callmebot.com/whatsapp.php?phone={VINNIE_PHONE}&text={msg}&apikey={VINNIE_APIKEY}",
-            timeout=10,
-        )
-    except Exception:
-        pass
-
-
-# ---------------------------------------------------------------------------
-# X OAuth 1.0a
-# ---------------------------------------------------------------------------
-def _x_oauth_header(method, url, api_key, api_secret, access_token, access_secret, extra_params=None):
-    oauth_params = {
-        "oauth_consumer_key": api_key,
-        "oauth_nonce": uuid.uuid4().hex,
-        "oauth_signature_method": "HMAC-SHA1",
-        "oauth_timestamp": str(int(time.time())),
-        "oauth_token": access_token,
-        "oauth_version": "1.0",
-    }
-    all_params = {**oauth_params}
-    if extra_params:
-        all_params.update(extra_params)
-    params_string = "&".join(
-        f"{urllib.parse.quote(k, safe='')}={urllib.parse.quote(str(v), safe='')}"
-        for k, v in sorted(all_params.items())
-    )
-    base_string = f"{method}&{urllib.parse.quote(url, safe='')}&{urllib.parse.quote(params_string, safe='')}"
-    signing_key = f"{urllib.parse.quote(api_secret, safe='')}&{urllib.parse.quote(access_secret, safe='')}"
-    signature = hmac.new(signing_key.encode(), base_string.encode(), hashlib.sha1).digest()
-    oauth_params["oauth_signature"] = base64.b64encode(signature).decode()
-    return "OAuth " + ", ".join(
-        f'{urllib.parse.quote(k, safe="")}="{urllib.parse.quote(v, safe="")}"'
-        for k, v in sorted(oauth_params.items())
-    )
-
-
-def get_x_stats(api_key, api_secret, access_token, access_secret, label="Personal"):
-    """Get X account metrics: followers, following, tweet count."""
-    url = "https://api.x.com/2/users/me"
-    params = {"user.fields": "public_metrics"}
-    auth = _x_oauth_header("GET", url, api_key, api_secret, access_token, access_secret, params)
-
-    try:
-        resp = httpx.get(url, params=params, headers={"Authorization": auth}, timeout=15)
-        if resp.status_code != 200:
-            log.warning(f"X {label} stats failed ({resp.status_code})")
-            return None
-        data = resp.json().get("data", {})
-        metrics = data.get("public_metrics", {})
-        return {
-            "account": label,
-            "username": data.get("username", ""),
-            "followers": metrics.get("followers_count", 0),
-            "following": metrics.get("following_count", 0),
-            "tweets": metrics.get("tweet_count", 0),
-        }
+        url = f"https://api.callmebot.com/whatsapp.php?phone={VINNIE_PHONE}&text={quote(message)}&apikey={VINNIE_API_KEY}"
+        resp = requests.get(url, timeout=15)
+        print(f"Vinnie: {resp.status_code}")
     except Exception as e:
-        log.warning(f"X {label} stats error: {e}")
-        return None
+        print(f"Vinnie error: {e}")
 
 
-def get_linkedin_stats(access_token, label="Oli"):
-    """Get basic LinkedIn profile info. Full analytics requires Marketing API."""
+def get_x_stats(api_key, api_secret, access_token, access_secret, account_name):
     try:
-        resp = httpx.get(
-            "https://api.linkedin.com/v2/userinfo",
-            headers={"Authorization": f"Bearer {access_token}"},
-            timeout=15,
+        from requests_oauthlib import OAuth1
+        auth = OAuth1(api_key, api_secret, access_token, access_secret)
+        resp = requests.get(
+            "https://api.twitter.com/2/users/me?user.fields=public_metrics",
+            auth=auth, timeout=15
         )
         if resp.status_code == 200:
-            data = resp.json()
+            data = resp.json().get("data", {})
+            metrics = data.get("public_metrics", {})
             return {
-                "account": f"LinkedIn {label}",
-                "name": data.get("name", ""),
-                "status": "Token active",
-            }
-        elif resp.status_code == 401:
-            return {
-                "account": f"LinkedIn {label}",
-                "name": "",
-                "status": "TOKEN EXPIRED",
+                "account": account_name,
+                "username": data.get("username", account_name),
+                "followers": metrics.get("followers_count", 0),
+                "following": metrics.get("following_count", 0),
+                "tweets": metrics.get("tweet_count", 0),
             }
         else:
-            return {
-                "account": f"LinkedIn {label}",
-                "name": "",
-                "status": f"Error {resp.status_code}",
-            }
+            print(f"X API error for {account_name}: {resp.status_code}")
+            return {"account": account_name, "followers": "?", "following": "?", "tweets": "?"}
     except Exception as e:
-        return {"account": f"LinkedIn {label}", "name": "", "status": str(e)}
+        print(f"X stats error for {account_name}: {e}")
+        return {"account": account_name, "followers": "?", "following": "?", "tweets": "?"}
 
 
-def count_leads():
-    """Count total leads in pipeline."""
-    csv_path = "leads/pipeline.csv"
-    if not os.path.exists(csv_path):
-        return 0, 0
+def check_linkedin_token(token, name):
+    try:
+        resp = requests.get(
+            "https://api.linkedin.com/v2/userinfo",
+            headers={"Authorization": f"Bearer {token}"},
+            timeout=15
+        )
+        if resp.status_code == 200:
+            return {"name": name, "status": "VALID", "detail": "Token working"}
+        elif resp.status_code == 401:
+            return {"name": name, "status": "EXPIRED", "detail": "Token expired or revoked"}
+        else:
+            return {"name": name, "status": "UNKNOWN", "detail": f"HTTP {resp.status_code}"}
+    except Exception as e:
+        return {"name": name, "status": "ERROR", "detail": str(e)}
+
+
+def count_leads(pipeline_path, history_path, product_name):
     total = 0
     this_week = 0
     week_ago = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
     try:
-        with open(csv_path, encoding="utf-8") as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                total += 1
-                if row.get("Date", "") >= week_ago:
-                    this_week += 1
-    except Exception:
-        pass
-    return total, this_week
+        if os.path.exists(pipeline_path):
+            with open(pipeline_path, "r") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    total += 1
+                    date_str = row.get("Date", "")
+                    if date_str >= week_ago:
+                        this_week += 1
+    except Exception as e:
+        print(f"Error reading {product_name} pipeline: {e}")
+    if total == 0:
+        try:
+            if os.path.exists(history_path):
+                with open(history_path, "r") as f:
+                    history = json.load(f)
+                    if isinstance(history, (list, dict)):
+                        total = len(history)
+        except Exception as e:
+            print(f"Error reading {product_name} history: {e}")
+    return {"product": product_name, "total": total, "this_week": this_week}
 
 
-def count_blog_posts():
-    """Count blog output files this week."""
-    # Blog posts are in the other repo, so we just check the commit messages
-    # For now, return placeholder
-    return "Check vivameda.com"
-
-
-def save_stats(stats: dict):
-    """Append weekly stats to CSV."""
+def save_stats(date_str, personal_x, biz_x, li_oli, li_lisa, agency_leads, bi_leads):
     os.makedirs(STATS_DIR, exist_ok=True)
-    file_exists = os.path.exists(STATS_FILE)
-
-    with open(STATS_FILE, "a", newline="", encoding="utf-8") as f:
+    file_exists = os.path.exists(STATS_CSV)
+    with open(STATS_CSV, "a", newline="") as f:
         writer = csv.writer(f)
         if not file_exists:
             writer.writerow([
-                "Date", "X Personal Followers", "X Personal Following",
-                "X Business Followers", "X Business Following",
-                "LinkedIn Oli Status", "LinkedIn Lisa Status",
-                "Total Leads", "Leads This Week",
+                "Date",
+                "X_Personal_Followers", "X_Personal_Following",
+                "X_Biz_Followers", "X_Biz_Following",
+                "LI_Oli_Status", "LI_Lisa_Status",
+                "Agency_Leads_Total", "Agency_Leads_Week",
+                "BI_Leads_Total", "BI_Leads_Week"
             ])
         writer.writerow([
-            datetime.now().strftime("%Y-%m-%d"),
-            stats.get("x_personal", {}).get("followers", ""),
-            stats.get("x_personal", {}).get("following", ""),
-            stats.get("x_business", {}).get("followers", ""),
-            stats.get("x_business", {}).get("following", ""),
-            stats.get("li_oli", {}).get("status", ""),
-            stats.get("li_lisa", {}).get("status", ""),
-            stats.get("total_leads", 0),
-            stats.get("week_leads", 0),
+            date_str,
+            personal_x.get("followers", "?"), personal_x.get("following", "?"),
+            biz_x.get("followers", "?"), biz_x.get("following", "?"),
+            li_oli.get("status", "?"), li_lisa.get("status", "?"),
+            agency_leads.get("total", 0), agency_leads.get("this_week", 0),
+            bi_leads.get("total", 0), bi_leads.get("this_week", 0)
         ])
+    print(f"Stats saved to {STATS_CSV}")
 
 
-def email_report(report: str):
-    """Email the weekly report."""
-    if not GMAIL_APP_PASSWORD:
-        log.warning("No Gmail password, skipping email")
-        return
+def send_email_report(date_str, personal_x, biz_x, li_oli, li_lisa, agency_leads, bi_leads):
+    subject = f"Vivameda Weekly Stats - {date_str}"
+    body = f"""VIVAMEDA WEEKLY STATS REPORT
+{date_str}
+{'=' * 50}
 
-    msg = MIMEMultipart()
-    msg["From"] = "nold.oliver@gmail.com"
-    msg["To"] = "oli@vivameda.com"
-    msg["Subject"] = f"Vivameda Weekly Report - {datetime.now().strftime('%Y-%m-%d')}"
-    msg.attach(MIMEText(report, "plain"))
+X ACCOUNTS
+----------
+@olinold (Personal)
+  Followers: {personal_x.get('followers', '?')}
+  Following: {personal_x.get('following', '?')}
+  Tweets: {personal_x.get('tweets', '?')}
 
+@vivameda_data (Business)
+  Followers: {biz_x.get('followers', '?')}
+  Following: {biz_x.get('following', '?')}
+  Tweets: {biz_x.get('tweets', '?')}
+
+LINKEDIN TOKEN HEALTH
+---------------------
+Oli: {li_oli.get('status', '?')} - {li_oli.get('detail', '')}
+Lisa: {li_lisa.get('status', '?')} - {li_lisa.get('detail', '')}
+
+LEAD PIPELINES
+--------------
+Agency Dataset (usagencydata.com)
+  Total leads: {agency_leads.get('total', 0)}
+  This week: {agency_leads.get('this_week', 0)}
+
+BI Workforce Intelligence Dataset (Flagship)
+  Total leads: {bi_leads.get('total', 0)}
+  This week: {bi_leads.get('this_week', 0)}
+
+Combined: {agency_leads.get('total', 0) + bi_leads.get('total', 0)} total leads across both pipelines
+{'=' * 50}
+Generated by Vivameda Automation System
+"""
     try:
+        msg = MIMEMultipart()
+        msg["From"] = GMAIL_USER
+        msg["To"] = REPORT_TO
+        msg["Subject"] = subject
+        msg.attach(MIMEText(body, "plain"))
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login("nold.oliver@gmail.com", GMAIL_APP_PASSWORD)
-            server.sendmail("nold.oliver@gmail.com", "oli@vivameda.com", msg.as_string())
-        log.info("Weekly report emailed")
+            server.login(GMAIL_USER, GMAIL_APP_PASSWORD)
+            server.send_message(msg)
+        print(f"Email sent to {REPORT_TO}")
     except Exception as e:
-        log.warning(f"Email failed: {e}")
+        print(f"Email error: {e}")
 
 
 def main():
-    log.info("Collecting weekly engagement stats...")
+    date_str = datetime.now().strftime("%Y-%m-%d")
+    print(f"Running weekly stats for {date_str}")
 
-    stats = {}
+    print("\nFetching X stats...")
+    personal_x = get_x_stats(X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET, "olinold")
+    biz_x = get_x_stats(X_BIZ_API_KEY, X_BIZ_API_SECRET, X_BIZ_ACCESS_TOKEN, X_BIZ_ACCESS_SECRET, "vivameda_data")
+    print(f"  @olinold: {personal_x.get('followers', '?')} followers")
+    print(f"  @vivameda_data: {biz_x.get('followers', '?')} followers")
 
-    # X Personal
-    if X_API_KEY and X_ACCESS_TOKEN:
-        stats["x_personal"] = get_x_stats(X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET, "Personal @olinold")
-        log.info(f"X Personal: {stats['x_personal']}")
-    else:
-        stats["x_personal"] = {}
+    print("\nChecking LinkedIn tokens...")
+    li_oli = check_linkedin_token(LINKEDIN_ACCESS_TOKEN, "Oli")
+    li_lisa = check_linkedin_token(LINKEDIN_ACCESS_TOKEN_LISA, "Lisa")
+    print(f"  Oli: {li_oli.get('status', '?')}")
+    print(f"  Lisa: {li_lisa.get('status', '?')}")
 
-    # X Business
-    if X_BIZ_API_KEY and X_BIZ_ACCESS_TOKEN:
-        stats["x_business"] = get_x_stats(X_BIZ_API_KEY, X_BIZ_API_SECRET, X_BIZ_ACCESS_TOKEN, X_BIZ_ACCESS_SECRET, "Business @vivameda_data")
-        log.info(f"X Business: {stats['x_business']}")
-    else:
-        stats["x_business"] = {}
+    print("\nCounting leads...")
+    agency_leads = count_leads(AGENCY_PIPELINE, AGENCY_HISTORY, "Agency Dataset")
+    bi_leads = count_leads(BI_PIPELINE, BI_HISTORY, "BI Workforce Intelligence")
+    print(f"  Agency: {agency_leads.get('total', 0)} total, {agency_leads.get('this_week', 0)} this week")
+    print(f"  BI: {bi_leads.get('total', 0)} total, {bi_leads.get('this_week', 0)} this week")
 
-    # LinkedIn
-    if LINKEDIN_ACCESS_TOKEN:
-        stats["li_oli"] = get_linkedin_stats(LINKEDIN_ACCESS_TOKEN, "Oli")
-        log.info(f"LinkedIn Oli: {stats['li_oli']}")
-    else:
-        stats["li_oli"] = {}
+    print("\nSaving stats...")
+    save_stats(date_str, personal_x, biz_x, li_oli, li_lisa, agency_leads, bi_leads)
 
-    if LINKEDIN_ACCESS_TOKEN_LISA:
-        stats["li_lisa"] = get_linkedin_stats(LINKEDIN_ACCESS_TOKEN_LISA, "Lisa")
-        log.info(f"LinkedIn Lisa: {stats['li_lisa']}")
-    else:
-        stats["li_lisa"] = {}
+    print("\nSending email report...")
+    send_email_report(date_str, personal_x, biz_x, li_oli, li_lisa, agency_leads, bi_leads)
 
-    # Leads
-    total_leads, week_leads = count_leads()
-    stats["total_leads"] = total_leads
-    stats["week_leads"] = week_leads
-    log.info(f"Leads: {total_leads} total, {week_leads} this week")
+    print("\nSending Vinnie summary...")
+    agency_total = agency_leads.get("total", 0)
+    agency_week = agency_leads.get("this_week", 0)
+    bi_total = bi_leads.get("total", 0)
+    bi_week = bi_leads.get("this_week", 0)
+    combined_total = agency_total + bi_total
 
-    # Save to CSV
-    save_stats(stats)
-
-    # Build report
-    xp = stats.get("x_personal", {})
-    xb = stats.get("x_business", {})
-    report = f"""VIVAMEDA WEEKLY REPORT - {datetime.now().strftime('%Y-%m-%d')}
-{'='*50}
-
-X ACCOUNTS:
-  @olinold: {xp.get('followers', '?')} followers, {xp.get('following', '?')} following
-  @vivameda_data: {xb.get('followers', '?')} followers, {xb.get('following', '?')} following
-
-LINKEDIN:
-  Oli: {stats.get('li_oli', {}).get('status', '?')}
-  Lisa: {stats.get('li_lisa', {}).get('status', '?')}
-
-LEAD PIPELINE:
-  Total leads found: {total_leads}
-  New leads this week: {week_leads}
-
-{'='*50}
-- Vinnie
-"""
-
-    print(report)
-
-    # Email report
-    email_report(report)
-
-    # Vinnie WhatsApp summary
     vinnie_msg = (
-        f"Vinnie+here.+WEEKLY+REPORT:"
-        f"+@olinold+{xp.get('followers', '?')}+followers."
-        f"+@vivameda_data+{xb.get('followers', '?')}+followers."
-        f"+{week_leads}+new+leads+this+week+({total_leads}+total)."
-        f"+Full+report+sent+to+your+email+boss."
+        f"WEEKLY STATS {date_str}\n"
+        f"X: @olinold {personal_x.get('followers', '?')} | @vivameda_data {biz_x.get('followers', '?')}\n"
+        f"LI: Oli={li_oli.get('status', '?')} Lisa={li_lisa.get('status', '?')}\n"
+        f"Agency leads: {agency_total} total (+{agency_week} this week)\n"
+        f"BI leads: {bi_total} total (+{bi_week} this week)\n"
+        f"Combined: {combined_total} leads in pipeline"
     )
-    vinnie_alert(vinnie_msg)
+    send_vinnie(vinnie_msg)
 
-    log.info("Weekly report complete!")
+    print("\nDone!")
 
 
 if __name__ == "__main__":
