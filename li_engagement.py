@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
-Vivameda LinkedIn Engagement Agent (Brave Search approach)
-Uses Brave Search to find LinkedIn posts, then w_member_social to like/comment.
-No r_member_social scope needed.
+Vivameda LinkedIn Engagement Agent (Brave Search approach v2)
+Broader queries, no freshness filter, better URL logging and URN extraction.
 """
 
 import os
@@ -27,26 +26,30 @@ COOLDOWN_DAYS = 14
 HISTORY_FILE = ".li_engagement_history.json"
 
 SEARCH_QUERIES = [
-    "site:linkedin.com/posts workforce data analytics",
-    "site:linkedin.com/posts workforce intelligence hiring",
-    "site:linkedin.com/posts alternative data HR",
-    "site:linkedin.com/posts talent analytics trends",
-    "site:linkedin.com/posts people analytics workforce",
-    "site:linkedin.com/posts labor market data insights",
-    "site:linkedin.com/posts hiring trends data",
-    "site:linkedin.com/posts employee data workforce planning",
-    "site:linkedin.com/posts recruitment data technology",
-    "site:linkedin.com/posts skills gap workforce",
-    "site:linkedin.com/posts headcount data analytics",
-    "site:linkedin.com/posts compensation benchmarking data",
-    "site:linkedin.com/posts HR tech data driven",
-    "site:linkedin.com/posts talent acquisition data",
-    "site:linkedin.com/posts org design workforce",
-    "site:linkedin.com/posts future of work data",
-    "site:linkedin.com/posts workforce automation AI",
-    "site:linkedin.com/posts professional data intelligence",
-    "site:linkedin.com/posts remote work data trends",
-    "site:linkedin.com/posts gig economy workforce data",
+    "site:linkedin.com/posts workforce data",
+    "site:linkedin.com/posts people analytics",
+    "site:linkedin.com/posts hiring trends",
+    "site:linkedin.com/posts talent analytics",
+    "site:linkedin.com/posts HR tech",
+    "site:linkedin.com/posts labor market",
+    "site:linkedin.com/posts workforce intelligence",
+    "site:linkedin.com/posts alternative data hiring",
+    "site:linkedin.com/posts employee data",
+    "site:linkedin.com/posts recruitment technology",
+    "site:linkedin.com/posts skills gap",
+    "site:linkedin.com/posts workforce planning",
+    "site:linkedin.com/posts compensation data",
+    "site:linkedin.com/posts headcount analytics",
+    "site:linkedin.com/posts future of work",
+    "site:linkedin.com/posts workforce automation",
+    "site:linkedin.com/posts talent acquisition",
+    "site:linkedin.com/posts org design",
+    "site:linkedin.com/posts remote work data",
+    "site:linkedin.com/posts human capital analytics",
+    "linkedin.com/posts workforce data 2026",
+    "linkedin.com/posts people analytics 2026",
+    "linkedin.com/posts hiring data trends",
+    "linkedin.com/posts HR analytics insights",
 ]
 
 log = print
@@ -109,7 +112,7 @@ def brave_search(query, count=20):
         resp = requests.get(
             "https://api.search.brave.com/res/v1/web/search",
             headers={"Accept": "application/json", "X-Subscription-Token": BRAVE_API_KEY},
-            params={"q": query, "count": count, "freshness": "pw"},
+            params={"q": query, "count": count},
             timeout=15,
         )
         if resp.status_code == 200:
@@ -122,12 +125,15 @@ def brave_search(query, count=20):
 
 
 def extract_post_urn_from_url(url):
-    match = re.search(r'activity[:-](\d{19,20})', url)
+    match = re.search(r'activity[:-](\d{16,20})', url)
     if match:
         return f"urn:li:activity:{match.group(1)}"
-    match = re.search(r'ugcPost[:-](\d{19,20})', url)
+    match = re.search(r'ugcPost[:-](\d{16,20})', url)
     if match:
         return f"urn:li:ugcPost:{match.group(1)}"
+    match = re.search(r'/feed/update/urn:li:activity:(\d+)', url)
+    if match:
+        return f"urn:li:activity:{match.group(1)}"
     return None
 
 
@@ -146,7 +152,8 @@ def score_post(title, description, url):
         if term in text:
             score += 15
     for term in ["data", "analytics", "workforce", "hiring", "talent", "recruitment",
-                  "hr", "human resources", "automation", "ai", "machine learning", "insights", "trends"]:
+                  "hr", "human resources", "automation", "ai", "machine learning",
+                  "insights", "trends", "future of work"]:
         if term in text:
             score += 5
     if "/posts/" in url:
@@ -255,7 +262,7 @@ Write ONE comment. Just the comment text, nothing else."""
 
 def main():
     today = datetime.now().strftime("%Y-%m-%d %H:%M")
-    log(f"LinkedIn Engagement Agent (Brave Search) starting: {today}")
+    log(f"LinkedIn Engagement Agent (Brave Search v2) starting: {today}")
 
     if not LINKEDIN_ACCESS_TOKEN:
         send_vinnie("LI ENGAGEMENT: No LinkedIn token.")
@@ -274,51 +281,67 @@ def main():
     history = load_history()
     history = cleanup_history(history)
 
-    queries = random.sample(SEARCH_QUERIES, min(3, len(SEARCH_QUERIES)))
+    queries = random.sample(SEARCH_QUERIES, min(5, len(SEARCH_QUERIES)))
     log(f"\nSearching with {len(queries)} queries...")
 
     all_results = []
     for query in queries:
-        results = brave_search(query, count=15)
-        short_q = query.replace("site:linkedin.com/posts ", "")
+        results = brave_search(query, count=20)
+        short_q = query.replace("site:linkedin.com/posts ", "").replace("linkedin.com/posts ", "")
         log(f"  '{short_q}': {len(results)} results")
         all_results.extend(results)
         time.sleep(1)
 
+    log(f"\nTotal raw results: {len(all_results)}")
+
     if not all_results:
-        send_vinnie("LI ENGAGEMENT: Brave returned no results.")
+        send_vinnie("LI ENGAGEMENT: Brave returned no results at all.")
         return
 
     seen_urns = set()
     posts = []
+    skipped_no_urn = 0
+    skipped_not_linkedin = 0
+
     for result in all_results:
         url = result.get("url", "")
         title = result.get("title", "")
         description = result.get("description", "")
+
         if "linkedin.com" not in url:
+            skipped_not_linkedin += 1
             continue
+
         urn = extract_post_urn_from_url(url)
-        if not urn or urn in seen_urns:
+        if not urn:
+            skipped_no_urn += 1
+            log(f"  NO URN: {url[:120]}")
+            continue
+
+        if urn in seen_urns:
             continue
         seen_urns.add(urn)
         if urn in history.get("liked_posts", {}):
             continue
         if url in history.get("engaged_urls", {}):
             continue
+
         author = extract_author_from_url(url)
         if author and author.lower() in ("olinold", "oli-nold", "olivernold"):
             continue
+
         score = score_post(title, description, url)
         if score < 20:
             continue
+
         posts.append({"urn": urn, "url": url, "title": title,
                        "description": description, "author": author or "unknown", "score": score})
 
     posts.sort(key=lambda x: x["score"], reverse=True)
-    log(f"\nEligible posts: {len(posts)}")
+    log(f"\nEligible posts: {len(posts)} (skipped {skipped_no_urn} no URN, {skipped_not_linkedin} not LinkedIn)")
 
     if not posts:
-        send_vinnie("LI ENGAGEMENT: No posts with extractable activity URNs. Next run will try different queries.")
+        send_vinnie(f"LI ENGAGEMENT: {len(all_results)} results from Brave, {skipped_no_urn} had no activity URN. Trying broader queries next run.")
         return
 
     liked = 0
