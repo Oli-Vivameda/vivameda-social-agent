@@ -1,0 +1,47 @@
+name: Lead Hunter
+
+on:
+  schedule:
+    - cron: '0 6 * * 1-5'  # Mon-Fri at 06:00 UTC (08:00 Cyprus, before blog and social)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  hunt:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install anthropic httpx
+
+      - name: Run Lead Hunter
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
+        run: python lead_hunter.py
+
+      - name: Save leads
+        if: always()
+        run: |
+          git config user.name "Vivameda Lead Hunter"
+          git config user.email "leads@vivameda.com"
+          git add leads/ 2>/dev/null || true
+          git diff --staged --quiet || {
+            git commit -m "New leads - $(date +%Y-%m-%d)"
+            git pull --rebase origin main || true
+            git push || true
+          }
+
+      - name: WhatsApp failure
+        if: failure()
+        run: |
+          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=Vinnie+here.+Lead+Hunter+crashed.+Check+GitHub+Actions.&apikey=5944134"
