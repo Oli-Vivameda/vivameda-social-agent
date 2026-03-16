@@ -1,0 +1,56 @@
+name: Weekly Stats Report
+
+on:
+  schedule:
+    - cron: '0 14 * * 5'  # Every Friday at 16:00 Cyprus
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install httpx
+
+      - name: Collect weekly stats
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+          X_BIZ_API_KEY: ${{ secrets.X_BIZ_API_KEY }}
+          X_BIZ_API_SECRET: ${{ secrets.X_BIZ_API_SECRET }}
+          X_BIZ_ACCESS_TOKEN: ${{ secrets.X_BIZ_ACCESS_TOKEN }}
+          X_BIZ_ACCESS_SECRET: ${{ secrets.X_BIZ_ACCESS_SECRET }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_ACCESS_TOKEN_LISA: ${{ secrets.LINKEDIN_ACCESS_TOKEN_LISA }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python weekly_stats.py
+
+      - name: Save stats
+        if: always()
+        run: |
+          git config user.name "Vivameda Stats Bot"
+          git config user.email "stats@vivameda.com"
+          git add stats/ 2>/dev/null || true
+          git diff --staged --quiet || {
+            git commit -m "Weekly stats - $(date +%Y-%m-%d)"
+            git pull --rebase origin main || true
+            git push || true
+          }
+
+      - name: WhatsApp failure
+        if: failure()
+        run: |
+          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=Vinnie+here.+Weekly+stats+report+crashed.+Check+GitHub+Actions.&apikey=5944134"

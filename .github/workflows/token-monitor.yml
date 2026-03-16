@@ -1,0 +1,24 @@
+name: Token Expiry Monitor
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'  # Every Monday at 09:00 Cyprus
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install httpx
+
+      - name: Check token expiry
+        run: python token_monitor.py
