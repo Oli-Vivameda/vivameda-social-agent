@@ -365,10 +365,14 @@ def generate_content(selection: dict) -> dict:
 
     # Build prompts directly with topic inserted
     # Strip company/brand names from image prompts to avoid DALL-E rejections
-    import re as _re
-    li_safe_topic = _re.sub(r"\b[A-Z][a-zA-Z]*(?:brick|ricks|soft|gle|zon|book|ify|Hub|force|ware|base|scale|Corp|Inc|Labs|AI)\b", "a leading tech company", selection["linkedin_topic"][:80])
-    li_image_prompt = li_style["prompt"].format(topic=li_safe_topic)
-    x_image_prompt = x_style["prompt"].format(topic=selection["x_topic"][:80])
+    _brands = ["Databricks","Google","Microsoft","Amazon","Meta","Apple","OpenAI","Anthropic","Tesla","Nvidia","Intel","IBM","Oracle","Salesforce","SAP","Snowflake","Palantir","Stripe","Uber","Airbnb","Netflix","Spotify","Adobe","Zoom","Slack","HubSpot","Workday","ServiceNow","Atlassian","Shopify","MongoDB","GitLab","GitHub","LinkedIn","Twitter","TikTok","ByteDance","CMU","MIT","Stanford","Harvard","AWS","Azure","Figma","Canva","Reddit","Discord"]
+    _safe_li = selection["linkedin_topic"][:80]
+    _safe_x = selection["x_topic"][:80]
+    for _b in _brands:
+        _safe_li = _safe_li.replace(_b, "a leading organization")
+        _safe_x = _safe_x.replace(_b, "a leading organization")
+    li_image_prompt = li_style["prompt"].format(topic=_safe_li)
+    x_image_prompt = x_style["prompt"].format(topic=_safe_x)
 
     return {
         "linkedin": linkedin_post,
