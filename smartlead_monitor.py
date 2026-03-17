@@ -19,7 +19,7 @@ logging.basicConfig(
 log = logging.getLogger(__name__)
 
 SMARTLEAD_API_KEY = os.environ.get("SMARTLEAD_API_KEY", "")
-BOUNCE_THRESHOLD = 4.0  # percent
+BOUNCE_THRESHOLD = 5.0  # percent
 VINNIE_PHONE = "4915129005414"
 VINNIE_APIKEY = "5944134"
 BASE_URL = "https://server.smartlead.ai/api/v1"
@@ -45,7 +45,8 @@ def get_all_campaigns() -> list[dict]:
         timeout=30,
     )
     resp.raise_for_status()
-    return resp.json()
+    campaigns = resp.json()
+    return [c for c in campaigns if c.get("status", "").lower() in ("active", "running")]
 
 
 def get_campaign_stats(campaign_id: int) -> dict:
