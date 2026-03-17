@@ -364,7 +364,10 @@ def generate_content(selection: dict) -> dict:
         pass
 
     # Build prompts directly with topic inserted
-    li_image_prompt = li_style["prompt"].format(topic=selection["linkedin_topic"][:80])
+    # Strip company/brand names from image prompts to avoid DALL-E rejections
+    import re as _re
+    li_safe_topic = _re.sub(r"\b[A-Z][a-zA-Z]*(?:brick|ricks|soft|gle|zon|book|ify|Hub|force|ware|base|scale|Corp|Inc|Labs|AI)\b", "a leading tech company", selection["linkedin_topic"][:80])
+    li_image_prompt = li_style["prompt"].format(topic=li_safe_topic)
     x_image_prompt = x_style["prompt"].format(topic=selection["x_topic"][:80])
 
     return {
@@ -690,6 +693,14 @@ def main():
                     log.info(f"LinkedIn image saved: {li_image_path}")
                 except Exception as e:
                     log.warning(f"LinkedIn image failed: {e}")
+                    fallback = pick_custom_image()
+                    if fallback:
+                        li_image_path = fallback
+                        log.info(f"DALL-E failed, using custom photo: {li_image_path}")
+                    fallback = pick_custom_image()
+                    if fallback:
+                        li_image_path = fallback
+                        log.info(f"Fallback to custom image: {li_image_path}")
 
         # X: custom images ~1/3 on personal (Oli) days only
         if post_x:
@@ -709,6 +720,14 @@ def main():
                     log.info(f"X image saved: {x_image_path}")
                 except Exception as e:
                     log.warning(f"X image failed: {e}")
+                    fallback = pick_custom_image()
+                    if fallback:
+                        x_image_path = fallback
+                        log.info(f"DALL-E failed, using custom photo: {x_image_path}")
+                    fallback = pick_custom_image()
+                    if fallback:
+                        x_image_path = fallback
+                        log.info(f"Fallback to custom image: {x_image_path}")
 
     # Step 5: Preview or publish
     if post_linkedin:
