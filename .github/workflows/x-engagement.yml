@@ -25,7 +25,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install requests requests-oauthlib
+        run: pip install requests requests-oauthlib anthropic httpx
 
       - name: Run X engagement
         env:
