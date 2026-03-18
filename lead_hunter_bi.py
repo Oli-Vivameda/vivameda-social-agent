@@ -44,7 +44,7 @@ MODEL = "claude-sonnet-4-20250514"
 
 LEADS_CSV = "leads_bi/pipeline.csv"
 LEADS_HISTORY = "leads_bi/.lead_history.json"
-LEADS_PER_RUN = 8
+LEADS_PER_RUN = 15
 MIN_SCORE = 50
 
 VINNIE_PHONE = "4915129005414"
@@ -392,7 +392,7 @@ def main():
     known = load_lead_history()
     log.info(f"Known companies: {len(known)}")
 
-    queries = random.sample(SEARCH_QUERIES, min(4, len(SEARCH_QUERIES)))
+    queries = random.sample(SEARCH_QUERIES, min(7, len(SEARCH_QUERIES)))
 
     all_results = []
     seen_domains = set()

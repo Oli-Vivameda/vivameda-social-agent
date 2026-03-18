@@ -1,0 +1,42 @@
+name: Lead Hunter BI (Afternoon)
+
+on:
+  schedule:
+    - cron: '0 12 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  hunt:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install anthropic httpx
+
+      - name: Run BI Lead Hunter (no email)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
+        run: python lead_hunter_bi.py
+
+      - name: Save leads
+        if: always()
+        run: |
+          git config user.name "Vivameda BI Lead Hunter"
+          git config user.email "leads-bi@vivameda.com"
+          git add leads_bi/ 2>/dev/null || true
+          git diff --staged --quiet || {
+            git commit -m "New BI leads afternoon - $(date +%Y-%m-%d)"
+            git pull --rebase origin main || true
+            git push || true
+          }
