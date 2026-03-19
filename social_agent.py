@@ -180,64 +180,44 @@ RULES:
 
 IMAGE_STYLES = [
     {
-        "name": "editorial watercolor",
-        "dalle_style": "vivid",
-        "prompt": "Editorial watercolor and ink illustration depicting {topic}. Loose, expressive brushstrokes with paint drips and splashes. Washes of burnt sienna, raw umber, and deep indigo on rough textured dark paper. Hand-painted feel with visible paper grain. Like an original fine art piece in a gallery. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
-    },
-    {
-        "name": "isometric 3D diorama",
-        "dalle_style": "vivid",
-        "prompt": "Stylized isometric 3D diorama related to {topic}. Miniature world with tiny detailed objects on a floating platform. Dark slate base with warm spotlighting from above. Tilt-shift depth of field. Colors: deep forest green, burnished gold, and charcoal. Playful yet sophisticated, like a premium product render. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
-    },
-    {
-        "name": "torn paper collage",
-        "dalle_style": "vivid",
-        "prompt": "Torn paper collage with layered textures about {topic}. Ripped cardboard, kraft paper, and dark fabric textures overlapping. Stamped ink marks and hand-drawn pencil sketches visible. Earth tones: raw umber, deep ochre, slate gray. Handmade craft aesthetic, tactile and analog. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
-    },
-    {
-        "name": "abstract oil painting",
-        "dalle_style": "vivid",
-        "prompt": "Abstract oil painting with thick impasto texture evoking {topic}. Bold palette knife strokes creating ridges and valleys of paint. Colors: deep crimson, midnight blue, and metallic bronze on a near-black canvas. Museum-quality contemporary art. Richly textured surface catching dramatic side light. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
-    },
-    {
-        "name": "vintage flat-lay still life",
+        "name": "aerial city at night",
         "dalle_style": "natural",
-        "prompt": "Overhead flat-lay arrangement on weathered dark wood surface relating metaphorically to {topic}. Vintage brass scientific instruments, aged leather-bound journals, antique maps, and dried botanical specimens. Warm candlelight atmosphere. Dutch Golden Age still life aesthetic. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
+        "prompt": "Aerial photograph of a modern city skyline at night relating to {topic}. Glass office towers lit from within, streets forming geometric patterns below. Cool blue and warm amber light contrast. Shot from a high vantage point. Realistic urban photography, not illustrated. Clean and professional. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
     },
     {
-        "name": "linocut print",
-        "dalle_style": "vivid",
-        "prompt": "Linocut style illustration about {topic}. Bold carved lines with visible wood grain texture. Limited to two ink colors: deep vermillion and dark teal on black paper. High contrast with strong graphic shapes. Folk art meets modernist design. Hand-carved imperfections visible. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
-    },
-    {
-        "name": "moody landscape metaphor",
+        "name": "clean workspace photo",
         "dalle_style": "natural",
-        "prompt": "Moody landscape photograph as visual metaphor for {topic}. Fog-covered ancient forest at dawn, or volcanic terrain with steam, or vast desert dunes. Single dominant warm accent against cool muted tones. Ultra-wide cinematic composition. National Geographic expedition photography quality. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
+        "prompt": "Professional overhead photograph of a modern minimal workspace related to {topic}. Clean white desk with a laptop, notebook, and coffee cup. Soft natural window light from the left. Shallow depth of field. Neutral tones with one subtle color accent. Real photography style, not illustrated. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
     },
     {
-        "name": "art deco poster",
+        "name": "abstract data flow",
         "dalle_style": "vivid",
-        "prompt": "Geometric art deco abstract composition about {topic}. Sharp angular shapes, radiating sunburst patterns, and stepped forms. Rich jewel tones: deep emerald, sapphire blue, and antiqued gold on matte black. Roaring twenties luxury aesthetic. Ornamental borders with precision symmetry. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
+        "prompt": "Abstract visualization of flowing data streams and connections relating to {topic}. Thin luminous lines and nodes forming organic network patterns on a deep dark background. Colors: electric blue, teal, and white. Like a premium fintech or data company brand visual. Clean, modern, and sophisticated. Not cluttered. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
     },
     {
-        "name": "japanese woodblock",
-        "dalle_style": "vivid",
-        "prompt": "Japanese woodblock print (ukiyo-e) inspired illustration of {topic}. Flowing organic lines, flat color areas, and subtle gradients. Colors: deep indigo, rust red, sage green, and warm cream on dark ground. Edo period aesthetic with contemporary subject matter. Delicate and refined. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
-    },
-    {
-        "name": "macro natural textures",
+        "name": "modern glass architecture",
         "dalle_style": "natural",
-        "prompt": "Macro photography of natural textures as metaphor for {topic}. Extreme close-up of crystalline formations, tree bark patterns, or geological strata. Deep earth tones with occasional iridescent highlights. Scientific precision meets artistic beauty. Dark moody lighting revealing intricate detail. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
+        "prompt": "Photograph of modern glass and steel architecture relating metaphorically to {topic}. Geometric reflections in a contemporary office building facade. Blue sky reflected in glass panels. Clean lines, sharp angles. Shot from below looking up. Professional architectural photography. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
     },
     {
-        "name": "blueprint technical drawing",
-        "dalle_style": "vivid",
-        "prompt": "Blueprint and technical drawing aesthetic about {topic}. White and copper-toned linework on deep navy background. Architectural plans, engineering schematics, geometric patterns. Compass roses and cross-sections. Vintage industrial draftsmanship meets modern data visualization. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS, NO ANNOTATIONS, NO MEASUREMENTS anywhere in the image. Pure visual linework only.",
-    },
-    {
-        "name": "scandinavian dark minimalism",
+        "name": "conference room scene",
         "dalle_style": "natural",
-        "prompt": "Scandinavian dark minimalism: a single powerful symbolic object related to {topic} placed on a dark concrete surface. Dramatic chiaroscuro lighting from one side. Muted palette of charcoal, warm gray, and a single accent of burnt orange. Negative space dominates. Gallery photography aesthetic. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image. Pure visual art only.",
+        "prompt": "Professional photograph of an empty modern conference room with floor-to-ceiling windows overlooking a city, relating to {topic}. Long table with chairs, clean and minimal. Morning light streaming in. Warm wood tones and cool glass. Corporate but inviting. Real photography, not rendered. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
+    },
+    {
+        "name": "abstract geometric minimal",
+        "dalle_style": "vivid",
+        "prompt": "Minimal abstract geometric composition inspired by {topic}. Two or three clean overlapping shapes, subtle gradients. Navy blue, white, and a hint of gold on a dark background. Like a premium brand identity visual or annual report cover. Sophisticated and restrained. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
+    },
+    {
+        "name": "people in motion",
+        "dalle_style": "natural",
+        "prompt": "Long exposure photograph of business professionals walking through a modern atrium or transit hub, relating to {topic}. Motion blur on the people, sharp architecture. Light trails and movement. Conveys pace, scale, and momentum. Professional documentary photography style. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
+    },
+    {
+        "name": "dark gradient abstract",
+        "dalle_style": "vivid",
+        "prompt": "Smooth dark gradient abstract background inspired by {topic}. Deep navy transitioning to black with subtle ambient light glow in teal or warm amber. Clean, sophisticated, like a premium SaaS product hero image. Minimal and elegant. No objects, just light and color. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
     },
 ]
 
