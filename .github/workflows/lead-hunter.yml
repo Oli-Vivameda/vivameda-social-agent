@@ -82,9 +82,9 @@ jobs:
       - name: WhatsApp summary
         if: success()
         run: |
-          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=Vinnie+here.+Lead+Hunter+done.+CSV+sent+to+your+email.+Go+check+oli@vivameda.com+boss.&apikey=5944134"
+          curl -s "https://api.textmebot.com/send.php?recipient=35799909204&text=Vinnie+here.+Lead+Hunter+done.+CSV+sent+to+your+email.+Go+check+oli@vivameda.com+boss.&apikey=wdXW78gEZEFt"
 
       - name: WhatsApp failure
         if: failure()
         run: |
-          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=Vinnie+here.+Lead+Hunter+crashed.+Check+GitHub+Actions.&apikey=5944134"
+          curl -s "https://api.textmebot.com/send.php?recipient=35799909204&text=Vinnie+here.+Lead+Hunter+crashed.+Check+GitHub+Actions.&apikey=wdXW78gEZEFt"

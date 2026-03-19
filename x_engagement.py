@@ -81,7 +81,7 @@ def _vinnie_alert(msg: str):
         return
     _vinnie_alerted.add(msg)
     try:
-        httpx.get(f"https://api.callmebot.com/whatsapp.php?phone=4915129005414&text={msg}&apikey=5944134", timeout=10)
+        httpx.get(f"https://api.textmebot.com/send.php?recipient=35799909204&text={msg}&apikey=wdXW78gEZEFt", timeout=10)
         log.info("Vinnie alert sent")
     except Exception:
         log.warning("Failed to send Vinnie alert")

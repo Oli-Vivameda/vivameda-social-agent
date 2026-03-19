@@ -24,8 +24,8 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
-VINNIE_PHONE = "4915129005414"
-VINNIE_APIKEY = "5944134"
+VINNIE_PHONE = "35799909204"
+VINNIE_APIKEY = "wdXW78gEZEFt"
 
 # UPDATE THESE when tokens are refreshed
 TOKEN_EXPIRY_DATES = {
@@ -39,7 +39,7 @@ WARNING_DAYS = [14, 7, 3, 1]
 def vinnie_alert(msg: str):
     try:
         httpx.get(
-            f"https://api.callmebot.com/whatsapp.php?phone={VINNIE_PHONE}&text={msg}&apikey={VINNIE_APIKEY}",
+            f"https://api.textmebot.com/send.php?recipient={VINNIE_PHONE}&text={msg}&apikey={VINNIE_APIKEY}",
             timeout=10,
         )
         log.info("Vinnie alert sent")

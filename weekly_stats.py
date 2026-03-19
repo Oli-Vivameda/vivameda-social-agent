@@ -35,8 +35,8 @@ X_BIZ_ACCESS_SECRET = os.environ.get("X_BIZ_ACCESS_SECRET", "")
 LINKEDIN_ACCESS_TOKEN = os.environ.get("LINKEDIN_ACCESS_TOKEN", "")
 LINKEDIN_ACCESS_TOKEN_LISA = os.environ.get("LINKEDIN_ACCESS_TOKEN_LISA", "")
 
-VINNIE_PHONE = "4915129005414"
-VINNIE_API_KEY = "5944134"
+VINNIE_PHONE = "35799909204"
+VINNIE_API_KEY = "wdXW78gEZEFt"
 
 STATS_DIR = "stats"
 STATS_CSV = os.path.join(STATS_DIR, "weekly_stats.csv")
@@ -48,7 +48,7 @@ BI_HISTORY = "leads_bi/.lead_history.json"
 
 def send_vinnie(message):
     try:
-        url = f"https://api.callmebot.com/whatsapp.php?phone={VINNIE_PHONE}&text={quote(message)}&apikey={VINNIE_API_KEY}"
+        url = f"https://api.textmebot.com/send.php?recipient={VINNIE_PHONE}&text={quote(message)}&apikey={VINNIE_API_KEY}"
         resp = requests.get(url, timeout=15)
         print(f"Vinnie: {resp.status_code}")
     except Exception as e:

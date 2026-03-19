@@ -47,14 +47,14 @@ LEADS_HISTORY = "leads_bi/.lead_history.json"
 LEADS_PER_RUN = 15
 MIN_SCORE = 50
 
-VINNIE_PHONE = "4915129005414"
-VINNIE_APIKEY = "5944134"
+VINNIE_PHONE = "35799909204"
+VINNIE_APIKEY = "wdXW78gEZEFt"
 
 
 def vinnie_alert(msg: str):
     try:
         httpx.get(
-            f"https://api.callmebot.com/whatsapp.php?phone={VINNIE_PHONE}&text={msg}&apikey={VINNIE_APIKEY}",
+            f"https://api.textmebot.com/send.php?recipient={VINNIE_PHONE}&text={msg}&apikey={VINNIE_APIKEY}",
             timeout=10,
         )
     except Exception:

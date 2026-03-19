@@ -58,9 +58,9 @@ jobs:
         run: |
           MSGS=("Vinnie+here.+LinkedIn+and+X+are+fed.+Go+check+your+empire+boss." "It's+Vinnie.+Posted+on+LinkedIn+and+X.+You+can+thank+me+later." "Vinnie+reporting.+Social+posts+are+live.+Another+day+another+banger." "Yo+it's+Vinnie.+LinkedIn+and+X+just+got+blessed.+You're+welcome." "Vinnie+done.+Posts+live.+Images+attached.+I+don't+even+need+coffee.")
           MSG=${MSGS[$RANDOM % ${#MSGS[@]}]}
-          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=$MSG&apikey=5944134"
+          curl -s "https://api.textmebot.com/send.php?recipient=35799909204&text=$MSG&apikey=wdXW78gEZEFt"
 
       - name: WhatsApp failure
         if: failure()
         run: |
-          curl -s "https://api.callmebot.com/whatsapp.php?phone=4915129005414&text=Vinnie+here+and+I+messed+up.+Social+posts+broke.+Go+check+GitHub+Actions+before+I+make+it+worse.&apikey=5944134"
+          curl -s "https://api.textmebot.com/send.php?recipient=35799909204&text=Vinnie+here+and+I+messed+up.+Social+posts+broke.+Go+check+GitHub+Actions+before+I+make+it+worse.&apikey=wdXW78gEZEFt"

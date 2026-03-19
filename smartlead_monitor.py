@@ -20,8 +20,8 @@ log = logging.getLogger(__name__)
 
 SMARTLEAD_API_KEY = os.environ.get("SMARTLEAD_API_KEY", "")
 BOUNCE_THRESHOLD = 5.0  # percent
-VINNIE_PHONE = "4915129005414"
-VINNIE_APIKEY = "5944134"
+VINNIE_PHONE = "35799909204"
+VINNIE_APIKEY = "wdXW78gEZEFt"
 BASE_URL = "https://server.smartlead.ai/api/v1"
 
 
@@ -29,7 +29,7 @@ def vinnie_alert(msg: str):
     """Send WhatsApp alert via Vinnie."""
     try:
         httpx.get(
-            f"https://api.callmebot.com/whatsapp.php?phone={VINNIE_PHONE}&text={msg}&apikey={VINNIE_APIKEY}",
+            f"https://api.textmebot.com/send.php?recipient={VINNIE_PHONE}&text={msg}&apikey={VINNIE_APIKEY}",
             timeout=10,
         )
         log.info("Vinnie alert sent")

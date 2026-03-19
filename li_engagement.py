@@ -17,8 +17,8 @@ LINKEDIN_ACCESS_TOKEN = os.environ.get("LINKEDIN_ACCESS_TOKEN", "")
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 BRAVE_API_KEY = os.environ.get("BRAVE_API_KEY", "")
 
-VINNIE_PHONE = "4915129005414"
-VINNIE_API_KEY = "5944134"
+VINNIE_PHONE = "35799909204"
+VINNIE_API_KEY = "wdXW78gEZEFt"
 
 MAX_LIKES = 15
 MAX_COMMENTS = 4
@@ -57,7 +57,7 @@ log = print
 
 def send_vinnie(message):
     try:
-        url = f"https://api.callmebot.com/whatsapp.php?phone={VINNIE_PHONE}&text={quote(message)}&apikey={VINNIE_API_KEY}"
+        url = f"https://api.textmebot.com/send.php?recipient={VINNIE_PHONE}&text={quote(message)}&apikey={VINNIE_API_KEY}"
         requests.get(url, timeout=15)
     except Exception as e:
         log(f"Vinnie error: {e}")
