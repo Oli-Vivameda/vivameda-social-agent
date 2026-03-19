@@ -42,7 +42,7 @@ def get_all_campaigns() -> list[dict]:
     resp = httpx.get(
         f"{BASE_URL}/campaigns",
         params={"api_key": SMARTLEAD_API_KEY},
-        timeout=30,
+        timeout=60,
     )
     resp.raise_for_status()
     campaigns = resp.json()
@@ -59,7 +59,7 @@ def get_campaign_stats(campaign_id: int) -> dict:
             "offset": 0,
             "limit": 1,
         },
-        timeout=30,
+        timeout=60,
     )
     resp.raise_for_status()
     data = resp.json()
@@ -77,7 +77,7 @@ def get_campaign_stats(campaign_id: int) -> dict:
             "limit": 1,
             "email_status": "bounced",
         },
-        timeout=30,
+        timeout=60,
     )
     resp_bounced.raise_for_status()
     bounced_data = resp_bounced.json()
