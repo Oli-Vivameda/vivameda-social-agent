@@ -59,6 +59,7 @@ jobs:
           msg = MIMEMultipart()
           msg["From"] = "nold.oliver@gmail.com"
           msg["To"] = "oli@vivameda.com"
+          msg["Cc"] = "joseph@vivameda.com"
           msg["Subject"] = f"Vivameda Lead Pipeline - {datetime.now().strftime('%Y-%m-%d')}"
 
           body = "Fresh leads attached. Check the pipeline CSV.\n\n- Vinnie"
@@ -73,7 +74,7 @@ jobs:
 
           with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
               server.login("nold.oliver@gmail.com", os.environ["GMAIL_APP_PASSWORD"])
-              server.sendmail("nold.oliver@gmail.com", "oli@vivameda.com", msg.as_string())
+              server.sendmail("nold.oliver@gmail.com", ["oli@vivameda.com", "joseph@vivameda.com"], msg.as_string())
               print("Email sent successfully")
           PYEOF
           fi
