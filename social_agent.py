@@ -243,8 +243,8 @@ IMAGE_STYLES = [
 
 STYLE_HISTORY_FILE = ".style_history.json"
 CUSTOM_IMAGES_DIR = "images"
-CUSTOM_IMAGE_CHANCE_LINKEDIN = 0.67  # ~2 out of 3 for LinkedIn
-CUSTOM_IMAGE_CHANCE_X = 0.33  # ~1 out of 3 for X
+CUSTOM_IMAGE_CHANCE_LINKEDIN = 0.40  # ~2 out of 3 for LinkedIn
+CUSTOM_IMAGE_CHANCE_X = 0.0  # ~1 out of 3 for X
 USED_IMAGES_FILE = ".used_images.json"
 
 
