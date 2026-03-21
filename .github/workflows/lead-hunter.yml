@@ -2,7 +2,7 @@ name: Lead Hunter
 
 on:
   schedule:
-    - cron: '0 6 * * 1-5'  # Mon-Fri at 06:00 UTC (08:00 Cyprus, before blog and social)
+    # - cron: '0 6 * * 1-5'  # DISABLED - focusing on BI only  # Mon-Fri at 06:00 UTC (08:00 Cyprus, before blog and social)
   workflow_dispatch:
 
 permissions:

@@ -274,7 +274,7 @@ def generate_content(selection: dict) -> dict:
     # Personal voice on odd days, business voice on even days
     day_of_year = datetime.now().timetuple().tm_yday
     is_personal = (day_of_year % 2 != 0)
-    linkedin_voice = OLI_PERSONAL_VOICE if is_personal else LISA_PERSONAL_VOICE
+    linkedin_voice = OLI_PERSONAL_VOICE  # Always Oli voice on LinkedIn
     x_voice = OLI_PERSONAL_VOICE if is_personal else VIVAMEDA_VOICE
     log.info(f"LinkedIn voice: {'OLI' if is_personal else 'LISA'}, X voice: {'OLI' if is_personal else 'VIVAMEDA'}")
 
@@ -741,14 +741,10 @@ def main():
     log.info(f"Day {day_of_year} of year, LinkedIn posting to {account_label}")
 
     # Publish
-    # LinkedIn: alternate between Oli (odd days) and Lisa (even days)
+    # LinkedIn: always post to Oli's profile
     if post_linkedin:
-        if is_business_day:
-            token = LINKEDIN_ACCESS_TOKEN_LISA
-            label = "Lisa"
-        else:
-            token = LINKEDIN_ACCESS_TOKEN
-            label = "Oli"
+        token = LINKEDIN_ACCESS_TOKEN
+        label = "Oli"
 
         if not token:
             log.warning(f"LinkedIn token for {label} not set, skipping LinkedIn")
