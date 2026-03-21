@@ -3,7 +3,7 @@ name: Lead Follow-Up Reminders
 on:
   schedule:
     # 08:45 Cyprus (UTC+2) = 06:45 UTC, weekdays only
-    - cron: '45 6 * * 1-5'
+    # - cron: '45 6 * * 1-5'  # DISABLED
   workflow_dispatch:
 
 jobs:
