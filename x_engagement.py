@@ -108,26 +108,30 @@ def _check_credits_recovered():
 # Search queries to find relevant conversations
 # ---------------------------------------------------------------------------
 ENGAGEMENT_SEARCHES = [
-    "workforce data",
-    "workforce intelligence",
+    # Alt data & investment (BI buyers live here)
     "alternative data investing",
-    "headcount growth signal",
-    "people analytics",
-    "talent intelligence",
-    "HR tech data",
-    "workforce analytics",
-    "labor market data",
-    "employee data trends",
-    "hiring velocity",
-    "company headcount",
-    "skills gap data",
-    "talent acquisition data",
-    "organizational restructuring",
-    "hiring freeze layoffs data",
-    "workforce planning AI",
-    "business intelligence B2B data",
     "alternative data hedge fund",
-    "human capital analytics",
+    "quant data strategy",
+    "alpha generation data",
+    "investment research data",
+    "venture capital deal flow",
+    "private equity due diligence data",
+    "ESG data analytics",
+    # AI & ML data
+    "machine learning training data",
+    "AI enterprise data",
+    "foundation model data",
+    "synthetic data market",
+    # Data industry
+    "data marketplace",
+    "data monetization",
+    "data as a service",
+    "data licensing business",
+    # Corporate intelligence
+    "competitive intelligence data",
+    "market intelligence platform",
+    "workforce intelligence",
+    "professional data analytics",
 ]
 
 # Per-run limits
