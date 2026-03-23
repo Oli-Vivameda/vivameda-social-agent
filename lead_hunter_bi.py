@@ -70,133 +70,191 @@ def vinnie_alert(msg: str):
 # Search queries from BI Buyer Intelligence Dossier
 # ---------------------------------------------------------------------------
 SEARCH_QUERIES = [
-    # Segment A: VC / Growth Equity
-    '"venture capital" "data-driven" "workforce data" OR "headcount" OR "hiring signals"',
-    '"venture capital" "head of data" OR "data scientist" hiring',
-    '"VC" "alternative data" "workforce" OR "employment" OR "people analytics"',
-    '"growth equity" "data team" OR "research platform" OR "quantitative"',
-    '"VC data stack" OR "venture capital data infrastructure"',
-    '"portfolio monitoring" "workforce" OR "headcount" OR "hiring"',
-    '"venture capital" raised new fund 2025 OR 2026',
-    '"data-driven investing" VC workforce',
+    # Tier 1: Private Equity
+    "private equity data-driven due diligence workforce",
+    "private equity portfolio monitoring headcount",
+    "PE operating partner data analytics",
+    "private equity human capital analysis",
+    "growth equity data team investment",
+    "PE firm alternative data strategy",
+    "private equity workforce benchmarking",
+    "buyout fund data procurement",
 
-    # Segment B: Hedge Funds / Quant
-    '"hedge fund" "alternative data" "workforce" OR "employment" OR "headcount"',
-    '"alternative data" "workforce intelligence" OR "people data" OR "hiring data"',
-    '"Head of Alternative Data" OR "Data Procurement" hedge fund',
-    '"quantitative research" "workforce" OR "employment data" OR "hiring signals"',
-    '"Neudata" OR "Battlefin" attendee OR speaker OR exhibited',
-    '"alternative data" marketplace workforce employment',
-    '"quant fund" "data science" workforce OR headcount',
-    '"systematic fund" alternative data procurement',
+    # Tier 1: Venture Capital
+    "venture capital data-driven portfolio support",
+    "VC data infrastructure research platform",
+    "venture capital raised fund 2025 2026 data",
+    "VC head of data OR data scientist hiring",
+    "venture capital portfolio analytics workforce",
+    "seed series funding data team building",
 
-    # Segment C: Alt Data Platforms / Aggregators
-    '"alternative data marketplace" OR "data exchange" workforce employment',
-    '"Revelio Labs" OR "Lightcast" OR "Burning Glass" client OR user OR competitor',
-    '"People Data Labs" OR "Proxycurl" OR "Thinknum" workforce data',
-    '"Snowflake Marketplace" workforce OR employment OR headcount',
-    '"AWS Data Exchange" workforce OR employment OR hiring',
-    '"data aggregator" workforce OR people OR employment',
+    # Tier 1: Hedge Funds / Quant
+    "hedge fund alternative data workforce employment",
+    "alternative data workforce intelligence people data",
+    "Head of Alternative Data hedge fund",
+    "quantitative research workforce employment signals",
+    "Neudata OR Battlefin attendee exhibitor 2026",
+    "systematic fund alternative data procurement",
+    "quant fund company intelligence dataset",
+    "alt data conference 2026 exhibitor sponsor",
 
-    # Segment D: Corporate Strategy / Market Intel
-    '"competitive intelligence" "workforce data" OR "hiring patterns" OR "headcount"',
-    '"market intelligence" "workforce analytics" OR "organizational analysis"',
-    '"corporate strategy" "alternative data" workforce OR talent',
-    '"M&A due diligence" workforce data OR headcount analysis',
+    # Tier 1: Investment Research
+    "investment research firm company intelligence",
+    "equity research alternative data provider",
+    "institutional investor data analytics platform",
+    "alpha generation company data signals",
 
-    # Segment E: AI/ML Companies
-    '"machine learning" "workforce data" OR "employment data" training',
-    '"AI" "company data" OR "workforce data" structured dataset',
-    '"feature engineering" workforce OR employment OR headcount',
-    '"NLP" OR "LLM" company intelligence OR workforce intelligence',
-    '"sales intelligence" workforce data OR hiring signals',
+    # Tier 1: Corporate Strategy / Corp Dev / Market Intel
+    "competitive intelligence workforce data hiring patterns",
+    "market intelligence organizational analysis",
+    "corporate strategy alternative data workforce",
+    "M&A due diligence workforce headcount analysis",
+    "corporate development data sourcing",
+    "market intelligence platform company data",
 
-    # Segment F: HR-Tech / Workforce Analytics
-    '"HR tech" "data enrichment" OR "workforce data" OR "external data"',
-    '"workforce analytics" platform data enrichment',
-    '"people analytics" "external data" OR "third party data"',
-    '"talent intelligence" platform data OR dataset',
+    # Tier 1: AI / ML Companies
+    "machine learning company data structured dataset",
+    "AI training data company intelligence workforce",
+    "entity resolution company data knowledge graph",
+    "NLP LLM company intelligence structured data",
+    "AI company building data products workforce",
+    "feature engineering company employment data",
 
-    # Segment G: Consulting
-    '"workforce study" OR "organizational analysis" McKinsey OR BCG OR Bain',
-    '"consulting" "workforce data" OR "headcount analysis" project',
+    # Tier 1: Data Product / Analytics Platform Companies
+    "company intelligence platform analytics",
+    "workforce analytics platform data enrichment",
+    "org analytics organizational intelligence product",
+    "talent intelligence platform dataset",
+    "knowledge graph company data product",
+    "entity resolution platform workforce",
 
-    # Trigger events
-    '"raised fund" venture capital 2025 OR 2026 "data"',
-    '"Head of Data" hired VC OR "venture capital" OR "investment" 2026',
-    '"alternative data" conference 2026 exhibitor OR sponsor',
-    'hiring "data procurement" OR "alternative data analyst" 2026',
+    # Tier 2: Consulting
+    "consulting firm workforce study organizational analysis",
+    "strategy consulting alternative data workforce",
+    "management consulting company benchmarking data",
 
-    # Competitors / landscape
-    '"workforce intelligence" OR "people analytics data" provider',
-    '"Revelio Labs" OR "Lightcast" alternative OR competitor',
+    # Tier 2: Data Marketplaces / Brokers
+    "data marketplace workforce employment company",
+    "Snowflake Marketplace workforce employment headcount",
+    "AWS Data Exchange workforce employment hiring",
+    "Databricks marketplace company data",
+    "data broker company intelligence workforce",
+    "data reseller B2B company data",
+
+    # Tier 2: Executive Search / Talent Intel
+    "executive search firm data analytics workforce",
+    "talent intelligence firm company data",
+
+    # Trigger Events
+    "raised fund 2026 data-driven investment",
+    "Head of Data hired investment firm 2026",
+    "hiring data procurement alternative data analyst 2026",
+    "new data partnership announcement workforce",
+    "data product launch company intelligence 2026",
+
+    # Competitor Landscape (find their customers)
+    "Revelio Labs client OR customer OR alternative",
+    "Lightcast client OR user OR competing",
+    "People Data Labs use case OR client",
+    "Thinknum alternative data customer",
+    "workforce intelligence provider comparison",
 ]
 
+
 SEGMENT_CONTEXT = """
-BUYER SEGMENTS for Vivameda Workforce Intelligence Datasets:
+You are a lead intelligence agent for Vivameda, a premium B2B data business.
 
-Product: Structured workforce intelligence. 250M+ professional records processed into
-company-year observations. US SaaS dataset: ~4,900 companies, ~1.2M observations (2018-2020).
-Broader infrastructure: 1.2TB+, 2010-2025. Delivery: Parquet, CSV, JSONL.
+Your job is NOT to generate mass lead lists.
+Your job is to identify a small number of highly relevant buyer accounts that are likely to purchase historical workforce intelligence, company structure intelligence, or capability intelligence datasets.
 
-Key differentiator: TEMPORAL workforce data. Not snapshots. Trajectories over time.
-Headcount growth, hiring patterns, org structure changes, role distributions, seniority shifts.
+Optimize for: quality over quantity, signal over noise, relevance over volume, buyer intent over generic prospecting.
 
-Segment A: VC / Growth Equity (30% priority)
-- Portfolio monitoring, deal sourcing, due diligence
-- Budget: $10K-$100K/yr
-- Signals: data team hires, "data-driven" on website, new fund raised
+BUSINESS CONTEXT:
+We sell premium, non-exclusive, historical company intelligence products. US-focused with global signals.
+Strongest use cases: investment research, strategic market analysis, AI/modeling/data enrichment, company benchmarking, workforce/org structure/capability analysis.
 
-Segment B: Hedge Funds / Quant (25% priority)
-- Alt data signals for investment models, alpha generation
-- Budget: $25K-$500K/yr
-- Signals: alt data conference attendance, "Head of Alt Data" role, quantitative approach
+THREE CORE PRODUCT LAYERS:
+- Growth Intelligence: shows how companies grew, shrank, or stayed flat over time
+- Market Intelligence: shows how companies are structured internally by role/function
+- Capability Intelligence: shows what companies are actually capable of building, based on skills/capability distributions
 
-Segment C: Alt Data Platforms / Aggregators (15%)
-- Resale, enrichment, platform integration
-- Budget: $15K-$200K/yr
-- Signals: data marketplace, partnership pages, "Head of Data Partnerships"
+Product: 250M+ professional records, 1.2TB+, 2010-2025. US SaaS subset: ~4,900 companies, ~1.2M observations. Delivery: Parquet, CSV, JSONL. Pricing: $5K-$500K/yr.
 
-Segment D: Corporate Strategy / Market Intel (15%)
-- Competitive intelligence, M&A research
-- Budget: $10K-$75K/yr
-- Signals: "market intelligence" team, M&A activity
+We are NOT selling cheap contact lists. We are NOT mass-market. We are a premium, selective, intelligence-driven business.
 
-Segment E: AI/ML Companies (5%)
-- Training data, feature engineering
-- Budget: $5K-$50K/yr
-- Signals: ML team, company intelligence product
+BUYER TIERS:
 
-Segment F: HR-Tech / Workforce Analytics (5%)
-- Platform enrichment, benchmarking
-- Budget: $10K-$100K/yr
+Tier 1 (highest priority):
+- Private equity firms, growth equity firms
+- Venture capital firms with data-driven portfolio support
+- Alternative data buyers, investment research firms
+- Corporate strategy teams, corporate development teams, market intelligence teams
+- AI companies, ML/analytics/data infrastructure companies
+- Companies building data products
+- Firms working on entity resolution, knowledge graphs, analytics platforms, workforce analytics, org analytics
 
-Segment G: Management Consulting (5%)
-- Client deliverables, sector research
-- Budget: $5K-$50K/project
+Tier 2:
+- Consulting firms with strong strategy/analytics practices
+- Executive search / talent intelligence firms
+- Research firms, B2B intelligence vendors
+- Data marketplaces / brokers / resellers
+- Snowflake / Databricks ecosystem participants
+- SaaS companies with strong expansion, M&A, or intelligence use cases
+
+Tier 3 (only if very strong fit):
+- Selected agencies or specialist operators with evidence of data buying behavior
+
+GEOGRAPHIC FOCUS: United States primary. Non-US firms only if strong US market exposure.
+
+STRONG BUYING SIGNALS:
+- Mentions of alternative data, investment intelligence, market intelligence
+- Mentions of workforce analytics, talent intelligence, company benchmarking
+- Mentions of org design/org analytics, corporate development/M&A sourcing
+- Mentions of AI model training, enrichment, structured datasets
+- Mentions of entity resolution, knowledge graphs, company intelligence, data products
+- Signs they buy, sell, or integrate datasets
+- Hiring for strategy, corp dev, market intelligence, research, data sourcing
+- Hiring for data engineering, ML, knowledge graph, entity resolution roles
+- Recent fund launch, new product launch, expansion into AI/analytics
+- Data partnership announcements, Snowflake/Databricks marketplace activity
+
+NEGATIVE FILTERS (avoid or heavily down-rank):
+- Generic agencies with no data buying behavior
+- Tiny freelancers, spammy lead-gen shops
+- Pure service businesses with no analytics angle
+- Companies with no visible use case for structured company intelligence
+- No likely budget owner or clear decision context
+- Direct competitors: Revelio Labs, Lightcast, People Data Labs
+- Pre-revenue startups with no funding
+- Exclusively consumer-market focused
+- <5 employees (unless funded AI startup)
 
 SCORING (max 100, minimum 50):
-+30: Buys external data products (confirmed)
-+20: Has dedicated data/research team (2+ people)
-+15: Is in Segment A, B, or C
-+10: Has published/used workforce or hiring data
+Confidence 9-10 (Score 85-100): Clear buyer type, clear use case, strong signal, likely budget
+Confidence 7-8 (Score 70-84): Good fit with at least one strong signal and plausible use case
+Confidence 5-6 (Score 50-69): Possible fit but not enough evidence yet
+Below 5: Do not include
+
++30: Confirmed external data buyer
++20: Dedicated data/research team (2+ people)
++15: Tier 1 buyer type
++10: Published/used workforce or hiring data
 +10: Recently raised fund or received funding
-+5: Hiring data/research roles currently
++5: Hiring data/research roles
 +5: Based in major financial center
 -15: Company <10 employees
 -10: Builds own workforce data internally
--25: Direct competitor (Revelio, Lightcast, PDL)
+-25: Direct competitor
 -20: No data capability or team
 
-DISQUALIFY if:
-- Does not use external data
-- Direct workforce data competitor (Revelio, Lightcast, People Data Labs)
-- No data/analytics/research function
-- Pre-revenue startup with no funding
-- Exclusively consumer-market focused
-- <5 employees (unless funded AI startup)
-- Use case does not require temporal/longitudinal data
+PRODUCT FIT LOGIC:
+Growth Intelligence fits best when: buyer wants growth tracking, company benchmarking, macro/sector signals, investment screening, expansion/contraction monitoring
+Market Intelligence fits best when: buyer wants org structure visibility, role distribution benchmarking, function-level comparison, strategic org analysis
+Capability Intelligence fits best when: buyer wants deepest insight, AI/ML/modeling use cases, strategic capability mapping, skill/capability benchmarking, advanced research or data product integration
+
+TARGET CONTACT ROLES: Partner, Principal, Investment Team, Operating Partner, Head of Portfolio Operations, VP Strategy, Director of Strategy, Head of Corp Dev, Director of Corporate Development, Head of Market Intelligence, Research Lead, Head of Data, Head of AI, CTO, VP Engineering, Head of Analytics, Product Lead for data/intelligence products
 """
+
 
 
 def load_lead_history() -> set:
@@ -253,47 +311,72 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     known_list = ", ".join(list(known_companies)[:50]) if known_companies else "None yet"
 
-    prompt = f"""You are a lead qualification specialist for Vivameda's WORKFORCE INTELLIGENCE DATASET product.
-This is NOT the agency dataset. This is the flagship BI/investment product.
+    prompt = f"""Run today's buyer research scan.
+Focus on high-fit US buyers for premium company intelligence datasets.
+Search for fresh public signals that indicate likely need for:
+- investment intelligence
+- workforce intelligence
+- company benchmarking
+- org structure analysis
+- capability / skills intelligence
+- AI/data enrichment
+
+Be selective. Include only accounts with a real reason to buy.
+Think like a human analyst screening targets for a boutique high-ticket sales process.
+Never include a company unless there is a real, explainable reason it might buy.
+Do not guess blindly. Separate evidence from inference. If speculative, say so.
+Prefer fewer, stronger leads over many weak ones.
 
 {SEGMENT_CONTEXT}
 
-Below are search results. For each that represents a POTENTIAL BUYER of temporal workforce intelligence data:
+Below are search results. For each that represents a POTENTIAL BUYER, determine:
 
-1. Identify the company
-2. Determine segment (A/B/C/D/E/F/G)
-3. Explain WHY they would buy temporal workforce data (1-2 sentences, specific)
-4. Note evidence URL
-5. List buying signals
-6. Score using the model
-7. Recommend contact role
-8. Estimate company size
-9. Note any known data subscriptions if visible
+1. Company name and website
+2. Region (US preferred)
+3. Buyer tier (1/2/3) and specific type (e.g. "Tier 1: Private Equity")
+4. Which product layer fits best (Growth / Market / Capability) and why
+5. WHY they are a fit (2-4 sentences, specific and evidence-based)
+6. What buying signal triggered inclusion
+7. Suggested outreach angle (1-2 sentences)
+8. Suggested target contact roles/titles
+9. Confidence score (1-10) mapped to lead score (50-100)
+10. Company size and estimated data budget
 
-ALREADY KNOWN (skip): {known_list}
+ALREADY KNOWN (skip these): {known_list}
 
 SEARCH RESULTS:
 {results_text}
 
-Respond ONLY with a JSON array:
-{{
+Respond with a JSON object containing two keys:
+
+"leads": a JSON array where each element is:
+{{{{
   "company": "Company Name",
   "website": "domain.com",
-  "segment": "A",
-  "why_buyer": "Specific reason they need temporal workforce data",
+  "segment": "Tier 1: Private Equity",
+  "why_buyer": "Specific evidence-based reason with outreach angle",
   "evidence_url": "https://...",
-  "buying_signals": "Signal 1. Signal 2.",
+  "buying_signals": "Signal 1. Signal 2. Signal 3.",
   "lead_score": 75,
-  "contact_role": "Head of Data",
-  "company_size": "50-100",
+  "recommended_contact_role": "Head of Data, Operating Partner",
+  "company_size": "50-200",
   "est_data_budget": "$25K-$75K/yr",
-  "known_subscriptions": "PitchBook, Revelio",
-  "notes": "Additional context"
-}}
+  "known_subscriptions": "PitchBook, Bloomberg",
+  "notes": "Product fit: Growth Intelligence. Confidence: 7/10.",
+  "product_fit": "Growth"
+}}}}
 
-If NO results qualify, return: []
-Only include leads scoring 50+. Be strict. These are enterprise data buyers.
-Do NOT include: marketing agencies, workforce data competitors (Revelio, Lightcast, PDL), irrelevant companies.
+"analysis": {{{{
+  "top_3": ["Company A", "Company B", "Company C"],
+  "top_3_reasoning": "Why these are strongest and best product angle for each",
+  "emerging_themes": "What patterns or themes emerged from today's signals"
+}}}}
+
+If NO results qualify, return: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "No strong leads today", "emerging_themes": "None"}}}}}}
+Only include leads scoring 50+. Be strict. These are premium enterprise data buyers.
+Do NOT include: marketing agencies, direct competitors (Revelio, Lightcast, PDL), companies with no data use case.
+"""
+
 """
 
     resp = client.messages.create(
@@ -310,13 +393,23 @@ Do NOT include: marketing agencies, workforce data competitors (Revelio, Lightca
         text = text.split("```")[0].strip()
 
     try:
-        leads = json.loads(text)
-        if not isinstance(leads, list):
-            return []
-        return leads
+    try:
+        parsed = json.loads(text)
+        if isinstance(parsed, list):
+            return parsed
+        if isinstance(parsed, dict):
+            if "analysis" in parsed:
+                analysis = parsed["analysis"]
+                if analysis.get("top_3"):
+                    log.info(f"Top 3 today: {', '.join(analysis['top_3'])}")
+                if analysis.get("emerging_themes"):
+                    log.info(f"Emerging themes: {analysis['emerging_themes'][:200]}")
+            return parsed.get("leads", [])
+        return []
     except json.JSONDecodeError:
         log.warning("Claude returned invalid JSON")
         return []
+
 
 
 def append_to_csv(leads: list[dict]):
@@ -346,7 +439,7 @@ def append_to_csv(leads: list[dict]):
                 lead.get("evidence_url", ""),
                 lead.get("buying_signals", ""),
                 lead.get("lead_score", ""),
-                lead.get("contact_role", ""),
+                lead.get("recommended_contact_role", lead.get("contact_role", "")),
                 lead.get("company_size", ""),
                 lead.get("est_data_budget", ""),
                 lead.get("known_subscriptions", ""),
@@ -481,7 +574,7 @@ def main():
     known = load_lead_history()
     log.info(f"Known companies: {len(known)}")
 
-    queries = random.sample(SEARCH_QUERIES, min(7, len(SEARCH_QUERIES)))
+    queries = random.sample(SEARCH_QUERIES, min(10, len(SEARCH_QUERIES)))
 
     all_results = []
     seen_domains = set()
