@@ -33,6 +33,7 @@ log = logging.getLogger(__name__)
 try:
     import anthropic
     import httpx
+import requests
 except ImportError:
     log.error("Missing dependencies. Run: pip install anthropic httpx")
     sys.exit(1)
@@ -40,6 +41,10 @@ except ImportError:
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 BRAVE_API_KEY = os.environ.get("BRAVE_API_KEY", "")
 GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "")
+# Pipedrive CRM
+PIPEDRIVE_API_TOKEN = os.environ.get("PIPEDRIVE_API_TOKEN", "")
+PIPEDRIVE_DOMAIN = "vivameda"
+
 MODEL = "claude-sonnet-4-20250514"
 
 LEADS_CSV = "leads_bi/pipeline.csv"
@@ -382,6 +387,90 @@ def email_csv():
         log.warning(f"Email failed: {e}")
 
 
+
+def push_to_pipedrive(leads):
+    """Push qualified leads to Pipedrive as Organizations + Leads."""
+    if not PIPEDRIVE_API_TOKEN:
+        log.warning("No Pipedrive API token, skipping CRM push")
+        return 0
+
+    base_url = f"https://{PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1"
+    pushed = 0
+
+    for lead in leads:
+        try:
+            # Step 1: Create Organization
+            org_data = {
+                "name": lead.get("company", "Unknown Company"),
+                "visible_to": "3",  # visible to whole company
+            }
+            org_resp = requests.post(
+                f"{base_url}/organizations?api_token={PIPEDRIVE_API_TOKEN}",
+                json=org_data,
+                timeout=15,
+            )
+            if org_resp.status_code not in (200, 201):
+                log.warning(f"  Pipedrive org create failed for {lead.get('company')}: {org_resp.status_code}")
+                continue
+
+            org_id = org_resp.json().get("data", {}).get("id")
+            if not org_id:
+                log.warning(f"  No org ID returned for {lead.get('company')}")
+                continue
+
+            # Step 2: Create Lead linked to Organization
+            score = lead.get("lead_score", 0)
+            segment = lead.get("segment", "?")
+            notes_parts = [
+                f"Score: {score} | Segment: {segment}",
+                f"Website: {lead.get('website', 'N/A')}",
+                f"Why buyer: {lead.get('why_buyer', 'N/A')}",
+                f"Signals: {lead.get('buying_signals', 'N/A')}",
+                f"Contact role: {lead.get('recommended_contact_role', 'N/A')}",
+                f"Size: {lead.get('company_size', 'N/A')}",
+                f"Est. budget: {lead.get('est_data_budget', 'N/A')}",
+                f"Evidence: {lead.get('evidence_url', 'N/A')}",
+                f"Notes: {lead.get('notes', 'N/A')}",
+            ]
+
+            lead_data = {
+                "title": f"BI Lead: {lead.get('company', 'Unknown')} (Score {score})",
+                "organization_id": org_id,
+            }
+
+            lead_resp = requests.post(
+                f"{base_url}/leads?api_token={PIPEDRIVE_API_TOKEN}",
+                json=lead_data,
+                headers={"Content-Type": "application/json"},
+                timeout=15,
+            )
+            if lead_resp.status_code not in (200, 201):
+                log.warning(f"  Pipedrive lead create failed for {lead.get('company')}: {lead_resp.status_code}")
+                continue
+
+            lead_id = lead_resp.json().get("data", {}).get("id")
+
+            # Step 3: Add note with all the details
+            if lead_id:
+                note_data = {
+                    "content": "\n".join(notes_parts),
+                    "lead_id": lead_id,
+                }
+                requests.post(
+                    f"{base_url}/notes?api_token={PIPEDRIVE_API_TOKEN}",
+                    json=note_data,
+                    timeout=15,
+                )
+
+            pushed += 1
+            log.info(f"  Pushed to Pipedrive: {lead.get('company')} (org {org_id}, lead {lead_id})")
+
+        except Exception as e:
+            log.warning(f"  Pipedrive error for {lead.get('company')}: {e}")
+
+    return pushed
+
+
 def main():
     if not ANTHROPIC_API_KEY or not BRAVE_API_KEY:
         log.error("Missing API keys")
@@ -446,6 +535,8 @@ def main():
     if final_leads:
         append_to_csv(final_leads)
         save_lead_history(known)
+        pushed = push_to_pipedrive(final_leads)
+        log.info(f"Pushed {pushed}/{len(final_leads)} leads to Pipedrive")
         email_csv()
 
         high_score = [l for l in final_leads if l.get("lead_score", 0) >= 70]

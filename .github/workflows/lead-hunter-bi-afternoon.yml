@@ -27,6 +27,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
+          PIPEDRIVE_API_TOKEN: ${{ secrets.PIPEDRIVE_API_TOKEN }}
         run: python lead_hunter_bi.py
 
       - name: Save leads
