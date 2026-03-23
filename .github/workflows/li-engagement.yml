@@ -2,8 +2,8 @@ name: LinkedIn Engagement
 
 on:
   schedule:
-    - cron: '0 9 * * 1-5'
-    - cron: '0 13 * * 1-5'
+    # - cron: '0 9 * * 1-5'  # DISABLED
+    # - cron: '0 13 * * 1-5'  # DISABLED
   workflow_dispatch:
 
 jobs:
