@@ -620,6 +620,80 @@ def post_to_x(text: str, image_path: str = None, api_key: str = None, api_secret
     return data
 
 
+
+
+def retweet_from_other_account(tweet_id: str, api_key: str, api_secret: str, 
+                                access_token: str, access_secret: str):
+    """Retweet a post from the other X account."""
+    # First get the user ID for this account
+    user_url = "https://api.x.com/2/users/me"
+    
+    oauth_params = {
+        "oauth_consumer_key": api_key,
+        "oauth_nonce": uuid.uuid4().hex,
+        "oauth_signature_method": "HMAC-SHA1",
+        "oauth_timestamp": str(int(time.time())),
+        "oauth_token": access_token,
+        "oauth_version": "1.0",
+    }
+    
+    params_string = "&".join(
+        f"{urllib.parse.quote(k, safe='')}={urllib.parse.quote(v, safe='')}"
+        for k, v in sorted(oauth_params.items())
+    )
+    base_string = f"GET&{urllib.parse.quote(user_url, safe='')}&{urllib.parse.quote(params_string, safe='')}"
+    signing_key = f"{urllib.parse.quote(api_secret, safe='')}&{urllib.parse.quote(access_secret, safe='')}"
+    signature = hmac.new(signing_key.encode(), base_string.encode(), hashlib.sha1).digest()
+    oauth_params["oauth_signature"] = base64.b64encode(signature).decode()
+    
+    auth_header = "OAuth " + ", ".join(
+        f'{urllib.parse.quote(k, safe="")}="{urllib.parse.quote(v, safe="")}"'
+        for k, v in sorted(oauth_params.items())
+    )
+    
+    user_resp = httpx.get(user_url, headers={"Authorization": auth_header}, timeout=15)
+    user_resp.raise_for_status()
+    user_id = user_resp.json().get("data", {}).get("id")
+    
+    if not user_id:
+        log.warning("Could not get user ID for retweet")
+        return
+    
+    # Now retweet
+    rt_url = f"https://api.x.com/2/users/{user_id}/retweets"
+    
+    oauth_params = {
+        "oauth_consumer_key": api_key,
+        "oauth_nonce": uuid.uuid4().hex,
+        "oauth_signature_method": "HMAC-SHA1",
+        "oauth_timestamp": str(int(time.time())),
+        "oauth_token": access_token,
+        "oauth_version": "1.0",
+    }
+    
+    params_string = "&".join(
+        f"{urllib.parse.quote(k, safe='')}={urllib.parse.quote(v, safe='')}"
+        for k, v in sorted(oauth_params.items())
+    )
+    base_string = f"POST&{urllib.parse.quote(rt_url, safe='')}&{urllib.parse.quote(params_string, safe='')}"
+    signing_key = f"{urllib.parse.quote(api_secret, safe='')}&{urllib.parse.quote(access_secret, safe='')}"
+    signature = hmac.new(signing_key.encode(), base_string.encode(), hashlib.sha1).digest()
+    oauth_params["oauth_signature"] = base64.b64encode(signature).decode()
+    
+    auth_header = "OAuth " + ", ".join(
+        f'{urllib.parse.quote(k, safe="")}="{urllib.parse.quote(v, safe="")}"'
+        for k, v in sorted(oauth_params.items())
+    )
+    
+    rt_resp = httpx.post(
+        rt_url,
+        json={"tweet_id": tweet_id},
+        headers={"Authorization": auth_header, "Content-Type": "application/json"},
+        timeout=15,
+    )
+    rt_resp.raise_for_status()
+    log.info(f"Retweeted {tweet_id} from other account")
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -762,10 +836,19 @@ def main():
                 log.warning("X business credentials not set, skipping X")
             else:
                 try:
-                    post_to_x(content["x"], x_image_path,
+                    result = post_to_x(content["x"], x_image_path,
                               api_key=X_BIZ_API_KEY, api_secret=X_BIZ_API_SECRET,
                               access_token=X_BIZ_ACCESS_TOKEN, access_secret=X_BIZ_ACCESS_SECRET)
                     log.info("Posted to X BUSINESS account")
+                    # Cross-retweet from personal account
+                    tid = result.get("data", {}).get("id") if result else None
+                    if tid and X_API_KEY and X_ACCESS_TOKEN:
+                        try:
+                            time.sleep(5)
+                            retweet_from_other_account(tid, X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET)
+                            log.info("Personal account retweeted business post")
+                        except Exception as e2:
+                            log.warning(f"Cross-retweet failed: {e2}")
                 except Exception as e:
                     log.error(f"X business post failed: {e}")
         else:
@@ -773,8 +856,17 @@ def main():
                 log.warning("X API credentials not set, skipping X")
             else:
                 try:
-                    post_to_x(content["x"], x_image_path)
+                    result = post_to_x(content["x"], x_image_path)
                     log.info("Posted to X PERSONAL account")
+                    # Cross-retweet from business account
+                    tid = result.get("data", {}).get("id") if result else None
+                    if tid and X_BIZ_API_KEY and X_BIZ_ACCESS_TOKEN:
+                        try:
+                            time.sleep(5)
+                            retweet_from_other_account(tid, X_BIZ_API_KEY, X_BIZ_API_SECRET, X_BIZ_ACCESS_TOKEN, X_BIZ_ACCESS_SECRET)
+                            log.info("Business account retweeted personal post")
+                        except Exception as e2:
+                            log.warning(f"Cross-retweet failed: {e2}")
                 except Exception as e:
                     log.error(f"X post failed: {e}")
 
