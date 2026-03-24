@@ -392,7 +392,6 @@ Do NOT include: marketing agencies, direct competitors (Revelio, Lightcast, PDL)
         text = text.split("```")[0].strip()
 
     try:
-    try:
         parsed = json.loads(text)
         if isinstance(parsed, list):
             return parsed
