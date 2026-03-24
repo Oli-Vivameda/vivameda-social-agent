@@ -33,7 +33,7 @@ log = logging.getLogger(__name__)
 try:
     import anthropic
     import httpx
-import requests
+    import requests
 except ImportError:
     log.error("Missing dependencies. Run: pip install anthropic httpx")
     sys.exit(1)
