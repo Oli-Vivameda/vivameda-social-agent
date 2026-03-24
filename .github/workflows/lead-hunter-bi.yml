@@ -21,7 +21,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install anthropic httpx
+        run: pip install anthropic httpx requests
 
       - name: Run BI Lead Hunter
         env:
