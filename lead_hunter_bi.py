@@ -377,7 +377,6 @@ Only include leads scoring 50+. Be strict. These are premium enterprise data buy
 Do NOT include: marketing agencies, direct competitors (Revelio, Lightcast, PDL), companies with no data use case.
 """
 
-"""
 
     resp = client.messages.create(
         model=MODEL,
