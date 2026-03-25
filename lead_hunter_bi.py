@@ -70,163 +70,193 @@ def vinnie_alert(msg: str):
 # Search queries from BI Buyer Intelligence Dossier
 # ---------------------------------------------------------------------------
 SEARCH_QUERIES = [
-    # AI Labs / Startups building AI products
-    "AI startup seed series A 2025 2026 funding",
-    "AI startup hiring ML engineer data scientist",
-    "vertical AI company healthcare legal finance",
-    "AI copilot startup building product",
-    "AI agent startup autonomous",
-    "LLM startup fine-tuning training",
-    "AI search reasoning startup",
-    "AI infrastructure startup data pipeline",
-    "AI startup entity resolution knowledge graph",
-    "generative AI startup product launch",
+    # Priority 1: Independent Investment Research Shops
+    "institutional research boutique US",
+    "independent equity research firm",
+    "sector specialist research US",
+    "macro research boutique firm",
+    "independent research shop sell-side",
+    "equity research boutique New York",
+    "independent investment research firm",
+    "boutique research firm institutional investors",
+    "independent research provider US market",
+    "sector research specialist boutique",
 
-    # Training Data / Data Need Signals
-    "AI company training data acquisition",
-    "machine learning data pipeline hiring",
-    "AI startup data sourcing structured",
-    "feature engineering company intelligence",
-    "AI company knowledge graph building",
-    "entity resolution AI startup",
-    "LLM fine-tuning dataset structured data",
-    "AI data enrichment company workforce",
-    "training data marketplace AI startup",
-    "AI company data infrastructure scaling",
+    # Priority 2: Small Quant / Systematic Hedge Funds
+    "systematic alpha fund",
+    "quantamental hedge fund NYC",
+    "alternative data hedge fund US",
+    "emerging manager quant fund",
+    "quantitative hedge fund small team",
+    "systematic fund alternative data",
+    "quant fund launched 2025 2026",
+    "small hedge fund data-driven systematic",
+    "algorithmic trading fund alternative data",
+    "quant fund backtesting workforce data",
 
-    # Hiring Signals (ML/AI roles)
-    "hiring ML engineer startup 2026",
-    "hiring AI engineer data scientist 2026",
-    "hiring research engineer AI company",
-    "hiring data engineer AI startup",
-    "AI company hiring data acquisition",
+    # Priority 3: Boutique PE Operating Teams
+    "lower middle market private equity",
+    "PE operating partner boutique",
+    "special situations PE boutique",
+    "private equity due diligence team small",
+    "PE portfolio operations boutique firm",
+    "growth equity boutique operating team",
+    "PE firm workforce due diligence",
+    "private equity human capital analysis boutique",
 
-    # Funded AI Companies
-    "AI startup raised seed 2025 2026",
-    "AI startup raised series A 2025 2026",
-    "AI company funding round announced",
-    "venture capital AI investment 2026",
-    "Y Combinator AI startup batch",
+    # Alt Data Buyer Signals
+    "alternative data buyer conference Neudata BattleFin",
+    "Head of Alternative Data hiring 2026",
+    "alternative data procurement investment firm",
+    "alternative data evaluation workforce employment",
+    "buy workforce data employment signals",
 
-    # Vertical AI
-    "AI legal tech startup",
-    "AI healthcare startup data",
-    "AI fintech startup company data",
-    "AI sales intelligence startup",
-    "AI HR tech startup workforce data",
-    "AI cybersecurity startup",
-    "AI climate tech startup",
+    # Trigger Events
+    "hedge fund launched 2025 2026 small",
+    "PE fund raised 2025 2026 lower middle market",
+    "research firm new report workforce talent",
+    "hired data scientist investment firm 2026",
+    "quant fund hiring data scientist 2026",
+    "new fund launch emerging manager 2026",
 
-    # AI Product Companies
-    "AI copilot enterprise product",
-    "AI agent autonomous workflow",
-    "AI search engine startup",
-    "AI reasoning engine company",
-    "AI analytics platform startup",
-    "AI data product company structured",
+    # Competitor Customers
+    "Revelio Labs customer client user",
+    "Lightcast workforce data client",
+    "Thinknum alternative data buyer",
+    "Burning Glass workforce data user",
 
-    # GitHub / Technical Signals
-    "AI startup open source model GitHub",
-    "machine learning company GitHub contributors",
-
-    # Competitor Customers / Landscape
-    "People Data Labs alternative AI",
-    "Diffbot competitor structured data",
-    "Clearbit alternative company data AI",
-    "training data provider AI company",
-    "structured data vendor AI startup",
-
-    # Production / Scale Signals
-    "AI startup SOC2 enterprise customers",
-    "AI company scaling infrastructure production",
-    "AI startup series A scaling team",
+    # Geographic Clusters
+    "investment research firm Greenwich Connecticut",
+    "hedge fund boutique Chicago quantitative",
+    "quant fund San Francisco small team",
+    "investment firm Austin Texas data-driven",
+    "hedge fund New York small systematic",
 ]
 
 SEGMENT_CONTEXT = """
-You are a lead intelligence agent for Vivameda, a premium B2B data company.
+====================================================================
+VIVAMEDA LEAD HUNTER - MASTER INSTRUCTIONS
+READ EVERY WORD. FOLLOW EVERY RULE. NO EXCEPTIONS.
+====================================================================
 
-OBJECTIVE:
-Identify companies that actively build or deploy AI systems, have an immediate need
-for structured datasets, and can realistically purchase a dataset in the $5K-$20K range quickly.
-Focus on DEAL VELOCITY over brand size. We want fast closers, not enterprise procurement cycles.
+OVERVIEW:
+You are a high-intensity Lead Generation Specialist for Vivameda.
+We sell Workforce Intelligence Infrastructure. Specifically a unique
+historical archive (2018-2020) of 60M+ company-year records that
+includes "Failure Signals" (data on companies that no longer exist).
 
-PRODUCT:
-Vivameda sells structured company intelligence datasets. 250M+ professional records,
-1.2TB+, 2010-2025. Company-year observations covering headcount, growth, org structure,
-role distributions, skills, capabilities. Delivery: Parquet, CSV, JSONL.
+OUR GOAL: Find 30-50 high-intent leads per day in the US who can
+close a $10K-$25K deal in under 14 days.
 
-THREE USE CASES FOR AI BUYERS:
-1. Model Training: structured workforce/company data for training or fine-tuning AI models
-2. Entity Resolution / Graph Building: company and people data for knowledge graphs
-3. Workforce / Economic Modeling: temporal employment data for economic or labor models
+THE GOAL: Find small, agile investment and research firms that have
+a "Burning Need" for backtesting or due diligence data RIGHT NOW.
 
-GEOGRAPHIC SCOPE:
-Primary: United States
-Secondary (only if strong signals, score must be 75+): UK, Canada, Germany, France,
-Netherlands, Nordics, Israel
+====================================================================
+TARGET AVATAR: The "Systematic Alpha-Seeker"
+====================================================================
+Focus EXCLUSIVELY on firms with 5-40 employees.
+Larger firms are too slow. Smaller firms lack the budget.
 
-COMPANY SIZE FILTER (CRITICAL):
-Target: 2-80 employees (ideal sweet spot)
-Accept: up to 120 max
-EXCLUDE: >120 employees (slow procurement)
+PRIORITY 1: Independent Investment Research Shops ("The Storytellers")
+- WHO: Firms that sell research to hedge funds. "Equity Research,"
+  "Macro Research," "Sector Specialist" firms.
+- THE HOOK: They need our 2018-2020 data to write "retrospective"
+  reports or to prove their current theories about workforce
+  "Capability DNA."
+- KEYWORDS: "Institutional Research Boutique," "Independent Equity
+  Research," "Sector Specialist Research US"
 
-IDEAL CUSTOMER PROFILE (ICP):
-Include ONLY companies that:
-- Build AI products (not just USE AI features)
-- Have technical teams (ML engineers, data scientists, research engineers)
-- Work on: LLMs, vertical AI (finance, legal, healthcare), AI copilots/agents,
-  AI search/reasoning, data infrastructure, entity resolution, knowledge graphs
+PRIORITY 2: Small Quant / Systematic Hedge Funds ("The Backtesters")
+- WHO: Funds that trade using algorithms.
+- THE HOOK: They are DESPERATE for "Survivorship-Bias-Free" data.
+  They need to see the companies that DIED in 2020 to train their
+  AI models. Our dataset includes failure signals.
+- KEYWORDS: "Systematic Alpha Fund," "Quantamental Hedge Fund NYC,"
+  "Alternative Data Hedge Fund US," "Emerging Manager Quant"
 
-DISQUALIFY IMMEDIATELY:
-- Marketing agencies
-- Recruiters / consulting firms
-- Generic SaaS tools with "AI features" bolted on
-- ChatGPT wrappers / thin GPT layers
-- Automation tools without real AI/ML engineering
-- Companies without hiring or technical signals
-- Companies >120 employees
-- Direct competitors (Revelio Labs, Lightcast, People Data Labs)
+PRIORITY 3: Boutique PE Operating Teams ("The Due Diligence SEALs")
+- WHO: The teams inside Private Equity firms that fix businesses.
+- THE HOOK: They are currently auditing companies for acquisition.
+  They need to see if a target's "Skill Concentration" is real or
+  a sales pitch.
+- KEYWORDS: "Lower Middle Market Private Equity," "PE Operating
+  Partner," "Special Situations PE Boutique"
 
-SCORING SYSTEM (minimum 70 to qualify):
+====================================================================
+SEARCH AND FILTERING PROTOCOL
+====================================================================
+For EVERY lead, you MUST identify:
 
-Hiring Signals (+25):
-If hiring for: ML Engineer, AI Engineer, Data Scientist, Research Engineer
+1. THE PERSON: Look for titles like:
+   - Head of Research
+   - Portfolio Manager
+   - Director of Alpha Research
+   - Operating Partner
+   - Founder/CEO (if firm has <10 people)
 
-Data Need Signals (+30):
-If ANY of these appear in jobs, blog, or website:
-"training data", "data pipeline", "data acquisition", "data sourcing",
-"feature engineering", "entity resolution", "knowledge graph"
+2. THE SIGNAL: Look for:
+   - Recent fund launches (they have FRESH CASH)
+   - New research report releases (they need NEW DATA for the next one)
+   - Hiring of Data Scientists (they now have the HANDS to use our data)
 
-Funding Signals (+25):
-Seed or Series A in last 24 months, OR clear growth + hiring without funding
+3. GEOGRAPHY: Strictly US-based.
+   Priority cities: New York, Chicago, San Francisco, Austin, Greenwich.
 
-Hiring Velocity (+25):
-3+ relevant roles in last 30 days. 6+ roles = mark as HOT LEAD
+====================================================================
+AGENT GUARDRAILS (ABSOLUTE RULES)
+====================================================================
 
-Size Fit (+15):
-Within 10-80 employees
+DO NOT bring me:
+- Bulge bracket banks (Goldman, BlackRock, JP Morgan, Citadel, etc.)
+  They take 6 months to sign an NDA. We want firms where the person
+  you find IS the person who signs the check.
+- Marketing agencies (NEVER)
+- Recruiting firms / staffing companies (NEVER)
+- Consulting firms (McKinsey, BCG, Deloitte, etc.)
+- Companies with >40 employees
+- Competitors who BUILD workforce data: Revelio Labs, Lightcast,
+  People Data Labs, Thinknum, Burning Glass, Proxycurl
 
-Additional Buyer Readiness (+10 each):
-"enterprise customers", "SOC2", "production AI", "scaling infrastructure"
+TECHNICAL FIT: The firm MUST mention "Data," "Quantitative,"
+"Systematic," or "Proprietary Research" somewhere. If they are
+purely "Value Investors" reading annual reports by hand, they
+will NOT buy a 60M row dataset. Skip them.
 
-SCORING RULES:
-- Minimum score: 70
-- Non-US companies must score 75+
-- Score 85+ = HOT LEAD (immediate outreach priority)
+====================================================================
+SCORING (minimum 70)
+====================================================================
++30: Confirmed alt data buyer (conferences, vendor relationships)
++25: Has research/data team that uses external datasets
++25: Recently raised fund or fresh capital (2024-2026)
++20: Currently hiring data scientists or quant researchers
++15: Published research using workforce or company data
++10: Based in NYC, Greenwich, Chicago, SF, Boston, Austin
++5:  Website mentions data-driven or quantitative or systematic
+-30: >40 employees (TOO BIG)
+-30: Competitor
+-20: No data team or research function visible
+-15: No evidence of external data purchasing
+-10: Pure value/fundamental investor with no data infrastructure
 
-DECISION-MAKER FILTER (CRITICAL):
-Prioritize companies where Founder, CTO, or Head of AI makes purchasing decisions.
-Avoid companies with heavy procurement structures.
+RULES:
+- Minimum: 70
+- 85+ = HOT LEAD (immediate outreach, flag clearly)
+- Quality over quantity. ALWAYS.
+- Every lead must be a realistic closed deal within 14 days.
 
-TARGET CONTACT ROLES:
-Founder/CEO, CTO, Head of AI, Head of Data, VP Engineering, Head of ML,
-Research Lead, Chief Data Officer
-
-USE CASE MAPPING (MANDATORY):
-For EVERY lead, classify into one of:
-1. Model Training
-2. Entity Resolution / Graph Building
-3. Workforce / Economic Modeling
+====================================================================
+OUTPUT REQUIREMENTS (MANDATORY FOR EVERY LEAD)
+====================================================================
+1. Firm name and website
+2. Category: Quant Fund / Indie Research / PE Ops
+3. Employee count (must be 5-40)
+4. Decision maker title (Head of Research, PM, Founder, etc.)
+5. WHY NOW: specific trigger (e.g. "Just launched a Tech fund,"
+   "Published report on AI talent," "Hired 2 data scientists")
+6. The buying signal that triggered inclusion
+7. Lead score (70-100)
+8. HOT LEAD flag (yes/no)
+9. Estimated deal size ($10K trial vs $25K+ full set)
 """
 
 
@@ -286,57 +316,60 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     known_list = ", ".join(list(known_companies)[:50]) if known_companies else "None yet"
 
-    prompt = f"""Run today's AI buyer research scan.
-Find AI companies (10-80 employees) that need structured datasets NOW.
-Focus on deal velocity: companies that can buy a $5K-$20K dataset quickly.
+    prompt = f"""You are Vivameda's lead hunter. Today's mission:
 
-Search for fresh signals:
-- AI startups hiring ML/data roles
-- Companies building AI products that need training data
-- Recently funded AI companies (Seed/Series A)
-- Companies mentioning data acquisition, entity resolution, knowledge graphs
-- Vertical AI companies (healthcare, legal, finance, etc.)
+Find small investment and research firms (5-40 employees) in the US
+that have a BURNING NEED for backtesting data, due diligence data,
+or workforce intelligence data RIGHT NOW.
 
-Be extremely selective. Only real AI companies that BUILD AI products.
-No wrappers. No agencies. No consulting firms. No generic SaaS.
+We sell 60M+ company-year records (2018-2020) including failure signals.
+Price: $10K-$25K. We need firms that can close in under 14 days.
+
+Three targets ONLY:
+1. Independent research shops that sell research to hedge funds
+2. Small quant/systematic funds that need survivorship-bias-free data
+3. Boutique PE operating teams doing active due diligence
+
+NO bulge brackets. NO agencies. NO consultants. NO competitors.
+NO firms with >40 employees. NO pure value investors.
 
 {SEGMENT_CONTEXT}
 
-ALREADY KNOWN (skip these): {known_list}
+ALREADY KNOWN (skip): {known_list}
 
 SEARCH RESULTS:
 {results_text}
 
-Respond with a JSON object:
+Return JSON:
 
-"leads": array where each element is:
+"leads": array, each element:
 {{{{
-  "company": "Company Name",
+  "company": "Firm Name",
   "website": "domain.com",
-  "segment": "AI Lab - Vertical AI (Healthcare)",
-  "why_buyer": "Evidence-based reason they need structured data NOW",
+  "segment": "Quant Fund / Indie Research / PE Ops",
+  "why_buyer": "Just launched Tech-focused fund. Published AI talent report. Has 2 data scientists.",
   "evidence_url": "https://...",
-  "buying_signals": "Hiring 3 ML engineers. Recently raised $5M Seed. Building knowledge graph.",
-  "lead_score": 82,
-  "recommended_contact_role": "CTO, Founder",
-  "company_size": "25",
-  "est_data_budget": "$5K-$15K",
-  "known_subscriptions": "Unknown",
-  "notes": "HOT LEAD. Use case: Model Training. Funded Seed 2025. 4 open ML roles.",
-  "product_fit": "Model Training",
-  "use_case": "Model Training",
-  "is_hot": false
+  "buying_signals": "Fund launch 2025. Hiring quant researcher. Alt data conference attendee.",
+  "lead_score": 87,
+  "recommended_contact_role": "Head of Research, Founder",
+  "company_size": "14",
+  "est_data_budget": "$15K-$25K",
+  "known_subscriptions": "Bloomberg, Revelio",
+  "notes": "HOT LEAD. Indie research shop, 14 people, just published workforce report, founder decides.",
+  "product_fit": "Backtesting / Retrospective Research",
+  "use_case": "Survivorship-bias-free backtesting",
+  "is_hot": true
 }}}}
 
 "analysis": {{{{
-  "top_3": ["Company A", "Company B", "Company C"],
-  "top_3_reasoning": "Why these are strongest and best use case for each",
-  "emerging_themes": "What patterns emerged from today's signals"
+  "top_3": ["Firm A", "Firm B", "Firm C"],
+  "top_3_reasoning": "Why these three can close fastest",
+  "emerging_themes": "Patterns from today"
 }}}}
 
-If NO results qualify, return: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "No strong leads today", "emerging_themes": "None"}}}}}}
-Score 70+ only. Non-US must be 75+. Mark 85+ as HOT LEAD.
-Do NOT include: agencies, consultants, ChatGPT wrappers, generic SaaS, companies >120 employees.
+Empty: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "Nothing today", "emerging_themes": "None"}}}}}}
+
+REMEMBER: 5-40 employees ONLY. US ONLY. Must be realistic $10K-$25K close in 14 days. Every lead = someone who signs their own checks.
 """
 
 
