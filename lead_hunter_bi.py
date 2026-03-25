@@ -50,7 +50,7 @@ MODEL = "claude-sonnet-4-20250514"
 LEADS_CSV = "leads_bi/pipeline.csv"
 LEADS_HISTORY = "leads_bi/.lead_history.json"
 LEADS_PER_RUN = 15
-MIN_SCORE = 50
+MIN_SCORE = 70
 
 VINNIE_PHONE = "35799909204"
 VINNIE_APIKEY = "wdXW78gEZEFt"
@@ -70,190 +70,166 @@ def vinnie_alert(msg: str):
 # Search queries from BI Buyer Intelligence Dossier
 # ---------------------------------------------------------------------------
 SEARCH_QUERIES = [
-    # Tier 1: Private Equity
-    "private equity data-driven due diligence workforce",
-    "private equity portfolio monitoring headcount",
-    "PE operating partner data analytics",
-    "private equity human capital analysis",
-    "growth equity data team investment",
-    "PE firm alternative data strategy",
-    "private equity workforce benchmarking",
-    "buyout fund data procurement",
+    # AI Labs / Startups building AI products
+    "AI startup seed series A 2025 2026 funding",
+    "AI startup hiring ML engineer data scientist",
+    "vertical AI company healthcare legal finance",
+    "AI copilot startup building product",
+    "AI agent startup autonomous",
+    "LLM startup fine-tuning training",
+    "AI search reasoning startup",
+    "AI infrastructure startup data pipeline",
+    "AI startup entity resolution knowledge graph",
+    "generative AI startup product launch",
 
-    # Tier 1: Venture Capital
-    "venture capital data-driven portfolio support",
-    "VC data infrastructure research platform",
-    "venture capital raised fund 2025 2026 data",
-    "VC head of data OR data scientist hiring",
-    "venture capital portfolio analytics workforce",
-    "seed series funding data team building",
+    # Training Data / Data Need Signals
+    "AI company training data acquisition",
+    "machine learning data pipeline hiring",
+    "AI startup data sourcing structured",
+    "feature engineering company intelligence",
+    "AI company knowledge graph building",
+    "entity resolution AI startup",
+    "LLM fine-tuning dataset structured data",
+    "AI data enrichment company workforce",
+    "training data marketplace AI startup",
+    "AI company data infrastructure scaling",
 
-    # Tier 1: Hedge Funds / Quant
-    "hedge fund alternative data workforce employment",
-    "alternative data workforce intelligence people data",
-    "Head of Alternative Data hedge fund",
-    "quantitative research workforce employment signals",
-    "Neudata OR Battlefin attendee exhibitor 2026",
-    "systematic fund alternative data procurement",
-    "quant fund company intelligence dataset",
-    "alt data conference 2026 exhibitor sponsor",
+    # Hiring Signals (ML/AI roles)
+    "hiring ML engineer startup 2026",
+    "hiring AI engineer data scientist 2026",
+    "hiring research engineer AI company",
+    "hiring data engineer AI startup",
+    "AI company hiring data acquisition",
 
-    # Tier 1: Investment Research
-    "investment research firm company intelligence",
-    "equity research alternative data provider",
-    "institutional investor data analytics platform",
-    "alpha generation company data signals",
+    # Funded AI Companies
+    "AI startup raised seed 2025 2026",
+    "AI startup raised series A 2025 2026",
+    "AI company funding round announced",
+    "venture capital AI investment 2026",
+    "Y Combinator AI startup batch",
 
-    # Tier 1: Corporate Strategy / Corp Dev / Market Intel
-    "competitive intelligence workforce data hiring patterns",
-    "market intelligence organizational analysis",
-    "corporate strategy alternative data workforce",
-    "M&A due diligence workforce headcount analysis",
-    "corporate development data sourcing",
-    "market intelligence platform company data",
+    # Vertical AI
+    "AI legal tech startup",
+    "AI healthcare startup data",
+    "AI fintech startup company data",
+    "AI sales intelligence startup",
+    "AI HR tech startup workforce data",
+    "AI cybersecurity startup",
+    "AI climate tech startup",
 
-    # Tier 1: AI / ML Companies
-    "machine learning company data structured dataset",
-    "AI training data company intelligence workforce",
-    "entity resolution company data knowledge graph",
-    "NLP LLM company intelligence structured data",
-    "AI company building data products workforce",
-    "feature engineering company employment data",
+    # AI Product Companies
+    "AI copilot enterprise product",
+    "AI agent autonomous workflow",
+    "AI search engine startup",
+    "AI reasoning engine company",
+    "AI analytics platform startup",
+    "AI data product company structured",
 
-    # Tier 1: Data Product / Analytics Platform Companies
-    "company intelligence platform analytics",
-    "workforce analytics platform data enrichment",
-    "org analytics organizational intelligence product",
-    "talent intelligence platform dataset",
-    "knowledge graph company data product",
-    "entity resolution platform workforce",
+    # GitHub / Technical Signals
+    "AI startup open source model GitHub",
+    "machine learning company GitHub contributors",
 
-    # Tier 2: Consulting
-    "consulting firm workforce study organizational analysis",
-    "strategy consulting alternative data workforce",
-    "management consulting company benchmarking data",
+    # Competitor Customers / Landscape
+    "People Data Labs alternative AI",
+    "Diffbot competitor structured data",
+    "Clearbit alternative company data AI",
+    "training data provider AI company",
+    "structured data vendor AI startup",
 
-    # Tier 2: Data Marketplaces / Brokers
-    "data marketplace workforce employment company",
-    "Snowflake Marketplace workforce employment headcount",
-    "AWS Data Exchange workforce employment hiring",
-    "Databricks marketplace company data",
-    "data broker company intelligence workforce",
-    "data reseller B2B company data",
-
-    # Tier 2: Executive Search / Talent Intel
-    "executive search firm data analytics workforce",
-    "talent intelligence firm company data",
-
-    # Trigger Events
-    "raised fund 2026 data-driven investment",
-    "Head of Data hired investment firm 2026",
-    "hiring data procurement alternative data analyst 2026",
-    "new data partnership announcement workforce",
-    "data product launch company intelligence 2026",
-
-    # Competitor Landscape (find their customers)
-    "Revelio Labs client OR customer OR alternative",
-    "Lightcast client OR user OR competing",
-    "People Data Labs use case OR client",
-    "Thinknum alternative data customer",
-    "workforce intelligence provider comparison",
+    # Production / Scale Signals
+    "AI startup SOC2 enterprise customers",
+    "AI company scaling infrastructure production",
+    "AI startup series A scaling team",
 ]
 
-
 SEGMENT_CONTEXT = """
-You are a lead intelligence agent for Vivameda, a premium B2B data business.
+You are a lead intelligence agent for Vivameda, a premium B2B data company.
 
-Your job is NOT to generate mass lead lists.
-Your job is to identify a small number of highly relevant buyer accounts that are likely to purchase historical workforce intelligence, company structure intelligence, or capability intelligence datasets.
+OBJECTIVE:
+Identify companies that actively build or deploy AI systems, have an immediate need
+for structured datasets, and can realistically purchase a dataset in the $5K-$20K range quickly.
+Focus on DEAL VELOCITY over brand size. We want fast closers, not enterprise procurement cycles.
 
-Optimize for: quality over quantity, signal over noise, relevance over volume, buyer intent over generic prospecting.
+PRODUCT:
+Vivameda sells structured company intelligence datasets. 250M+ professional records,
+1.2TB+, 2010-2025. Company-year observations covering headcount, growth, org structure,
+role distributions, skills, capabilities. Delivery: Parquet, CSV, JSONL.
 
-BUSINESS CONTEXT:
-We sell premium, non-exclusive, historical company intelligence products. US-focused with global signals.
-Strongest use cases: investment research, strategic market analysis, AI/modeling/data enrichment, company benchmarking, workforce/org structure/capability analysis.
+THREE USE CASES FOR AI BUYERS:
+1. Model Training: structured workforce/company data for training or fine-tuning AI models
+2. Entity Resolution / Graph Building: company and people data for knowledge graphs
+3. Workforce / Economic Modeling: temporal employment data for economic or labor models
 
-THREE CORE PRODUCT LAYERS:
-- Growth Intelligence: shows how companies grew, shrank, or stayed flat over time
-- Market Intelligence: shows how companies are structured internally by role/function
-- Capability Intelligence: shows what companies are actually capable of building, based on skills/capability distributions
+GEOGRAPHIC SCOPE:
+Primary: United States
+Secondary (only if strong signals, score must be 75+): UK, Canada, Germany, France,
+Netherlands, Nordics, Israel
 
-Product: 250M+ professional records, 1.2TB+, 2010-2025. US SaaS subset: ~4,900 companies, ~1.2M observations. Delivery: Parquet, CSV, JSONL. Pricing: $5K-$500K/yr.
+COMPANY SIZE FILTER (CRITICAL):
+Target: 10-80 employees (ideal sweet spot)
+Accept: up to 120 max
+EXCLUDE: <10 employees (no budget) and >120 employees (slow procurement)
 
-We are NOT selling cheap contact lists. We are NOT mass-market. We are a premium, selective, intelligence-driven business.
+IDEAL CUSTOMER PROFILE (ICP):
+Include ONLY companies that:
+- Build AI products (not just USE AI features)
+- Have technical teams (ML engineers, data scientists, research engineers)
+- Work on: LLMs, vertical AI (finance, legal, healthcare), AI copilots/agents,
+  AI search/reasoning, data infrastructure, entity resolution, knowledge graphs
 
-BUYER TIERS:
+DISQUALIFY IMMEDIATELY:
+- Marketing agencies
+- Recruiters / consulting firms
+- Generic SaaS tools with "AI features" bolted on
+- ChatGPT wrappers / thin GPT layers
+- Automation tools without real AI/ML engineering
+- Companies without hiring or technical signals
+- Companies >120 employees
+- Companies <10 employees
+- Direct competitors (Revelio Labs, Lightcast, People Data Labs)
 
-Tier 1 (highest priority):
-- Private equity firms, growth equity firms
-- Venture capital firms with data-driven portfolio support
-- Alternative data buyers, investment research firms
-- Corporate strategy teams, corporate development teams, market intelligence teams
-- AI companies, ML/analytics/data infrastructure companies
-- Companies building data products
-- Firms working on entity resolution, knowledge graphs, analytics platforms, workforce analytics, org analytics
+SCORING SYSTEM (minimum 70 to qualify):
 
-Tier 2:
-- Consulting firms with strong strategy/analytics practices
-- Executive search / talent intelligence firms
-- Research firms, B2B intelligence vendors
-- Data marketplaces / brokers / resellers
-- Snowflake / Databricks ecosystem participants
-- SaaS companies with strong expansion, M&A, or intelligence use cases
+Hiring Signals (+25):
+If hiring for: ML Engineer, AI Engineer, Data Scientist, Research Engineer
 
-Tier 3 (only if very strong fit):
-- Selected agencies or specialist operators with evidence of data buying behavior
+Data Need Signals (+30):
+If ANY of these appear in jobs, blog, or website:
+"training data", "data pipeline", "data acquisition", "data sourcing",
+"feature engineering", "entity resolution", "knowledge graph"
 
-GEOGRAPHIC FOCUS: United States primary. Non-US firms only if strong US market exposure.
+Funding Signals (+25):
+Seed or Series A in last 24 months, OR clear growth + hiring without funding
 
-STRONG BUYING SIGNALS:
-- Mentions of alternative data, investment intelligence, market intelligence
-- Mentions of workforce analytics, talent intelligence, company benchmarking
-- Mentions of org design/org analytics, corporate development/M&A sourcing
-- Mentions of AI model training, enrichment, structured datasets
-- Mentions of entity resolution, knowledge graphs, company intelligence, data products
-- Signs they buy, sell, or integrate datasets
-- Hiring for strategy, corp dev, market intelligence, research, data sourcing
-- Hiring for data engineering, ML, knowledge graph, entity resolution roles
-- Recent fund launch, new product launch, expansion into AI/analytics
-- Data partnership announcements, Snowflake/Databricks marketplace activity
+Hiring Velocity (+25):
+3+ relevant roles in last 30 days. 6+ roles = mark as HOT LEAD
 
-NEGATIVE FILTERS (avoid or heavily down-rank):
-- Generic agencies with no data buying behavior
-- Tiny freelancers, spammy lead-gen shops
-- Pure service businesses with no analytics angle
-- Companies with no visible use case for structured company intelligence
-- No likely budget owner or clear decision context
-- Direct competitors: Revelio Labs, Lightcast, People Data Labs
-- Pre-revenue startups with no funding
-- Exclusively consumer-market focused
-- <5 employees (unless funded AI startup)
+Size Fit (+15):
+Within 10-80 employees
 
-SCORING (max 100, minimum 50):
-Confidence 9-10 (Score 85-100): Clear buyer type, clear use case, strong signal, likely budget
-Confidence 7-8 (Score 70-84): Good fit with at least one strong signal and plausible use case
-Confidence 5-6 (Score 50-69): Possible fit but not enough evidence yet
-Below 5: Do not include
+Additional Buyer Readiness (+10 each):
+"enterprise customers", "SOC2", "production AI", "scaling infrastructure"
 
-+30: Confirmed external data buyer
-+20: Dedicated data/research team (2+ people)
-+15: Tier 1 buyer type
-+10: Published/used workforce or hiring data
-+10: Recently raised fund or received funding
-+5: Hiring data/research roles
-+5: Based in major financial center
--15: Company <10 employees
--10: Builds own workforce data internally
--25: Direct competitor
--20: No data capability or team
+SCORING RULES:
+- Minimum score: 70
+- Non-US companies must score 75+
+- Score 85+ = HOT LEAD (immediate outreach priority)
 
-PRODUCT FIT LOGIC:
-Growth Intelligence fits best when: buyer wants growth tracking, company benchmarking, macro/sector signals, investment screening, expansion/contraction monitoring
-Market Intelligence fits best when: buyer wants org structure visibility, role distribution benchmarking, function-level comparison, strategic org analysis
-Capability Intelligence fits best when: buyer wants deepest insight, AI/ML/modeling use cases, strategic capability mapping, skill/capability benchmarking, advanced research or data product integration
+DECISION-MAKER FILTER (CRITICAL):
+Prioritize companies where Founder, CTO, or Head of AI makes purchasing decisions.
+Avoid companies with heavy procurement structures.
 
-TARGET CONTACT ROLES: Partner, Principal, Investment Team, Operating Partner, Head of Portfolio Operations, VP Strategy, Director of Strategy, Head of Corp Dev, Director of Corporate Development, Head of Market Intelligence, Research Lead, Head of Data, Head of AI, CTO, VP Engineering, Head of Analytics, Product Lead for data/intelligence products
+TARGET CONTACT ROLES:
+Founder/CEO, CTO, Head of AI, Head of Data, VP Engineering, Head of ML,
+Research Lead, Chief Data Officer
+
+USE CASE MAPPING (MANDATORY):
+For EVERY lead, classify into one of:
+1. Model Training
+2. Entity Resolution / Graph Building
+3. Workforce / Economic Modeling
 """
+
 
 
 
@@ -311,70 +287,57 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     known_list = ", ".join(list(known_companies)[:50]) if known_companies else "None yet"
 
-    prompt = f"""Run today's buyer research scan.
-Focus on high-fit US buyers for premium company intelligence datasets.
-Search for fresh public signals that indicate likely need for:
-- investment intelligence
-- workforce intelligence
-- company benchmarking
-- org structure analysis
-- capability / skills intelligence
-- AI/data enrichment
+    prompt = f"""Run today's AI buyer research scan.
+Find AI companies (10-80 employees) that need structured datasets NOW.
+Focus on deal velocity: companies that can buy a $5K-$20K dataset quickly.
 
-Be selective. Include only accounts with a real reason to buy.
-Think like a human analyst screening targets for a boutique high-ticket sales process.
-Never include a company unless there is a real, explainable reason it might buy.
-Do not guess blindly. Separate evidence from inference. If speculative, say so.
-Prefer fewer, stronger leads over many weak ones.
+Search for fresh signals:
+- AI startups hiring ML/data roles
+- Companies building AI products that need training data
+- Recently funded AI companies (Seed/Series A)
+- Companies mentioning data acquisition, entity resolution, knowledge graphs
+- Vertical AI companies (healthcare, legal, finance, etc.)
+
+Be extremely selective. Only real AI companies that BUILD AI products.
+No wrappers. No agencies. No consulting firms. No generic SaaS.
 
 {SEGMENT_CONTEXT}
-
-Below are search results. For each that represents a POTENTIAL BUYER, determine:
-
-1. Company name and website
-2. Region (US preferred)
-3. Buyer tier (1/2/3) and specific type (e.g. "Tier 1: Private Equity")
-4. Which product layer fits best (Growth / Market / Capability) and why
-5. WHY they are a fit (2-4 sentences, specific and evidence-based)
-6. What buying signal triggered inclusion
-7. Suggested outreach angle (1-2 sentences)
-8. Suggested target contact roles/titles
-9. Confidence score (1-10) mapped to lead score (50-100)
-10. Company size and estimated data budget
 
 ALREADY KNOWN (skip these): {known_list}
 
 SEARCH RESULTS:
 {results_text}
 
-Respond with a JSON object containing two keys:
+Respond with a JSON object:
 
-"leads": a JSON array where each element is:
+"leads": array where each element is:
 {{{{
   "company": "Company Name",
   "website": "domain.com",
-  "segment": "Tier 1: Private Equity",
-  "why_buyer": "Specific evidence-based reason with outreach angle",
+  "segment": "AI Lab - Vertical AI (Healthcare)",
+  "why_buyer": "Evidence-based reason they need structured data NOW",
   "evidence_url": "https://...",
-  "buying_signals": "Signal 1. Signal 2. Signal 3.",
-  "lead_score": 75,
-  "recommended_contact_role": "Head of Data, Operating Partner",
-  "company_size": "50-200",
-  "est_data_budget": "$25K-$75K/yr",
-  "known_subscriptions": "PitchBook, Bloomberg",
-  "notes": "Product fit: Growth Intelligence. Confidence: 7/10.",
-  "product_fit": "Growth"
+  "buying_signals": "Hiring 3 ML engineers. Recently raised $5M Seed. Building knowledge graph.",
+  "lead_score": 82,
+  "recommended_contact_role": "CTO, Founder",
+  "company_size": "25",
+  "est_data_budget": "$5K-$15K",
+  "known_subscriptions": "Unknown",
+  "notes": "HOT LEAD. Use case: Model Training. Funded Seed 2025. 4 open ML roles.",
+  "product_fit": "Model Training",
+  "use_case": "Model Training",
+  "is_hot": false
 }}}}
 
 "analysis": {{{{
   "top_3": ["Company A", "Company B", "Company C"],
-  "top_3_reasoning": "Why these are strongest and best product angle for each",
-  "emerging_themes": "What patterns or themes emerged from today's signals"
+  "top_3_reasoning": "Why these are strongest and best use case for each",
+  "emerging_themes": "What patterns emerged from today's signals"
 }}}}
 
 If NO results qualify, return: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "No strong leads today", "emerging_themes": "None"}}}}}}
-Only include leads scoring 50+. Be strict. These are premium enterprise data buyers.
-Do NOT include: marketing agencies, direct competitors (Revelio, Lightcast, PDL), companies with no data use case.
+Score 70+ only. Non-US must be 75+. Mark 85+ as HOT LEAD.
+Do NOT include: agencies, consultants, ChatGPT wrappers, generic SaaS, companies >120 or <10 employees.
 """
 
 
