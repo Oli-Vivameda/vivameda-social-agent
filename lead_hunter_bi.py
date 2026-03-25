@@ -166,9 +166,9 @@ Secondary (only if strong signals, score must be 75+): UK, Canada, Germany, Fran
 Netherlands, Nordics, Israel
 
 COMPANY SIZE FILTER (CRITICAL):
-Target: 10-80 employees (ideal sweet spot)
+Target: 2-80 employees (ideal sweet spot)
 Accept: up to 120 max
-EXCLUDE: <10 employees (no budget) and >120 employees (slow procurement)
+EXCLUDE: >120 employees (slow procurement)
 
 IDEAL CUSTOMER PROFILE (ICP):
 Include ONLY companies that:
@@ -185,7 +185,6 @@ DISQUALIFY IMMEDIATELY:
 - Automation tools without real AI/ML engineering
 - Companies without hiring or technical signals
 - Companies >120 employees
-- Companies <10 employees
 - Direct competitors (Revelio Labs, Lightcast, People Data Labs)
 
 SCORING SYSTEM (minimum 70 to qualify):
@@ -337,7 +336,7 @@ Respond with a JSON object:
 
 If NO results qualify, return: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "No strong leads today", "emerging_themes": "None"}}}}}}
 Score 70+ only. Non-US must be 75+. Mark 85+ as HOT LEAD.
-Do NOT include: agencies, consultants, ChatGPT wrappers, generic SaaS, companies >120 or <10 employees.
+Do NOT include: agencies, consultants, ChatGPT wrappers, generic SaaS, companies >120 employees.
 """
 
 
