@@ -180,44 +180,44 @@ RULES:
 
 IMAGE_STYLES = [
     {
-        "name": "aerial city at night",
-        "dalle_style": "natural",
-        "prompt": "Aerial photograph of a modern city skyline at night relating to {topic}. Glass office towers lit from within, streets forming geometric patterns below. Cool blue and warm amber light contrast. Shot from a high vantage point. Realistic urban photography, not illustrated. Clean and professional. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
-    },
-    {
-        "name": "clean workspace photo",
-        "dalle_style": "natural",
-        "prompt": "Professional overhead photograph of a modern minimal workspace related to {topic}. Clean white desk with a laptop, notebook, and coffee cup. Soft natural window light from the left. Shallow depth of field. Neutral tones with one subtle color accent. Real photography style, not illustrated. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
-    },
-    {
-        "name": "abstract data flow",
+        "name": "code on dark screen",
         "dalle_style": "vivid",
-        "prompt": "Abstract visualization of flowing data streams and connections relating to {topic}. Thin luminous lines and nodes forming organic network patterns on a deep dark background. Colors: electric blue, teal, and white. Like a premium fintech or data company brand visual. Clean, modern, and sophisticated. Not cluttered. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
+        "prompt": "Close-up photograph of glowing programming code on a dark monitor screen relating to {topic}. Lines of code in amber and cyan on a deep black background. Syntax highlighting visible. Slight bokeh and lens blur at edges. Like looking at a developer terminal in a dark room. Moody, technical, authentic. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
     },
     {
-        "name": "modern glass architecture",
+        "name": "data center server room",
         "dalle_style": "natural",
-        "prompt": "Photograph of modern glass and steel architecture relating metaphorically to {topic}. Geometric reflections in a contemporary office building facade. Blue sky reflected in glass panels. Clean lines, sharp angles. Shot from below looking up. Professional architectural photography. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
+        "prompt": "Photograph of a modern data center server room relating to {topic}. Rows of server racks with blinking LED lights in blue, green, and amber. Cold blue ambient lighting. Reflective floor. Deep perspective down the aisle. Industrial, powerful, technical. Professional photography. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
     },
     {
-        "name": "conference room scene",
+        "name": "circuit board macro",
         "dalle_style": "natural",
-        "prompt": "Professional photograph of an empty modern conference room with floor-to-ceiling windows overlooking a city, relating to {topic}. Long table with chairs, clean and minimal. Morning light streaming in. Warm wood tones and cool glass. Corporate but inviting. Real photography, not rendered. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
+        "prompt": "Extreme macro photograph of a circuit board relating to {topic}. Visible traces, solder points, microchips, and capacitors. Shallow depth of field with selective focus. Dark background with blue and green tones. Like an electron microscope view of technology infrastructure. Technical and beautiful. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
     },
     {
-        "name": "abstract geometric minimal",
+        "name": "technical watercolor mashup",
         "dalle_style": "vivid",
-        "prompt": "Minimal abstract geometric composition inspired by {topic}. Two or three clean overlapping shapes, subtle gradients. Navy blue, white, and a hint of gold on a dark background. Like a premium brand identity visual or annual report cover. Sophisticated and restrained. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
+        "prompt": "Artistic watercolor painting blended with technical elements relating to {topic}. Human head silhouette filled with circuit board patterns, gears, data nodes, and flowing digital elements. Watercolor ink drips and splashes in deep navy, amber, and rust tones on aged parchment background. Where art meets engineering. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
     },
     {
-        "name": "people in motion",
-        "dalle_style": "natural",
-        "prompt": "Long exposure photograph of business professionals walking through a modern atrium or transit hub, relating to {topic}. Motion blur on the people, sharp architecture. Light trails and movement. Conveys pace, scale, and momentum. Professional documentary photography style. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
-    },
-    {
-        "name": "dark gradient abstract",
+        "name": "isometric 3D diorama",
         "dalle_style": "vivid",
-        "prompt": "Smooth dark gradient abstract background inspired by {topic}. Deep navy transitioning to black with subtle ambient light glow in teal or warm amber. Clean, sophisticated, like a premium SaaS product hero image. Minimal and elegant. No objects, just light and color. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
+        "prompt": "Isometric 3D miniature diorama scene relating to {topic}. Detailed tiny world on a floating platform with dark background. Glowing warm lights, miniature buildings, trees, and technical infrastructure. Like a tilt-shift photograph of a model. Rich detail, dramatic single spotlight from above. Dark green and amber tones. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
+    },
+    {
+        "name": "terminal hacker screen",
+        "dalle_style": "vivid",
+        "prompt": "Dark terminal screen with scrolling data output relating to {topic}. Green and amber monospace font on pure black background. Matrix-style data streams mixed with realistic terminal commands. Multiple overlapping transparent terminal windows. Like a hacker workstation at 3am. Technical and atmospheric. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
+    },
+    {
+        "name": "network topology visualization",
+        "dalle_style": "vivid",
+        "prompt": "Technical visualization of a complex network topology relating to {topic}. Interconnected nodes and edges forming a large-scale graph on a dark background. Nodes glow in electric blue and white, connections pulse with data flow. Like a real-time infrastructure monitoring dashboard. Scientific and precise. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
+    },
+    {
+        "name": "blueprint technical drawing",
+        "dalle_style": "vivid",
+        "prompt": "Technical blueprint-style drawing relating to {topic}. White line drawings on deep blue background. Engineering diagrams, data flow charts, and system architecture sketches. Grid lines visible. Like an architect's technical plan for a data system. Precise, structured, professional. Landscape 16:9. ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO WRITING, NO TYPOGRAPHY, NO SIGNAGE, NO LABELS anywhere in the image.",
     },
 ]
 
