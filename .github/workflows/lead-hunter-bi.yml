@@ -2,7 +2,7 @@ name: Lead Hunter BI
 
 on:
   schedule:
-    - cron: '30 6 * * 1-5'  # Mon-Fri at 06:30 UTC (08:30 Cyprus, 30min after agency hunter)
+    - cron: '30 6 * * *'  # Every day including weekends  # Mon-Fri at 06:30 UTC (08:30 Cyprus, 30min after agency hunter)
   workflow_dispatch:
 
 permissions:
