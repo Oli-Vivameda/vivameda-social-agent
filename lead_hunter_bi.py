@@ -72,245 +72,152 @@ def vinnie_alert(msg: str):
 # Search queries from BI Buyer Intelligence Dossier
 # ---------------------------------------------------------------------------
 SEARCH_QUERIES = [
-    # Independent Research Firms / Boutiques
-    "independent research firm investment boutique",
-    "independent equity research boutique small team",
-    "niche investment research provider",
-    "sector specialist research firm boutique",
-    "macro research boutique firm institutional",
-    "independent research shop sell-side buy-side",
-    "boutique research firm data-driven insights",
-    "investment research startup platform",
-    "research boutique alternative data analytics",
-    "independent research provider workforce data",
+    # Research boutiques
+    "boutique research firm investment data",
+    "small research firm equity analysis",
+    "independent research boutique small team",
+    "niche research firm data-driven",
+    "boutique research firm UK London",
+    "boutique research firm Singapore Hong Kong",
+    "boutique research firm UAE Dubai",
+    "investment research firm founder 2-10 employees",
+    "independent research provider small",
 
-    # Quant / Data-Driven Research
-    "quantitative research firm small team",
-    "data-driven investment research startup",
-    "quantamental research boutique",
-    "systematic research firm alternative data",
-    "quant research boutique emerging manager",
-    "algorithmic research firm small fund",
+    # Alt data providers
+    "alternative data provider small team",
+    "small alternative data company",
+    "niche data provider analytics startup",
+    "alt data vendor boutique",
+    "alternative data startup founded 2023 2024 2025",
 
-    # Alternative Data / Analytics Startups
-    "alternative data startup analytics",
-    "alt data analytics company small team",
-    "data analytics startup investment signals",
-    "workforce analytics startup company",
-    "company intelligence data startup",
-    "structured data startup analytics platform",
-    "data enrichment startup B2B company",
-    "predictive analytics startup company data",
+    # Small AI labs
+    "small AI lab research team",
+    "AI research company small team data",
+    "machine learning startup structured data",
+    "AI company workforce data small",
+    "NLP startup structured datasets",
 
-    # Small AI/Data Companies
-    "AI data company structured datasets small",
-    "machine learning company data products",
-    "AI startup company intelligence workforce",
-    "data product startup analytics small team",
-    "NLP company structured data insights",
+    # Analytics consultancies
+    "data analytics consultancy boutique",
+    "analytics firm small team research",
+    "data consultancy boutique firm",
+    "workforce analytics small company",
+    "people analytics startup small",
 
-    # Global Research Firms
-    "investment research firm Singapore",
-    "research boutique Hong Kong data",
-    "independent research firm London small",
-    "equity research boutique Europe data-driven",
-    "research firm Israel data analytics",
-    "investment research firm Australia boutique",
+    # Trigger events
+    "research firm hiring data analyst 2026",
+    "data startup seed funding 2025 2026",
+    "analytics company launched 2025 2026",
 
-    # Selling Research / Insights
-    "sells research reports institutional investors",
-    "research platform subscription data",
-    "analytics platform sells insights reports",
-    "data-driven research reports subscription",
+    # Competitor adjacent
+    "Revelio Labs alternative competitor small",
+    "Lightcast competitor workforce data",
+    "workforce intelligence company small",
+    "company data provider startup niche",
+    "hiring data analytics provider small firm",
 
-    # Trigger Events
-    "research firm launched 2025 2026 data",
-    "analytics startup raised seed 2025 2026",
-    "data company new product launch 2026",
-    "hired Head of Data research firm 2026",
-
-    # Competitor Customers
-    "Revelio Labs customer alternative",
-    "Lightcast workforce data client user",
-    "Thinknum alternative data buyer",
-    "Burning Glass workforce client",
-    "workforce intelligence provider comparison review",
-
-    # Broader company-finding queries
-    "small research firm company data analytics",
-    "boutique analytics firm workforce data",
-    "data startup hiring trends analytics",
-    "company intelligence platform small team",
-    "workforce data provider small company",
-    "alt data vendor startup workforce",
-    "quant analytics firm boutique small",
-    "investment analytics platform startup",
-    "company data research platform",
-    "hiring analytics startup company",
-    "labor market data analytics firm",
-    "talent analytics company startup",
-    "HR data analytics startup platform",
-    "people analytics company small firm",
-    "company benchmarking data analytics",
-
-    # Site-targeted queries (find actual companies)
-    "site:linkedin.com 'investment research' 'data-driven' '1-10 employees'",
-    "site:crunchbase.com workforce analytics seed funding",
-    "site:crunchbase.com alternative data startup seed series-a",
-    "site:crunchbase.com research platform company data funded",
-    "site:pitchbook.com workforce data analytics startup",
-    "site:angel.co analytics research data startup",
-    "site:producthunt.com workforce data analytics company",
-    "site:g2.com workforce analytics alternative data platform",
-    "site:reddit.com workforce data vendor buy alternative",
-    "site:datarade.ai workforce employment company data",
-    "alternative data startup workforce hiring analytics founded 2023 2024 2025",
-    "research boutique founded 2024 2025 data-driven investment",
-    "company intelligence startup seed funding workforce",
-    "people analytics platform startup small team funded",
-    "workforce intelligence startup series A seed 2024 2025 2026",
+    # Site-targeted
+    "site:crunchbase.com alternative data startup seed",
+    "site:crunchbase.com research boutique data small",
+    "site:crunchbase.com workforce analytics startup",
+    "site:datarade.ai workforce company data provider",
+    "site:angel.co data analytics research startup",
 ]
+
 
 
 
 SEGMENT_CONTEXT = """
 ====================================================================
-VIVAMEDA GLOBAL DEAL-SOURCING ANALYST
-READ EVERY WORD. FOLLOW EVERY RULE. NO EXCEPTIONS.
+VIVAMEDA LEAD GENERATION AGENT
 ====================================================================
 
-You are a global deal-sourcing analyst focused on identifying high-probability
-buyers for a premium workforce intelligence dataset.
+You are a lead generation agent for Vivameda, a company selling structured
+workforce intelligence datasets.
 
-Your objective is NOT to find interesting companies.
-Your objective is to find companies that can REALISTICALLY BUY a $10K-$20K
-dataset within 14 days.
+Your ONLY goal is: Find companies that can realistically buy a dataset
+within 7-21 days.
 
-You must prioritize: speed to close, clear use case, small decisive teams.
-
-====================================================================
-DAILY OUTPUT REQUIREMENT
-====================================================================
-Minimum: 30 qualified leads per day
-Geography: GLOBAL (no restriction)
-Prioritize:
-- US (primary)
-- UK, Singapore, Hong Kong, Europe (secondary)
-- Rest of world (opportunistic)
+NOT strategic partners. NOT big tech. NOT inspiration. REAL BUYERS ONLY.
 
 ====================================================================
 IDEAL CUSTOMER PROFILE (STRICT)
 ====================================================================
 
-Company Type (PRIMARY TARGETS):
-- Independent research firms / research boutiques
-- Quant / data-driven research teams
-- Niche investment research providers
-- Alternative data / analytics startups
-- Small AI/data companies using structured datasets
+ONLY return companies that match ALL of the following:
 
-Company Size:
-- 2-15 employees (ideal)
-- Up to 25 max
-- MUST appear small, lean, and decision-fast
+1. Company Type (MUST MATCH ONE):
+   - Small research firms / research boutiques
+   - Small alternative data providers
+   - Small AI labs / model training teams
+   - Small investment research teams
+   - Small analytics/data consultancies
 
-Behavioral Signals (MANDATORY, at least 1 required):
-Company MUST show at least one of:
-- Sells research, reports, or insights
-- Mentions: "data", "analytics", "quant", "research platform", "investment research"
-- Has a product, dataset, or analytical offering
-- Publishes insights or structured analysis
-- Appears data-driven (not generic consulting)
+2. Company Size (STRICT):
+   - 2-20 employees ONLY
+   - If larger -> EXCLUDE
+
+3. Behavior Signal (CRITICAL):
+   Company MUST already:
+   - sell research, insights, or data OR
+   - use external datasets in their work
+   If unclear -> EXCLUDE
+
+4. Geography:
+   - Global (US preferred, then UK, Singapore, Hong Kong, UAE)
+   - DO NOT limit to one country
+
+5. Speed Filter (VERY IMPORTANT):
+   ONLY include companies that:
+   - look scrappy / boutique / fast-moving
+   - have simple websites
+   - offer services or niche products
+   - likely founder-led
+   If it looks corporate -> EXCLUDE
 
 ====================================================================
-HARD EXCLUSIONS (STRICT)
+EXCLUDE (STRICT BLACKLIST)
 ====================================================================
-DO NOT include:
-- Large companies (>50 employees)
-- Banks, large hedge funds, institutions
-- Generic consulting firms
-- Marketing agencies
-- Service-heavy businesses with no data angle
-- Corporates without clear data/research usage
-- If unclear whether they would buy data, EXCLUDE
+DO NOT return:
+- Large companies (Similarweb, Kpler, YipitData, Revelio Labs, Lightcast, etc.)
+- Platforms / marketplaces
+- SaaS tools without data focus
+- Marketing agencies (unless clearly data-driven research)
+- Consulting firms without data products
+- Academic institutions
+- Government entities
+- Any company that would require procurement, legal review, or long sales cycle
 
 ====================================================================
 YOUR DATASET (CONTEXT)
 ====================================================================
-You are sourcing buyers for Vivameda's workforce intelligence dataset:
-- ~4.2M companies
-- ~60M+ company-year records
-- Includes: company growth, hiring trends, workforce structure, capability/skill signals
-- Longitudinal (time series), not snapshots
-- Historical archive including failure signals (companies that no longer exist)
-- Survivorship-bias-free for backtesting
+You are sourcing buyers for Vivameda workforce intelligence dataset:
+- ~4.2M companies, ~60M+ company-year records
+- Company growth, hiring trends, workforce structure, capability/skill signals
+- Longitudinal time series, survivorship-bias-free
+- Historical archive including companies that no longer exist
 - Delivery: Parquet, CSV, JSONL, Snowflake
 - Price: $10K-$20K
 
 ====================================================================
-USE CASE MAPPING (CRITICAL)
+QUALITY STANDARD
 ====================================================================
-For EVERY lead, you MUST define: Why would THIS company buy THIS dataset?
-
-Examples:
-- Enhance investment research with workforce signals
-- Build predictive hiring/growth indicators
-- Enrich existing datasets with temporal workforce data
-- Improve sector analysis with company structure signals
-- Power internal models or reports with survivorship-bias-free data
-- Backtest investment models against historical workforce data
-
-If the use case is not obvious, suggest a plausible one and score lower (4-5).
+- If unsure -> SKIP the lead
+- Better return 5 strong leads than 20 weak ones
+- No generic descriptions
+- Every lead must feel like a real company you could email today
+  and get a reply from the founder
 
 ====================================================================
-BUYING PROBABILITY CORE FILTER
+TARGET CONTACTS
 ====================================================================
-Only include companies that:
-- Can understand the dataset immediately (no explanation needed)
-- Have a clear use case within 30 seconds
-- Likely have budget or revenue model tied to data
-
-If unclear, include with a low score (4-5) and note your uncertainty.
-
-====================================================================
-SCORING (Buying Likelihood 1-10)
-====================================================================
-Based on: size, clarity of use case, data sophistication
-
-8-10: Tier 1 - Contact immediately. High probability, fast close.
-6-7:  Tier 2 - Good fit, secondary priority.
-4-5:  Tier 3 - Low priority, only include if still relevant.
-Below 3: DO NOT INCLUDE.
-
-Minimum score to qualify: 4
-
-====================================================================
-PRIORITY TIERS
-====================================================================
-Tier 1: Contact immediately. Clear use case, small team, data-driven, can close fast.
-Tier 2: Good fit, may need one conversation to qualify.
-Tier 3: Possible fit, include only if pipeline needs volume.
-
-====================================================================
-QUALITY RULES
-====================================================================
-- Be INCLUSIVE, not exclusive. When in doubt, INCLUDE the lead with a lower score.
-- A score of 4-5 is fine for Tier 3. We want volume AND quality.
-- Better to include a borderline lead at score 5 than miss a real buyer.
-- The human operator will make the final call. Your job is to surface opportunities.
-- Aim for 10-15 leads per batch minimum.
-
-====================================================================
-TARGET CONTACT ROLES
-====================================================================
-At small firms (2-25 people), these are the buyers:
+At these firms (2-20 people), the buyer is:
 - Founder / CEO
 - Head of Research
 - CTO / Chief Data Officer
-- Head of Data / Analytics
-- Portfolio Manager (if data-focused)
 These people can say YES and wire money the same week.
 """
+
 
 
 
@@ -388,43 +295,43 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     known_list = ", ".join(list(known_companies)[:50]) if known_companies else "None yet"
 
-    prompt = f"""You are Vivameda's global deal-sourcing analyst.
+    prompt = f"""You are Vivameda's lead generation agent.
 
-Today's mission: Find companies that can REALISTICALLY BUY a $10K-$20K
-workforce intelligence dataset within 14 days.
+Find companies that can REALISTICALLY BUY a $10K-$20K workforce intelligence
+dataset within 7-21 days.
 
-Target: small research firms, quant boutiques, alt data startups, AI/data companies.
-2-25 employees. Global but US-first. Must be data-driven. Must have clear use case.
+Target: small research firms, alt data providers, small AI labs, investment
+research boutiques, analytics consultancies. 2-20 employees. Founder-led.
+Scrappy. Already sells or uses data.
 
-NO banks. NO large funds. NO consultants. NO agencies. NO companies >50 people.
-
-Every lead must feel like: "I could sell this in 1-2 conversations."
+NO large companies. NO platforms. NO SaaS tools. NO consulting without data.
+NO academic. NO government. NO companies needing procurement or legal review.
 
 {SEGMENT_CONTEXT}
 
-ALREADY KNOWN (skip): {known_list}
+ALREADY KNOWN (skip these): {known_list}
 
 SEARCH RESULTS:
 {results_text}
 
-Return JSON:
+Return EXACTLY this JSON format:
 
 "leads": array, each element:
 {{{{
   "company": "Firm Name",
   "website": "domain.com",
-  "segment": "Research Boutique / Quant Firm / Alt Data Startup / AI Data Company",
-  "why_buyer": "VERY SPECIFIC: what exactly makes them a match. Max 2 lines.",
+  "segment": "Research Boutique / Alt Data Provider / AI Lab / Analytics Consultancy",
+  "why_buyer": "2-person research firm selling equity reports. Already buys external datasets. Founder-led.",
   "evidence_url": "https://...",
-  "buying_signals": "Sells research to hedge funds. Mentions analytics on website. 8-person team.",
+  "buying_signals": "Sells research to hedge funds. 5-person team. Simple website. Founder is ex-Goldman.",
   "lead_score": 8,
-  "recommended_contact_role": "Founder, Head of Research",
-  "company_size": "8",
+  "recommended_contact_role": "Founder",
+  "company_size": "5",
   "est_data_budget": "$10K-$20K",
   "known_subscriptions": "Unknown",
-  "notes": "Tier 1. Use case: enhance sector research with workforce growth signals. Global, US-based.",
-  "product_fit": "Investment Research Enhancement",
-  "use_case": "Enhance investment research with workforce signals",
+  "notes": "Use case: enrich equity research with workforce growth signals.",
+  "product_fit": "Research Enhancement",
+  "use_case": "Enrich investment research with hiring trend signals",
   "is_hot": true,
   "tier": 1,
   "country": "US"
@@ -432,14 +339,19 @@ Return JSON:
 
 "analysis": {{{{
   "top_3": ["Firm A", "Firm B", "Firm C"],
-  "top_3_reasoning": "Why these 3 are the strongest: clearest use case, smallest team, fastest close",
-  "emerging_themes": "Patterns from today"
+  "top_3_reasoning": "Why these 3 are strongest",
+  "emerging_themes": "Patterns noticed"
 }}}}
 
-Empty: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "Nothing today", "emerging_themes": "None"}}}}}}
+Empty if nothing qualifies: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "Nothing qualified", "emerging_themes": "None"}}}}}}
 
-FINAL: Score 4+ included. Tier 1 (8-10) = contact now. Tier 2 (6-7) = good fit. Tier 3 (4-5) = worth a look. Aim for 15-20 leads per batch. Be INCLUSIVE. Let the human decide who to skip.
+RULES:
+- Return 10 leads per batch. Quality over volume.
+- Score 1-10 for speed to close. 8+ = contact today. 6-7 = good fit. 4-5 = worth a look.
+- If unsure about a company, SKIP IT. Do not pad with weak leads.
+- Every lead must be a real company you could email today and get a founder reply.
 """
+
 
 
     resp = client.messages.create(
