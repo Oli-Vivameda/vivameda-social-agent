@@ -653,8 +653,11 @@ def main():
     for i in range(0, len(all_results), 15):
         batch = all_results[i:i+15]
         log.info(f"Qualifying batch {i//15 + 1} ({len(batch)} results)...")
-        leads = qualify_leads_with_claude(batch, known)
-        all_leads.extend(leads)
+        try:
+            leads = qualify_leads_with_claude(batch, known)
+            all_leads.extend(leads)
+        except Exception as e:
+            log.error(f"Batch {i//15 + 1} failed: {e}. Continuing with leads found so far.")
         time.sleep(2)
 
     final_leads = []
