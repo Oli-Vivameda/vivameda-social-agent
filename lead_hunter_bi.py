@@ -40,6 +40,8 @@ except ImportError:
 
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 BRAVE_API_KEY = os.environ.get("BRAVE_API_KEY", "")
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY", "")
+GOOGLE_CSE_ID = os.environ.get("GOOGLE_CSE_ID", "")
 GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "")
 # Pipedrive CRM
 PIPEDRIVE_API_TOKEN = os.environ.get("PIPEDRIVE_API_TOKEN", "")
@@ -346,6 +348,25 @@ def brave_search(query: str, count: int = 10) -> list[dict]:
     return [{"title": r.get("title", ""), "url": r.get("url", ""), "description": r.get("description", "")} for r in results]
 
 
+def google_search(query: str, count: int = 10) -> list[dict]:
+    if not GOOGLE_API_KEY or not GOOGLE_CSE_ID:
+        return []
+    try:
+        resp = httpx.get(
+            "https://www.googleapis.com/customsearch/v1",
+            params={"key": GOOGLE_API_KEY, "cx": GOOGLE_CSE_ID, "q": query, "num": min(count, 10)},
+            timeout=15,
+        )
+        if resp.status_code != 200:
+            log.warning(f"Google search failed ({resp.status_code})")
+            return []
+        items = resp.json().get("items", [])
+        return [{"title": r.get("title", ""), "url": r.get("link", ""), "description": r.get("snippet", "")} for r in items]
+    except Exception as e:
+        log.warning(f"Google search error: {e}")
+        return []
+
+
 def extract_domain(url: str) -> str:
     from urllib.parse import urlparse
     parsed = urlparse(url)
@@ -623,6 +644,8 @@ def main():
     for query in queries:
         log.info(f"Searching: {query[:60]}...")
         results = brave_search(query, count=10)
+        google_results = google_search(query, count=10)
+        results.extend(google_results)
 
         for r in results:
             domain = extract_domain(r["url"])
