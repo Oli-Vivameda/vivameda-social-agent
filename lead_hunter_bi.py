@@ -699,10 +699,10 @@ def main():
         log.info(f"Pushed {pushed}/{len(final_leads)} leads to Pipedrive")
         email_csv()
 
-        high_score = [l for l in final_leads if l.get("lead_score", 0) >= 70]
+        high_score = [l for l in final_leads if l.get("lead_score", 0) >= 8]
         msg = (
             f"Vinnie+here.+BI+Lead+Hunter+found+{len(final_leads)}+new+leads+today+(flagship+product)."
-            f"+{len(high_score)}+scored+above+70."
+            f"+{len(high_score)}+scored+above+8."
             f"+Top:+{final_leads[0].get('company', 'Unknown').replace(' ', '+')}"
             f"+({final_leads[0].get('lead_score', '?')}pts,+Segment+{final_leads[0].get('segment', '?')})."
             f"+CSV+sent+to+email.+Check+oli@vivameda.com+boss."
