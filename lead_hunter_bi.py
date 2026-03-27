@@ -49,8 +49,8 @@ MODEL = "claude-sonnet-4-20250514"
 
 LEADS_CSV = "leads_bi/pipeline.csv"
 LEADS_HISTORY = "leads_bi/.lead_history.json"
-LEADS_PER_RUN = 15
-MIN_SCORE = 60
+LEADS_PER_RUN = 25
+MIN_SCORE = 40
 
 VINNIE_PHONE = "35799909204"
 VINNIE_APIKEY = "wdXW78gEZEFt"
@@ -258,7 +258,7 @@ Examples:
 - Power internal models or reports with survivorship-bias-free data
 - Backtest investment models against historical workforce data
 
-If you cannot clearly define the use case, EXCLUDE the lead.
+If the use case is not obvious, suggest a plausible one and score lower (4-5).
 
 ====================================================================
 BUYING PROBABILITY CORE FILTER
@@ -268,7 +268,7 @@ Only include companies that:
 - Have a clear use case within 30 seconds
 - Likely have budget or revenue model tied to data
 
-If unclear, EXCLUDE.
+If unclear, include with a low score (4-5) and note your uncertainty.
 
 ====================================================================
 SCORING (Buying Likelihood 1-10)
@@ -278,9 +278,9 @@ Based on: size, clarity of use case, data sophistication
 8-10: Tier 1 - Contact immediately. High probability, fast close.
 6-7:  Tier 2 - Good fit, secondary priority.
 4-5:  Tier 3 - Low priority, only include if still relevant.
-Below 4: DO NOT INCLUDE.
+Below 3: DO NOT INCLUDE.
 
-Minimum score to qualify: 6
+Minimum score to qualify: 4
 
 ====================================================================
 PRIORITY TIERS
@@ -290,15 +290,13 @@ Tier 2: Good fit, may need one conversation to qualify.
 Tier 3: Possible fit, include only if pipeline needs volume.
 
 ====================================================================
-QUALITY RULES (VERY IMPORTANT)
+QUALITY RULES
 ====================================================================
-- No fluff
-- No generic descriptions
-- No "maybe" companies
-- Every lead must feel: actionable, relevant, closeable
-- If you are unsure about a company, EXCLUDE it
-- If the use case is weak, EXCLUDE it
-- Only output leads that feel like: "I could sell this within 1-2 conversations"
+- Be INCLUSIVE, not exclusive. When in doubt, INCLUDE the lead with a lower score.
+- A score of 4-5 is fine for Tier 3. We want volume AND quality.
+- Better to include a borderline lead at score 5 than miss a real buyer.
+- The human operator will make the final call. Your job is to surface opportunities.
+- Aim for 10-15 leads per batch minimum.
 
 ====================================================================
 TARGET CONTACT ROLES
@@ -419,7 +417,7 @@ Return JSON:
 
 Empty: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "Nothing today", "emerging_themes": "None"}}}}}}
 
-FINAL: Score 6+ only. Every lead must be closeable in 14 days. No fluff. No maybes. Quality over volume, but aim for 15+ per batch.
+FINAL: Score 4+ included. Tier 1 (8-10) = contact now. Tier 2 (6-7) = good fit. Tier 3 (4-5) = worth a look. Aim for 15-20 leads per batch. Be INCLUSIVE. Let the human decide who to skip.
 """
 
 
