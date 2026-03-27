@@ -150,7 +150,25 @@ SEARCH_QUERIES = [
     "HR data analytics startup platform",
     "people analytics company small firm",
     "company benchmarking data analytics",
+
+    # Site-targeted queries (find actual companies)
+    "site:linkedin.com 'investment research' 'data-driven' '1-10 employees'",
+    "site:crunchbase.com workforce analytics seed funding",
+    "site:crunchbase.com alternative data startup seed series-a",
+    "site:crunchbase.com research platform company data funded",
+    "site:pitchbook.com workforce data analytics startup",
+    "site:angel.co analytics research data startup",
+    "site:producthunt.com workforce data analytics company",
+    "site:g2.com workforce analytics alternative data platform",
+    "site:reddit.com workforce data vendor buy alternative",
+    "site:datarade.ai workforce employment company data",
+    "alternative data startup workforce hiring analytics founded 2023 2024 2025",
+    "research boutique founded 2024 2025 data-driven investment",
+    "company intelligence startup seed funding workforce",
+    "people analytics platform startup small team funded",
+    "workforce intelligence startup series A seed 2024 2025 2026",
 ]
+
 
 
 SEGMENT_CONTEXT = """
