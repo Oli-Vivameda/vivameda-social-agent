@@ -133,7 +133,25 @@ SEARCH_QUERIES = [
     "Thinknum alternative data buyer",
     "Burning Glass workforce client",
     "workforce intelligence provider comparison review",
+
+    # Broader company-finding queries
+    "small research firm company data analytics",
+    "boutique analytics firm workforce data",
+    "data startup hiring trends analytics",
+    "company intelligence platform small team",
+    "workforce data provider small company",
+    "alt data vendor startup workforce",
+    "quant analytics firm boutique small",
+    "investment analytics platform startup",
+    "company data research platform",
+    "hiring analytics startup company",
+    "labor market data analytics firm",
+    "talent analytics company startup",
+    "HR data analytics startup platform",
+    "people analytics company small firm",
+    "company benchmarking data analytics",
 ]
+
 
 SEGMENT_CONTEXT = """
 ====================================================================
@@ -301,7 +319,7 @@ def save_lead_history(companies: set):
 def brave_search(query: str, count: int = 10) -> list[dict]:
     resp = httpx.get(
         "https://api.search.brave.com/res/v1/web/search",
-        params={"q": query, "count": count, "freshness": "pm"},
+        params={"q": query, "count": count, "freshness": "py"},
         headers={"Accept": "application/json", "Accept-Encoding": "gzip", "X-Subscription-Token": BRAVE_API_KEY},
         timeout=15,
     )
@@ -581,7 +599,7 @@ def main():
     known = load_lead_history()
     log.info(f"Known companies: {len(known)}")
 
-    queries = random.sample(SEARCH_QUERIES, min(10, len(SEARCH_QUERIES)))
+    queries = random.sample(SEARCH_QUERIES, min(15, len(SEARCH_QUERIES)))
 
     all_results = []
     seen_domains = set()
