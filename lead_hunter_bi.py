@@ -50,7 +50,7 @@ MODEL = "claude-sonnet-4-20250514"
 LEADS_CSV = "leads_bi/pipeline.csv"
 LEADS_HISTORY = "leads_bi/.lead_history.json"
 LEADS_PER_RUN = 25
-MIN_SCORE = 40
+MIN_SCORE = 4
 
 VINNIE_PHONE = "35799909204"
 VINNIE_APIKEY = "wdXW78gEZEFt"
