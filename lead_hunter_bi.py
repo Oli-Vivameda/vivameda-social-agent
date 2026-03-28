@@ -498,7 +498,7 @@ def push_to_pipedrive(leads):
                 "visible_to": "3",  # visible to whole company
             }
             if website:
-                org_data["url"] = website
+                org_data["website"] = website
             org_resp = requests.post(
                 f"{base_url}/organizations?api_token={PIPEDRIVE_API_TOKEN}",
                 json=org_data,
