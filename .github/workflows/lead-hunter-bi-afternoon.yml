@@ -2,7 +2,8 @@ name: Lead Hunter BI (Afternoon)
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # Every day including weekends
+    - cron: '0 12 * * *'  # 14:00 Cyprus
+    - cron: '0 15 * * *'  # 17:00 Cyprus
   workflow_dispatch:
 
 permissions:
