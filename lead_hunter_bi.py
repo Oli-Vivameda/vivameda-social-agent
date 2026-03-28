@@ -490,10 +490,15 @@ def push_to_pipedrive(leads):
     for lead in leads:
         try:
             # Step 1: Create Organization
+            website = lead.get('website', '')
+            if website and not website.startswith('http'):
+                website = 'https://' + website
             org_data = {
                 "name": lead.get("company", "Unknown Company"),
                 "visible_to": "3",  # visible to whole company
             }
+            if website:
+                org_data["url"] = website
             org_resp = requests.post(
                 f"{base_url}/organizations?api_token={PIPEDRIVE_API_TOKEN}",
                 json=org_data,
