@@ -52,7 +52,7 @@ MODEL = "claude-sonnet-4-20250514"
 LEADS_CSV = "leads_bi/pipeline.csv"
 LEADS_HISTORY = "leads_bi/.lead_history.json"
 LEADS_PER_RUN = 25
-MIN_SCORE = 7
+MIN_SCORE = 5
 
 VINNIE_PHONE = "35799909204"
 VINNIE_APIKEY = "wdXW78gEZEFt"
@@ -232,7 +232,7 @@ SCORING (0-10)
 5-6.9: Weak/secondary. Only include with specific reason. Must explain why.
 Below 5: REJECT. Do not return.
 
-MINIMUM SCORE TO INCLUDE: 7.0
+MINIMUM SCORE TO INCLUDE: 5.0
 
 ====================================================================
 DO NOT BE FOOLED BY THESE WORDS
@@ -412,7 +412,7 @@ Return JSON:
 Empty: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "Nothing qualified", "emerging_themes": "None"}}}}}}
 
 RULES:
-- Score 7+ ONLY. Below 7 = reject.
+- Score 5+ included. 7+ are priority. 5-6 are worth a look.
 - Quality over volume. 5 excellent > 50 weak.
 - Every lead must pass: "Do they BUY external datasets as core input?"
 - If unsure, REJECT. Be commercially ruthless.
