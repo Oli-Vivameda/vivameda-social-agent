@@ -52,7 +52,7 @@ MODEL = "claude-sonnet-4-20250514"
 LEADS_CSV = "leads_bi/pipeline.csv"
 LEADS_HISTORY = "leads_bi/.lead_history.json"
 LEADS_PER_RUN = 25
-MIN_SCORE = 5
+MIN_SCORE = 4
 
 VINNIE_PHONE = "35799909204"
 VINNIE_APIKEY = "wdXW78gEZEFt"
@@ -72,217 +72,162 @@ def vinnie_alert(msg: str):
 # Search queries from BI Buyer Intelligence Dossier
 # ---------------------------------------------------------------------------
 SEARCH_QUERIES = [
-    # Research boutiques
-    "boutique research firm investment data",
-    "small research firm equity analysis",
-    "independent research boutique small team",
-    "niche research firm data-driven",
-    "boutique research firm UK London",
-    "boutique research firm Singapore Hong Kong",
-    "boutique research firm UAE Dubai",
-    "investment research firm founder 2-10 employees",
-    "independent research provider small",
+    # Alt data / data providers (Bucket A)
+    "alternative data provider company",
+    "alternative data vendor startup",
+    "alt data company small team",
+    "data provider structured datasets",
+    "data vendor API company",
+    "dataset provider company intelligence",
+    "data product company analytics",
+    "alternative data firm workforce",
+    "data marketplace vendor small",
+    "financial data provider boutique",
 
-    # Alt data providers
-    "alternative data provider small team",
-    "small alternative data company",
-    "niche data provider analytics startup",
-    "alt data vendor boutique",
-    "alternative data startup founded 2023 2024 2025",
+    # Market intelligence / data platforms
+    "market intelligence data platform",
+    "company intelligence data provider",
+    "competitive intelligence data vendor",
+    "business intelligence data product company",
+    "data API provider company signals",
 
-    # Small AI labs
-    "small AI lab research team",
-    "AI research company small team data",
-    "machine learning startup structured data",
-    "AI company workforce data small",
-    "NLP startup structured datasets",
+    # Research with structured data (Bucket B)
+    "investment research firm data-driven",
+    "research boutique structured data",
+    "equity research data provider",
+    "quantitative research firm data",
+    "research platform alternative data",
 
-    # Analytics consultancies
-    "data analytics consultancy boutique",
-    "analytics firm small team research",
-    "data consultancy boutique firm",
-    "workforce analytics small company",
-    "people analytics startup small",
+    # AI data companies
+    "AI data company structured datasets",
+    "machine learning data provider",
+    "AI training data company",
+    "NLP data company structured",
 
-    # Trigger events
-    "research firm hiring data analyst 2026",
-    "data startup seed funding 2025 2026",
-    "analytics company launched 2025 2026",
+    # Global expansion
+    "alternative data provider Singapore",
+    "data vendor company London UK",
+    "alternative data company Hong Kong",
+    "data platform provider Europe",
+    "market intelligence company UAE Dubai",
+    "data provider company Israel",
+    "alternative data Asia Pacific",
+    "data vendor company Australia",
 
-    # Competitor adjacent
-    "Revelio Labs alternative competitor small",
-    "Lightcast competitor workforce data",
-    "workforce intelligence company small",
-    "company data provider startup niche",
-    "hiring data analytics provider small firm",
+    # Trigger / discovery
+    "alternative data startup funded 2024 2025 2026",
+    "data provider company launched 2025 2026",
+    "dataset vendor seed funding",
+    "alternative data conference exhibitor",
+    "Neudata vendor directory alternative data",
 
     # Site-targeted
-    "site:crunchbase.com alternative data startup seed",
-    "site:crunchbase.com research boutique data small",
-    "site:crunchbase.com workforce analytics startup",
-    "site:datarade.ai workforce company data provider",
-    "site:angel.co data analytics research startup",
+    "site:crunchbase.com alternative data provider",
+    "site:crunchbase.com data vendor startup funded",
+    "site:datarade.ai data provider workforce company",
+    "site:alternativedata.org vendor directory",
 ]
+
 
 
 
 
 SEGMENT_CONTEXT = """
 ====================================================================
-VIVAMEDA LEAD QUALIFICATION AGENT — READ EVERY WORD
+VIVAMEDA B2B LEAD FINDER — STRUCTURED DATA BUYERS
 ====================================================================
 
-You are a highly selective B2B lead qualification agent for Vivameda.
+Your task is to find high-quality B2B leads for a data infrastructure
+company selling structured datasets.
 
-Your job is NOT to find "interesting companies."
-Your job is to find companies that are highly likely to BUY external
-structured workforce intelligence datasets in the near term.
+====================================================================
+STEP 1: PRIORITIZE THESE COMPANIES
+====================================================================
+Focus on companies that:
+- Sell datasets, APIs, or data platforms
+- Operate in alternative data, AI data, or market intelligence
+- Serve investors, AI teams, or research
 
-Optimize for: revenue potential, speed to close, fit with product,
-probability buyer already understands alternative data.
+====================================================================
+STEP 2: CLASSIFY INTO BUCKETS
+====================================================================
 
-Be extremely strict. Low quality leads are WORSE than missing good ones.
-Do not return generic "data companies," "AI companies," "consultancies,"
-or "research companies" unless they clearly buy and use external structured datasets.
+Bucket A (Top priority):
+- Data providers / alt-data companies
+- Companies that sell structured data products
+- Data marketplaces and distributors
+
+Bucket B:
+- Research firms with structured, repeatable data
+- Investment research boutiques using external datasets
+- Analytics firms with data products (not services)
+
+Bucket C (optional strategic):
+- Larger firms with clear dataset procurement
+- Platform companies that integrate external data
+
+====================================================================
+STEP 3: HARD EXCLUSIONS — REJECT IMMEDIATELY
+====================================================================
+- Consulting company
+- Investment bank
+- Agency (marketing, PR, digital, creative)
+- HR tech (recruiting tools, ATS, HRIS)
+- SaaS without data product
+- Survey / polling / panel firms
+- System integrators
+- Software development shops
+
+====================================================================
+STEP 4: SCORING SYSTEM
+====================================================================
++3 — sells datasets or API
++2 — serves investor / AI / quant customers
++2 — has productized data offering
++1 — team size 5-200
++2 — clear data positioning on website
+
+Maximum: 10 points
+Reject if score < 4
+
+====================================================================
+STEP 5: OUTPUT RULES
+====================================================================
+Return 10-15 companies per run:
+- At least 5 Bucket A (score 6+)
+- Up to 5 Bucket B (score 4-5)
+- Optional Bucket C only if exceptional
+
+====================================================================
+STEP 6: SEARCH STRATEGY
+====================================================================
+If too few results:
+- Expand globally (Asia, Europe, Middle East, smaller markets)
+- Use keywords: "alternative data", "data platform", "market intelligence", "data API"
+- Try: "data vendor", "data product company", "dataset provider"
+
+DO NOT relax exclusion rules when expanding search.
 
 ====================================================================
 VIVAMEDA PRODUCT CONTEXT
 ====================================================================
-
-Vivameda sells structured workforce intelligence. NOT a service, NOT consulting.
-
-The product:
-- Structured workforce intelligence, longitudinal company intelligence
-- Company evolution signals over time
-- Hiring velocity, growth, churn, seniority shifts, capability build-up
-- Research and modeling inputs for investment, data products, advanced analytics
+You are sourcing buyers for Vivameda's workforce intelligence dataset:
 - ~4.2M companies, ~60M+ company-year records
-- Survivorship-bias-free, includes companies that no longer exist
+- Hiring velocity, growth, churn, seniority shifts, capability signals
+- Longitudinal time series, survivorship-bias-free
 - Delivery: Parquet, CSV, JSONL, Snowflake
 - Price: $10K-$20K
 
-Best buyers: companies that immediately understand and use external datasets as core input.
-
 ====================================================================
-IDEAL BUYER CATEGORIES
+TARGET CONTACTS
 ====================================================================
-
-TIER 1 (pursue immediately):
-- Alternative data firms
-- Data vendors / data product companies
-- Hedge funds / quant funds
-- Institutional investors using differentiated datasets
-- Research platforms that evaluate, buy, integrate, or distribute datasets
-- AI labs/model builders ONLY if they clearly use external structured economic/workforce data
-
-TIER 2 (good fit, worth outreach):
-- Institutional equity research boutiques
-- Investor research firms / forensic research firms
-- Market intelligence firms relying on external datasets
-- Benchmarking firms with proprietary databases
-- Specialist intelligence providers where external company-level data strengthens product
-
-TIER 3 (secondary, only with strong evidence):
-- Firms producing recurring subscription insights depending on non-obvious external signals
-
-====================================================================
-HARD EXCLUSIONS — AUTOMATICALLY REJECT
-====================================================================
-Unless explicit proof they buy and productize external datasets:
-- Data/AI consultancies, implementation partners, system integrators
-- Dashboard/BI shops, data engineering agencies, software dev agencies
-- Generic SaaS, cybersecurity, martech, branding, PR, digital marketing
-- Primary market research agencies, survey/polling/focus group/panel firms
-- Companies whose business is mainly custom client work or building with client data
-- Macro/technical research firms relying mainly on price, sentiment, positioning
-
-====================================================================
-CRITICAL DECISION RULE
-====================================================================
-The main question is NOT: "Do they work with data?"
-The main question IS: "Do they BUY external datasets as a core input to create value?"
-
-If the answer is not clearly yes or very likely yes → REJECT.
-
-Secondary question: "Is their use case close enough to workforce intelligence
-that a commercial conversation makes sense NOW?"
-
-If too far from company analysis, investment research, intelligence products,
-benchmarking, or advanced modeling → REJECT.
-
-====================================================================
-10-DIMENSION EVALUATION (score each lead on ALL)
-====================================================================
-1. Buyer Type Fit — naturally buys external datasets?
-2. Data Dependency — depends on external data for product/edge?
-3. Productization — monetizes data/research/models, not pure services?
-4. Use Case Relevance — workforce intelligence improves what they sell?
-5. Commercial Readiness — can buy now, no long education cycle?
-6. Speed to Close — weeks not months?
-7. Budget Potential — meaningful deal size?
-8. Sophistication — understands differentiated structured datasets?
-9. Strategic Value — strong logo, distribution partner, repeat buyer?
-10. Urgency of Pain — competes on information advantage/signal quality?
-
-====================================================================
-SCORING (0-10)
-====================================================================
-9-10: Excellent. Clear buyer. Pursue immediately.
-7-8.9: Good fit. Realistic buyer. Worth outreach.
-5-6.9: Weak/secondary. Only include with specific reason. Must explain why.
-Below 5: REJECT. Do not return.
-
-MINIMUM SCORE TO INCLUDE: 5.0
-
-====================================================================
-DO NOT BE FOOLED BY THESE WORDS
-====================================================================
-These words alone do NOT make a good lead:
-AI, analytics, insights, intelligence, data-driven, machine learning,
-research, dashboards, strategy, platform
-
-Look through the words. Determine the ACTUAL business model.
-
-====================================================================
-RED FLAGS (usually means reject)
-====================================================================
-"we help clients use their data", "consulting services", "custom solutions",
-"implementation", "survey programming", "fieldwork", "respondent recruitment",
-"digital transformation", "market research agency", "data strategy",
-"managed services", "software development", "business intelligence consulting"
-
-====================================================================
-POSITIVE SIGNALS
-====================================================================
-- Sells data products or research subscriptions
-- Serves hedge funds, institutional investors, asset managers, quants
-- Evaluates alternative datasets
-- Distributes research to financial institutions
-- Uses external information sources as core edge
-- Benchmarks companies/markets using structured datasets
-- Offers recurring intelligence products (not one-off projects)
-- Competes on information advantage, proprietary signals, differentiated data
-
-====================================================================
-COMMERCIAL BIAS
-====================================================================
-Bias toward:
-- Smaller specialized firms, boutiques
-- Clear information-edge business models
-- Buyers that understand value quickly
-- Founder/president/CDO/Head of Research can say yes without procurement
-
-Avoid:
-- Giant enterprises (unless very clear immediate fit)
-- Long education cycles
-- "Nice to have" positioning
-
-====================================================================
-FINAL RULE
-====================================================================
-Quality > quantity. Better 5 excellent leads than 50 weak ones.
-If unsure → REJECT. Be commercially ruthless.
+- Founder / CEO
+- Head of Data / Chief Data Officer
+- Head of Research
+- VP Data Partnerships
+These people can say YES quickly at small firms.
 """
+
 
 
 
@@ -362,16 +307,26 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     known_list = ", ".join(list(known_companies)[:50]) if known_companies else "None yet"
 
-    prompt = f"""You are Vivameda's lead qualification agent. Commercially ruthless. Quality only.
+    prompt = f"""You are Vivameda's B2B lead finder for structured data buyers.
 
-Find companies that BUY external structured datasets as a core input to create value.
-NOT companies that "work with data." Companies that BUY DATASETS.
+Find companies that SELL datasets, APIs, or data platforms. Companies in
+alternative data, AI data, or market intelligence. Companies serving
+investors, AI teams, or research.
 
-Tier 1: alt data firms, data vendors, hedge/quant funds, research platforms.
-Tier 2: equity research boutiques, market intelligence, benchmarking firms.
-Hard exclude: consultancies, agencies, SaaS tools, survey firms, large enterprises.
+SCORING:
++3 sells datasets/API
++2 investor/AI customers
++2 productized data
++1 team size 5-200
++2 clear data positioning
+Reject if score < 4.
 
-Minimum score: 7.0 out of 10. If unsure, REJECT.
+HARD EXCLUDE: consulting, investment banks, agencies, HR tech, SaaS without data product.
+
+Bucket A (priority): data providers, alt-data companies. Score 6+.
+Bucket B: research firms with structured data. Score 4-5.
+
+Return 10-15 companies. At least 5 Bucket A.
 
 {SEGMENT_CONTEXT}
 
@@ -386,18 +341,18 @@ Return JSON:
 {{{{
   "company": "Firm Name",
   "website": "domain.com",
-  "segment": "Alt Data Vendor / Research Platform / Quant Fund / Data Product Co",
-  "why_buyer": "Sells workforce analytics to hedge funds. 8-person team. Buys external datasets. Founder-led.",
+  "segment": "Alt Data Provider / Data Platform / Research Boutique / AI Data Co",
+  "why_buyer": "Sells workforce analytics API to hedge funds. 12-person team. Clear data product.",
   "evidence_url": "https://...",
-  "buying_signals": "Data product company. Serves institutional investors. Simple website. Clear data dependency.",
+  "buying_signals": "Data product company. Sells API. Serves quant funds. Clear data positioning.",
   "lead_score": 8,
-  "recommended_contact_role": "Founder / Head of Data",
-  "company_size": "8",
+  "recommended_contact_role": "Founder / Head of Data Partnerships",
+  "company_size": "12",
   "est_data_budget": "$10K-$20K",
   "known_subscriptions": "Unknown",
-  "notes": "Tier 1. Sells data products to funds. Would use workforce signals to enrich offering.",
+  "notes": "Bucket A. Sells data to funds. Would integrate workforce signals into platform.",
   "product_fit": "Data Product Enrichment",
-  "use_case": "Enrich existing data product with longitudinal workforce signals",
+  "use_case": "Integrate workforce signals into existing data product/API",
   "is_hot": true,
   "tier": 1,
   "country": "US"
@@ -405,19 +360,19 @@ Return JSON:
 
 "analysis": {{{{
   "top_3": ["Firm A", "Firm B", "Firm C"],
-  "top_3_reasoning": "Why these 3 are strongest buyers",
+  "top_3_reasoning": "Why these 3 are strongest",
   "emerging_themes": "Patterns from today"
 }}}}
 
 Empty: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "Nothing qualified", "emerging_themes": "None"}}}}}}
 
 RULES:
-- Score 5+ included. 7+ are priority. 5-6 are worth a look.
-- Quality over volume. 5 excellent > 50 weak.
-- Every lead must pass: "Do they BUY external datasets as core input?"
-- If unsure, REJECT. Be commercially ruthless.
-- For rejected companies from search results, note: Company Name, Rejected, Reason (1 line).
+- 10-15 leads per batch. At least 5 Bucket A (score 6+).
+- Score < 4 = reject.
+- If too few results, expand globally but DO NOT relax exclusions.
+- Every lead: company name, website, classification, score, 1-line reasoning.
 """
+
 
 
 
