@@ -588,8 +588,10 @@ def push_to_pipedrive(leads):
             lead_data = {
                 "title": lead.get("company", "Unknown"),
                 "organization_id": org_id,
-                "deal_value": lead.get("lead_score", 0),
-                "deal_currency": "USD",
+                "value": {
+                    "amount": lead.get("lead_score", 0),
+                    "currency": "USD",
+                },
             }
 
             lead_resp = requests.post(
