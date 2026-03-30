@@ -72,61 +72,58 @@ def vinnie_alert(msg: str):
 # Search queries from BI Buyer Intelligence Dossier
 # ---------------------------------------------------------------------------
 SEARCH_QUERIES = [
-    # Alt data / data providers (Bucket A)
-    "alternative data provider company",
-    "alternative data vendor startup",
-    "alt data company small team",
-    "data provider structured datasets",
-    "data vendor API company",
-    "dataset provider company intelligence",
-    "data product company analytics",
-    "alternative data firm workforce",
-    "data marketplace vendor small",
-    "financial data provider boutique",
+    # Equity systematic funds
+    "systematic equity hedge fund",
+    "equity long short hedge fund quantitative",
+    "systematic equity fund alternative data",
+    "quantitative equity hedge fund small",
+    "equity quant fund emerging manager",
+    "systematic equity fund backtesting",
+    "equity long short fund data-driven",
+    "multi-strategy hedge fund equity pod",
 
-    # Market intelligence / data platforms
-    "market intelligence data platform",
-    "company intelligence data provider",
-    "competitive intelligence data vendor",
-    "business intelligence data product company",
-    "data API provider company signals",
+    # Alt data buyers
+    "hedge fund alternative data buyer",
+    "alternative data hedge fund procurement",
+    "head of alternative data hedge fund",
+    "alternative data analyst quant fund",
+    "data sourcing hedge fund quant",
+    "alternative data evaluation hedge fund",
+    "BattleFin attendee hedge fund",
+    "Neudata alternative data buyer fund",
 
-    # Research with structured data (Bucket B)
-    "investment research firm data-driven",
-    "research boutique structured data",
-    "equity research data provider",
-    "quantitative research firm data",
-    "research platform alternative data",
+    # Macro quants
+    "systematic macro hedge fund",
+    "global macro hedge fund quantitative",
+    "macro quant fund systematic",
+    "systematic macro fund data-driven",
 
-    # AI data companies
-    "AI data company structured datasets",
-    "machine learning data provider",
-    "AI training data company",
-    "NLP data company structured",
+    # Quant research firms
+    "quantitative research firm equity",
+    "quant research boutique alternative data",
+    "quantitative investment research firm",
+    "factor research firm equity signals",
 
-    # Global expansion
-    "alternative data provider Singapore",
-    "data vendor company London UK",
-    "alternative data company Hong Kong",
-    "data platform provider Europe",
-    "market intelligence company UAE Dubai",
-    "data provider company Israel",
-    "alternative data Asia Pacific",
-    "data vendor company Australia",
+    # Geographic expansion
+    "systematic equity fund London UK",
+    "quantitative hedge fund Singapore",
+    "equity quant fund Hong Kong",
+    "systematic fund Europe alternative data",
+    "quant hedge fund Israel",
 
-    # Trigger / discovery
-    "alternative data startup funded 2024 2025 2026",
-    "data provider company launched 2025 2026",
-    "dataset vendor seed funding",
-    "alternative data conference exhibitor",
-    "Neudata vendor directory alternative data",
+    # Emerging / small managers
+    "emerging hedge fund manager systematic equity",
+    "new hedge fund launch 2025 2026 quantitative",
+    "small quant fund alternative data",
+    "boutique hedge fund systematic equity",
 
     # Site-targeted
-    "site:crunchbase.com alternative data provider",
-    "site:crunchbase.com data vendor startup funded",
-    "site:datarade.ai data provider workforce company",
-    "site:alternativedata.org vendor directory",
+    "site:crunchbase.com systematic hedge fund",
+    "site:linkedin.com head alternative data hedge fund",
+    "site:hedgefundresearch.com systematic equity",
+    "site:alternativedata.org vendor buyer",
 ]
+
 
 
 
@@ -134,99 +131,136 @@ SEARCH_QUERIES = [
 
 SEGMENT_CONTEXT = """
 ====================================================================
-VIVAMEDA B2B LEAD FINDER — STRUCTURED DATA BUYERS
+VIVAMEDA LEAD FINDER — EQUITY QUANTS & MACRO QUANTS
 ====================================================================
 
-Your task is to find high-quality B2B leads for a data infrastructure
-company selling structured datasets.
+You are a lead generation agent for Vivameda, finding buyers for a
+HISTORICAL workforce intelligence dataset.
+
+CRITICAL: Our data is HISTORICAL and STATIC. Company-year grain,
+1950-2020, 60M+ records, 4.2M companies. NO live feed. NO real-time.
+NO daily/weekly refresh. This is backtesting data.
 
 ====================================================================
-STEP 1: PRIORITIZE THESE COMPANIES
-====================================================================
-Focus on companies that:
-- Sell datasets, APIs, or data platforms
-- Operate in alternative data, AI data, or market intelligence
-- Serve investors, AI teams, or research
-
-====================================================================
-STEP 2: CLASSIFY INTO BUCKETS
+PRIMARY TARGET: EQUITY QUANTS / SYSTEMATIC EQUITY
 ====================================================================
 
-Bucket A (Top priority):
-- Data providers / alt-data companies
-- Companies that sell structured data products
-- Data marketplaces and distributors
+These firms backtest alternative data signals against historical stock
+prices. Our longitudinal workforce data is exactly what they need.
 
-Bucket B:
-- Research firms with structured, repeatable data
-- Investment research boutiques using external datasets
-- Analytics firms with data products (not services)
+They want to correlate workforce composition changes with equity returns.
 
-Bucket C (optional strategic):
-- Larger firms with clear dataset procurement
-- Platform companies that integrate external data
+Firm types:
+- Equity long/short hedge funds
+- Systematic equity funds
+- Multi-strategy funds with equity pods
+- Quantitative equity research firms
 
-====================================================================
-STEP 3: HARD EXCLUSIONS — REJECT IMMEDIATELY
-====================================================================
-- Consulting company
-- Investment bank
-- Agency (marketing, PR, digital, creative)
-- HR tech (recruiting tools, ATS, HRIS)
-- SaaS without data product
-- Survey / polling / panel firms
-- System integrators
-- Software development shops
+Target titles:
+- Head of Alternative Data
+- Quantitative Researcher
+- Alternative Data Analyst
+- Data Sourcing / Data Procurement
+- Portfolio Manager (Systematic Equity)
+
+WHY THEY BUY: Backtest workforce signals (hiring velocity, skill shifts,
+headcount growth, churn) against historical equity returns. Our survivorship-
+bias-free data with companies that no longer exist is uniquely valuable
+for backtesting — most alt data only covers surviving companies.
 
 ====================================================================
-STEP 4: SCORING SYSTEM
+SECONDARY TARGET: SYSTEMATIC MACRO / GLOBAL MACRO QUANTS
 ====================================================================
-+3 — sells datasets or API
-+2 — serves investor / AI / quant customers
-+2 — has productized data offering
-+1 — team size 5-200
-+2 — clear data positioning on website
 
-Maximum: 10 points
-Reject if score < 4
+These use aggregate workforce trends (industry-level, country-level)
+to inform macro positioning.
 
-====================================================================
-STEP 5: OUTPUT RULES
-====================================================================
-Return 10-15 companies per run:
-- At least 5 Bucket A (score 6+)
-- Up to 5 Bucket B (score 4-5)
-- Optional Bucket C only if exceptional
+Firm types:
+- Global macro hedge funds
+- Systematic macro funds
+- Macro-focused research firms
 
-====================================================================
-STEP 6: SEARCH STRATEGY
-====================================================================
-If too few results:
-- Expand globally (Asia, Europe, Middle East, smaller markets)
-- Use keywords: "alternative data", "data platform", "market intelligence", "data API"
-- Try: "data vendor", "data product company", "dataset provider"
+Target titles:
+- Macro Strategist
+- Quantitative Researcher (Macro)
+- Head of Data
 
-DO NOT relax exclusion rules when expanding search.
+WHY THEY BUY: Aggregate our data to industry/country level for macro
+signals — workforce expansion/contraction as leading indicator for
+economic cycles, sector rotation, country-level growth.
 
 ====================================================================
-VIVAMEDA PRODUCT CONTEXT
+HARD DISQUALIFICATION (CRITICAL)
 ====================================================================
-You are sourcing buyers for Vivameda's workforce intelligence dataset:
+
+DISQUALIFY any prospect whose core product or platform is built around:
+- Real-time data or live signals
+- Daily/weekly data refreshes
+- Nowcasting or real-time analytics
+- Live dashboards or streaming data
+- Real-time alt-data platforms
+
+Our data is historical and static. No live feed. Companies needing
+real-time signals will NOT buy our product. SKIP THEM.
+
+Also DISQUALIFY:
+- Consulting firms
+- Investment banks
+- Marketing agencies
+- HR tech / recruiting tools
+- SaaS without data/quant focus
+- Academic institutions
+- Companies > 200 employees (unless clear alt data procurement team)
+
+====================================================================
+SCORING
+====================================================================
+
++3 — Equity systematic fund or macro quant fund
++3 — Has "alternative data" or "data sourcing" role/function
++2 — Backtests signals against historical data
++2 — Small team (5-50 employees), fast decision-making
++1 — Known alt data buyer (attends BattleFin, Neudata, etc.)
+-5 — Core product is real-time/live data (DISQUALIFY)
+
+Bucket A (score 6+): Contact immediately. Equity quants, systematic funds.
+Bucket B (score 4-5): Good fit. Macro quants, research firms with quant focus.
+Reject if score < 4.
+
+====================================================================
+PRODUCT CONTEXT
+====================================================================
 - ~4.2M companies, ~60M+ company-year records
-- Hiring velocity, growth, churn, seniority shifts, capability signals
-- Longitudinal time series, survivorship-bias-free
+- 1950-2020 observed data range
+- Hiring velocity, growth, churn, seniority shifts, capability/skill signals
+- Survivorship-bias-free (includes companies that failed/merged/delisted)
+- Company-year grain — perfect for backtesting against stock returns
+- 87% role coverage at headcount >= 20
+- 96.5% capability coverage
+- Zero null keys, zero duplicate grains
 - Delivery: Parquet, CSV, JSONL, Snowflake
-- Price: $10K-$20K
+- Price: $10K-$20K for initial dataset
 
 ====================================================================
-TARGET CONTACTS
+TARGET CONTACTS AT THESE FIRMS
 ====================================================================
-- Founder / CEO
-- Head of Data / Chief Data Officer
-- Head of Research
-- VP Data Partnerships
-These people can say YES quickly at small firms.
+- Head of Alternative Data (primary)
+- Quantitative Researcher
+- Alternative Data Analyst
+- Data Sourcing / Procurement
+- Portfolio Manager (if systematic equity)
+- CIO (at small funds < 20 people)
+These people evaluate and buy alt data datasets routinely.
+
+====================================================================
+QUALITY RULES
+====================================================================
+- Every lead must be a firm that backtests or uses historical alt data
+- If the firm only uses real-time data, DISQUALIFY
+- Better 5 real quant fund leads than 50 generic data companies
+- Be commercially ruthless. If unsure, skip.
 """
+
 
 
 
@@ -307,26 +341,20 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     known_list = ", ".join(list(known_companies)[:50]) if known_companies else "None yet"
 
-    prompt = f"""You are Vivameda's B2B lead finder for structured data buyers.
+    prompt = f"""You are Vivameda's lead finder targeting equity quants and macro quants.
 
-Find companies that SELL datasets, APIs, or data platforms. Companies in
-alternative data, AI data, or market intelligence. Companies serving
-investors, AI teams, or research.
+Find firms that BACKTEST alternative data signals against historical data.
+Our product: historical workforce intelligence, company-year grain, 1950-2020,
+60M+ records, survivorship-bias-free. Perfect for backtesting workforce
+signals against equity returns.
 
-SCORING:
-+3 sells datasets/API
-+2 investor/AI customers
-+2 productized data
-+1 team size 5-200
-+2 clear data positioning
-Reject if score < 4.
+PRIMARY: Equity systematic funds, equity long/short, multi-strat with equity pods.
+SECONDARY: Systematic macro funds, global macro quants.
 
-HARD EXCLUDE: consulting, investment banks, agencies, HR tech, SaaS without data product.
+DISQUALIFY: Any firm built around real-time data, live signals, nowcasting,
+daily refreshes. Our data is historical. No live feed.
 
-Bucket A (priority): data providers, alt-data companies. Score 6+.
-Bucket B: research firms with structured data. Score 4-5.
-
-Return 10-15 companies. At least 5 Bucket A.
+Also exclude: consulting, banks, agencies, HR tech, SaaS, academic.
 
 {SEGMENT_CONTEXT}
 
@@ -339,39 +367,40 @@ Return JSON:
 
 "leads": array, each element:
 {{{{
-  "company": "Firm Name",
+  "company": "Fund Name",
   "website": "domain.com",
-  "segment": "Alt Data Provider / Data Platform / Research Boutique / AI Data Co",
-  "why_buyer": "Sells workforce analytics API to hedge funds. 12-person team. Clear data product.",
+  "segment": "Equity Systematic / Macro Quant / Multi-Strategy / Alt Data Buyer",
+  "why_buyer": "Systematic equity fund. 15-person team. Known alt data buyer. Backtests signals.",
   "evidence_url": "https://...",
-  "buying_signals": "Data product company. Sells API. Serves quant funds. Clear data positioning.",
+  "buying_signals": "Has Head of Alt Data role. Attends BattleFin. Systematic equity strategy.",
   "lead_score": 8,
-  "recommended_contact_role": "Founder / Head of Data Partnerships",
-  "company_size": "12",
+  "recommended_contact_role": "Head of Alternative Data",
+  "company_size": "15",
   "est_data_budget": "$10K-$20K",
   "known_subscriptions": "Unknown",
-  "notes": "Bucket A. Sells data to funds. Would integrate workforce signals into platform.",
-  "product_fit": "Data Product Enrichment",
-  "use_case": "Integrate workforce signals into existing data product/API",
+  "notes": "Bucket A. Backtests workforce signals against equity returns. Fast close.",
+  "product_fit": "Backtesting / Signal Research",
+  "use_case": "Backtest workforce composition changes against historical equity returns",
   "is_hot": true,
   "tier": 1,
   "country": "US"
 }}}}
 
 "analysis": {{{{
-  "top_3": ["Firm A", "Firm B", "Firm C"],
-  "top_3_reasoning": "Why these 3 are strongest",
+  "top_3": ["Fund A", "Fund B", "Fund C"],
+  "top_3_reasoning": "Why these 3 are strongest alt data buyers",
   "emerging_themes": "Patterns from today"
 }}}}
 
 Empty: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "Nothing qualified", "emerging_themes": "None"}}}}}}
 
 RULES:
-- 10-15 leads per batch. At least 5 Bucket A (score 6+).
-- Score < 4 = reject.
-- If too few results, expand globally but DO NOT relax exclusions.
-- Every lead: company name, website, classification, score, 1-line reasoning.
+- Bucket A (score 6+): equity quants, systematic funds. At least 5 per batch.
+- Bucket B (score 4-5): macro quants, quant research. Up to 5 per batch.
+- DISQUALIFY any real-time/live data company. Score -5.
+- 10-15 leads per batch. Quality over volume.
 """
+
 
 
 
