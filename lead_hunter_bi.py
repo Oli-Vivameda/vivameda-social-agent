@@ -72,57 +72,60 @@ def vinnie_alert(msg: str):
 # Search queries from BI Buyer Intelligence Dossier
 # ---------------------------------------------------------------------------
 SEARCH_QUERIES = [
-    # Equity systematic funds
-    "systematic equity hedge fund",
-    "equity long short hedge fund quantitative",
-    "systematic equity fund alternative data",
-    "quantitative equity hedge fund small",
-    "equity quant fund emerging manager",
-    "systematic equity fund backtesting",
-    "equity long short fund data-driven",
-    "multi-strategy hedge fund equity pod",
+    # Market intelligence firms
+    "market intelligence firm research",
+    "market intelligence company small team",
+    "competitive intelligence firm research reports",
+    "B2B intelligence company insights",
+    "market intelligence provider boutique",
 
-    # Alt data buyers
-    "hedge fund alternative data buyer",
-    "alternative data hedge fund procurement",
-    "head of alternative data hedge fund",
-    "alternative data analyst quant fund",
-    "data sourcing hedge fund quant",
-    "alternative data evaluation hedge fund",
-    "BattleFin attendee hedge fund",
-    "Neudata alternative data buyer fund",
+    # Equity / investment research
+    "equity research firm independent",
+    "equity research boutique small",
+    "independent equity research provider",
+    "investment research firm sell-side",
+    "sector research firm boutique",
+    "industry research firm niche",
 
-    # Macro quants
-    "systematic macro hedge fund",
-    "global macro hedge fund quantitative",
-    "macro quant fund systematic",
-    "systematic macro fund data-driven",
+    # Research firms selling reports
+    "research firm sells reports subscriptions",
+    "research firm subscription insights investors",
+    "boutique research firm financial clients",
+    "research provider institutional investors",
+    "sell-side research firm independent",
 
-    # Quant research firms
-    "quantitative research firm equity",
-    "quant research boutique alternative data",
-    "quantitative investment research firm",
-    "factor research firm equity signals",
+    # Consumer / sector intelligence
+    "consumer insights firm research",
+    "consumer intelligence company data",
+    "retail research firm insights",
+    "healthcare research firm data insights",
+    "SaaS research firm industry analysis",
+    "technology research firm sector reports",
+
+    # Data insights providers
+    "data insights company research",
+    "business intelligence firm reports",
+    "data analytics firm research reports",
+    "alternative data research firm",
 
     # Geographic expansion
-    "systematic equity fund London UK",
-    "quantitative hedge fund Singapore",
-    "equity quant fund Hong Kong",
-    "systematic fund Europe alternative data",
-    "quant hedge fund Israel",
+    "market intelligence firm London UK",
+    "research firm EU Europe insights",
+    "equity research firm UK independent",
+    "industry research company Germany France",
 
-    # Emerging / small managers
-    "emerging hedge fund manager systematic equity",
-    "new hedge fund launch 2025 2026 quantitative",
-    "small quant fund alternative data",
-    "boutique hedge fund systematic equity",
+    # Discovery / trigger
+    "research firm founded 2023 2024 2025",
+    "market intelligence startup",
+    "research company raised funding insights",
 
     # Site-targeted
-    "site:crunchbase.com systematic hedge fund",
-    "site:linkedin.com head alternative data hedge fund",
-    "site:hedgefundresearch.com systematic equity",
-    "site:alternativedata.org vendor buyer",
+    "site:crunchbase.com market intelligence research firm",
+    "site:crunchbase.com equity research boutique",
+    "site:linkedin.com market intelligence firm research",
+    "site:datarade.ai research data provider",
 ]
+
 
 
 
@@ -131,135 +134,156 @@ SEARCH_QUERIES = [
 
 SEGMENT_CONTEXT = """
 ====================================================================
-VIVAMEDA LEAD FINDER — EQUITY QUANTS & MACRO QUANTS
+VIVAMEDA FAST CASH LEAD FINDER
 ====================================================================
 
-You are a lead generation agent for Vivameda, finding buyers for a
-HISTORICAL workforce intelligence dataset.
-
-CRITICAL: Our data is HISTORICAL and STATIC. Company-year grain,
-1950-2020, 60M+ records, 4.2M companies. NO live feed. NO real-time.
-NO daily/weekly refresh. This is backtesting data.
+Target: small to mid-sized research and data-driven intelligence firms that
+sell insights to financial clients, rely on external datasets, and can make
+buying decisions quickly without heavy procurement.
 
 ====================================================================
-PRIMARY TARGET: EQUITY QUANTS / SYSTEMATIC EQUITY
+1. COMPANY PROFILE (STRICT FILTER)
 ====================================================================
 
-These firms backtest alternative data signals against historical stock
-prices. Our longitudinal workforce data is exactly what they need.
+Size (MANDATORY):
+- 10-80 employees (ideal)
+- Up to 120 max if very strong fit
+- Small enough = fast decisions. Large enough = budget.
 
-They want to correlate workforce composition changes with equity returns.
+Geography:
+- US (priority)
+- UK
+- Secondary: EU
 
-Firm types:
-- Equity long/short hedge funds
-- Systematic equity funds
-- Multi-strategy funds with equity pods
-- Quantitative equity research firms
-
-Target titles:
-- Head of Alternative Data
-- Quantitative Researcher
-- Alternative Data Analyst
-- Data Sourcing / Data Procurement
-- Portfolio Manager (Systematic Equity)
-
-WHY THEY BUY: Backtest workforce signals (hiring velocity, skill shifts,
-headcount growth, churn) against historical equity returns. Our survivorship-
-bias-free data with companies that no longer exist is uniquely valuable
-for backtesting — most alt data only covers surviving companies.
+Business Model (MANDATORY, at least one):
+Company must clearly:
+- Sell research reports
+- Sell data / insights
+- Provide market intelligence
+- Provide equity / industry research
 
 ====================================================================
-SECONDARY TARGET: SYSTEMATIC MACRO / GLOBAL MACRO QUANTS
+2. KEYWORDS (MUST MATCH at least 1)
 ====================================================================
 
-These use aggregate workforce trends (industry-level, country-level)
-to inform macro positioning.
+MUST HAVE (at least 1):
+- "market intelligence"
+- "research firm"
+- "equity research"
+- "industry research"
+- "data insights"
+- "business intelligence"
+- "alternative data" (BUT not real-time focused)
 
-Firm types:
-- Global macro hedge funds
-- Systematic macro funds
-- Macro-focused research firms
-
-Target titles:
-- Macro Strategist
-- Quantitative Researcher (Macro)
-- Head of Data
-
-WHY THEY BUY: Aggregate our data to industry/country level for macro
-signals — workforce expansion/contraction as leading indicator for
-economic cycles, sector rotation, country-level growth.
-
-====================================================================
-HARD DISQUALIFICATION (CRITICAL)
-====================================================================
-
-DISQUALIFY any prospect whose core product or platform is built around:
-- Real-time data or live signals
-- Daily/weekly data refreshes
-- Nowcasting or real-time analytics
-- Live dashboards or streaming data
-- Real-time alt-data platforms
-
-Our data is historical and static. No live feed. Companies needing
-real-time signals will NOT buy our product. SKIP THEM.
-
-Also DISQUALIFY:
-- Consulting firms
-- Investment banks
-- Marketing agencies
-- HR tech / recruiting tools
-- SaaS without data/quant focus
-- Academic institutions
-- Companies > 200 employees (unless clear alt data procurement team)
+STRONG SIGNAL (boost ranking):
+- "sell-side research"
+- "investment research"
+- "sector research"
+- "consumer insights"
+- "B2B intelligence"
+- "competitive intelligence"
 
 ====================================================================
-SCORING
+3. BUYING SIGNALS (prioritize companies with these)
 ====================================================================
 
-+3 — Equity systematic fund or macro quant fund
-+3 — Has "alternative data" or "data sourcing" role/function
-+2 — Backtests signals against historical data
-+2 — Small team (5-50 employees), fast decision-making
-+1 — Known alt data buyer (attends BattleFin, Neudata, etc.)
--5 — Core product is real-time/live data (DISQUALIFY)
+Signal A — Monetize insights:
+- Sell reports / subscriptions
+- Have "clients" or "subscribers"
 
-Bucket A (score 6+): Contact immediately. Equity quants, systematic funds.
-Bucket B (score 4-5): Good fit. Macro quants, research firms with quant focus.
-Reject if score < 4.
+Signal B — Differentiation pressure:
+- Niche focus (e.g. retail, SaaS, healthcare)
+- Need unique angles to stand out
+
+Signal C — Data dependency:
+- Mention datasets, analytics, modeling, insights
+
+====================================================================
+4. HARD EXCLUSION FILTERS (CRITICAL)
+====================================================================
+
+EXCLUDE these categories:
+
+Financial firms (WRONG ICP):
+- Hedge funds, asset managers, ETF providers, wealth managers
+
+Real-time / trading data firms:
+- "real-time data", "high-frequency", "trading signals", "intraday"
+- Our data is historical, NOT real-time
+
+Consulting firms (unless data productized):
+- Generic consulting, agencies, strategy firms
+
+Large enterprises:
+- Over 150 employees
+
+====================================================================
+5. PERFECT EXAMPLES (pattern anchors)
+====================================================================
+- YipitData (but smaller versions)
+- Eagle Alpha
+- Boutique research firms selling reports to funds
+
+====================================================================
+6. SCORING SYSTEM
+====================================================================
+
+FAST CASH — HIGH (ideal):
+- 10-50 employees
+- Clearly selling research / insights
+- Data mentioned on website
+- Can buy in 1-3 calls
+
+FAST CASH — MEDIUM:
+- 50-120 employees
+- Less clear data usage but still research-focused
+- May need one extra conversation
+
+====================================================================
+7. WHAT A PERFECT LEAD LOOKS LIKE
+====================================================================
+A company that:
+- Sells research subscriptions to investors
+- Has no internal data infrastructure
+- Needs new datasets to differentiate their research
+- Can decide quickly without procurement
+
+That is your buyer.
+
+====================================================================
+8. POSITIONING ALIGNMENT
+====================================================================
+You are NOT selling a "dataset."
+You ARE selling a "new insight layer they can use in reports immediately."
+
+Their reports become more valuable with workforce signals:
+- Hiring velocity as growth indicator
+- Skill shifts as capability signal
+- Headcount trends as sector health metric
+- Survivorship-bias-free data for historical analysis
+
+====================================================================
+9. FINAL FILTER (MOST IMPORTANT)
+====================================================================
+Before outputting a company, it MUST pass this test:
+
+"Can this company realistically buy a dataset in 1-3 calls
+without heavy validation?"
+
+If NO -> REJECT.
 
 ====================================================================
 PRODUCT CONTEXT
 ====================================================================
 - ~4.2M companies, ~60M+ company-year records
-- 1950-2020 observed data range
+- 1950-2020 observed data, longitudinal time series
 - Hiring velocity, growth, churn, seniority shifts, capability/skill signals
-- Survivorship-bias-free (includes companies that failed/merged/delisted)
-- Company-year grain — perfect for backtesting against stock returns
+- Survivorship-bias-free (includes failed/merged/delisted companies)
 - 87% role coverage at headcount >= 20
-- 96.5% capability coverage
-- Zero null keys, zero duplicate grains
 - Delivery: Parquet, CSV, JSONL, Snowflake
-- Price: $10K-$20K for initial dataset
-
-====================================================================
-TARGET CONTACTS AT THESE FIRMS
-====================================================================
-- Head of Alternative Data (primary)
-- Quantitative Researcher
-- Alternative Data Analyst
-- Data Sourcing / Procurement
-- Portfolio Manager (if systematic equity)
-- CIO (at small funds < 20 people)
-These people evaluate and buy alt data datasets routinely.
-
-====================================================================
-QUALITY RULES
-====================================================================
-- Every lead must be a firm that backtests or uses historical alt data
-- If the firm only uses real-time data, DISQUALIFY
-- Better 5 real quant fund leads than 50 generic data companies
-- Be commercially ruthless. If unsure, skip.
+- Price: $10K-$20K
 """
+
 
 
 
@@ -341,20 +365,22 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     known_list = ", ".join(list(known_companies)[:50]) if known_companies else "None yet"
 
-    prompt = f"""You are Vivameda's lead finder targeting equity quants and macro quants.
+    prompt = f"""You are Vivameda's FAST CASH lead finder.
 
-Find firms that BACKTEST alternative data signals against historical data.
-Our product: historical workforce intelligence, company-year grain, 1950-2020,
-60M+ records, survivorship-bias-free. Perfect for backtesting workforce
-signals against equity returns.
+Find small to mid-sized research firms (10-80 employees) that sell insights
+to financial clients, rely on external datasets, and buy quickly.
 
-PRIMARY: Equity systematic funds, equity long/short, multi-strat with equity pods.
-SECONDARY: Systematic macro funds, global macro quants.
+TARGET: Research firms, market intelligence firms, equity/industry research,
+data insight providers. 10-80 employees. US priority, UK, EU.
 
-DISQUALIFY: Any firm built around real-time data, live signals, nowcasting,
-daily refreshes. Our data is historical. No live feed.
+THEY MUST: sell reports, subscriptions, or data insights. Need external
+datasets to differentiate. Can buy in 1-3 calls.
 
-Also exclude: consulting, banks, agencies, HR tech, SaaS, academic.
+EXCLUDE: Hedge funds, asset managers, real-time data firms, consulting,
+agencies, large enterprises (150+). Our data is HISTORICAL not real-time.
+
+You are NOT finding dataset buyers. You are finding firms that need a
+"new insight layer they can use in reports immediately."
 
 {SEGMENT_CONTEXT}
 
@@ -367,39 +393,41 @@ Return JSON:
 
 "leads": array, each element:
 {{{{
-  "company": "Fund Name",
+  "company": "Firm Name",
   "website": "domain.com",
-  "segment": "Equity Systematic / Macro Quant / Multi-Strategy / Alt Data Buyer",
-  "why_buyer": "Systematic equity fund. 15-person team. Known alt data buyer. Backtests signals.",
+  "segment": "Market Intelligence / Equity Research / Industry Research / Data Insights",
+  "why_buyer": "Sells sector research to hedge funds. 25-person team. Mentions external datasets. Niche healthcare focus.",
   "evidence_url": "https://...",
-  "buying_signals": "Has Head of Alt Data role. Attends BattleFin. Systematic equity strategy.",
+  "buying_signals": "Sells research subscriptions. Niche focus. Mentions analytics and modeling.",
   "lead_score": 8,
-  "recommended_contact_role": "Head of Alternative Data",
-  "company_size": "15",
+  "recommended_contact_role": "Founder / Head of Research / Head of Data",
+  "company_size": "25",
   "est_data_budget": "$10K-$20K",
   "known_subscriptions": "Unknown",
-  "notes": "Bucket A. Backtests workforce signals against equity returns. Fast close.",
-  "product_fit": "Backtesting / Signal Research",
-  "use_case": "Backtest workforce composition changes against historical equity returns",
+  "notes": "FAST CASH - HIGH. Sells research to funds. Workforce signals would differentiate their reports.",
+  "product_fit": "Research Enhancement / New Insight Layer",
+  "use_case": "Add workforce signals to sector research reports for subscribers",
   "is_hot": true,
   "tier": 1,
   "country": "US"
 }}}}
 
 "analysis": {{{{
-  "top_3": ["Fund A", "Fund B", "Fund C"],
-  "top_3_reasoning": "Why these 3 are strongest alt data buyers",
+  "top_3": ["Firm A", "Firm B", "Firm C"],
+  "top_3_reasoning": "Why these 3 can buy fastest",
   "emerging_themes": "Patterns from today"
 }}}}
 
 Empty: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "Nothing qualified", "emerging_themes": "None"}}}}}}
 
-RULES:
-- Bucket A (score 6+): equity quants, systematic funds. At least 5 per batch.
-- Bucket B (score 4-5): macro quants, quant research. Up to 5 per batch.
-- DISQUALIFY any real-time/live data company. Score -5.
-- 10-15 leads per batch. Quality over volume.
+CATEGORIES:
+- "FAST CASH - HIGH": 10-50 employees, clearly selling research/insights, data mentioned.
+- "FAST CASH - MEDIUM": 50-120 employees, research-focused, less clear data usage.
+
+Return 10-15 leads. Quality over volume. Every lead must pass:
+"Can this company buy in 1-3 calls without heavy validation?" If NO -> reject.
 """
+
 
 
 
