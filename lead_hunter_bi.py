@@ -128,6 +128,20 @@ SEARCH_QUERIES = [
     "site:linkedin.com equity research boutique alternative data",
     "site:crunchbase.com M&A due diligence firm",
     "site:crunchbase.com equity research boutique funded",
+
+    # POST-MERGER INTEGRATION / HCDD (50% priority)
+    "post-merger integration human capital firm",
+    "human capital due diligence M&A boutique",
+    "post-merger integration consulting workforce",
+    "PMI human capital advisory firm",
+    "human capital due diligence advisory",
+    "post-merger talent integration firm",
+    "M&A human capital consulting boutique",
+    "workforce integration post-merger firm",
+    "HR due diligence M&A advisory",
+    "talent due diligence firm boutique",
+    "post-merger workforce advisory small firm",
+    "human capital M&A advisory boutique team",
 ]
 
 
@@ -156,7 +170,7 @@ larger competitors.
 THE TARGET AVATAR: "THE AGILE BOUTIQUE"
 ====================================================================
 
-Size: 10-100 employees
+Size: 10-200 employees MAX (strictly exclude over 200)
 - Decision-makers are accessible
 - Have discretionary budget
 - Can move fast
@@ -177,13 +191,18 @@ the historical depth to see "talent flows" or "skill-based alpha" over time.
 SEARCH PARAMETERS & KEY INDICATORS
 ====================================================================
 
-Identify firms that mention the following on their websites or LinkedIn:
+PRIORITY FOCUS (50% of effort):
+Firms mentioning "Post-Merger Integration" or "Human Capital Due Diligence"
+on their websites. These are the FASTEST-CLOSING deals for our Market
+Intelligence layer. Prioritize these heavily.
+
+Other indicators to identify:
 
 1. "Alternative Data" or "Alpha"
    → Indicates they value non-traditional datasets for investment/strategy
 
-2. "Human Capital Due Diligence"
-   → Indicates immediate need for our Market Intelligence (role distribution) layer
+2. "Human Capital Due Diligence" or "Post-Merger Integration"
+   → HIGHEST PRIORITY. Immediate need for Market Intelligence (role distribution)
 
 3. "Talent Benchmarking"
    → Indicates need for our Growth Intelligence (headcount/tenure) layer
@@ -245,7 +264,7 @@ Capability Intelligence — 1.8B+ skill signals, upskilling patterns
 ====================================================================
 HARD EXCLUSIONS
 ====================================================================
-- Large enterprises (500+ employees) with slow procurement
+- ANY organization with more than 200 employees — strictly exclude
 - Survey/panel/UX research firms
 - Generic consulting without data products
 - Software tools without data dependency
@@ -347,8 +366,11 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     prompt = f"""You are a Senior Market Intelligence Researcher for Vivameda.
 
-Find "Agile Boutique" firms: 10-100 employees, equity research, M&A due diligence,
+Find "Agile Boutique" firms: 10-200 employees MAX (strictly exclude over 200), equity research, M&A due diligence,
 executive search, economic policy, or niche strategy consulting. Worldwide.
+
+PRIORITY: 50% of leads should mention "Post-Merger Integration" or
+"Human Capital Due Diligence" — these are fastest-closing deals for Market Intelligence.
 
 They need historical workforce depth — talent flows, skill-based alpha, headcount
 trends — and are currently stuck on snapshot data.
