@@ -72,56 +72,59 @@ def vinnie_alert(msg: str):
 # Search queries from BI Buyer Intelligence Dossier
 # ---------------------------------------------------------------------------
 SEARCH_QUERIES = [
-    # Equity Research Boutiques
-    "equity research boutique firm independent",
-    "independent equity research firm small team",
-    "boutique equity research institutional investors",
-    "equity research firm initiating coverage",
-    "independent research firm publishes reports",
-    "equity research boutique small-cap coverage",
-    "sell-side research boutique independent",
-    "equity research firm alternative data alpha",
+    # Financial/Investment Prediction AI
+    "AI startup company prediction financial",
+    "machine learning company performance prediction",
+    "AI lab stock prediction structured data",
+    "ML startup equity signal generation",
+    "AI company revenue forecasting model",
+    "startup investment risk scoring AI",
+    "AI lab financial prediction training data",
+    "machine learning startup company analysis",
 
-    # Sector-Specific Intelligence
-    "healthcare research firm boutique equity",
-    "technology research firm boutique sector",
-    "energy sector research firm independent",
-    "consumer retail research boutique firm",
-    "financial services research firm boutique",
-    "industrial sector research firm equity",
-    "real estate research boutique firm",
-    "SaaS technology research intelligence firm",
+    # Company Intelligence AI
+    "AI startup company scoring benchmarking",
+    "AI company intelligence platform startup",
+    "machine learning company health prediction",
+    "AI startup failure prediction company",
+    "AI lab competitive intelligence scoring",
+    "startup M&A target identification AI",
+    "company analysis AI product startup",
 
-    # Alt Data Aggregators
-    "alternative data aggregator firm small",
-    "niche data provider hedge funds",
-    "alternative data boutique firm",
-    "data aggregator investment research",
+    # Economic/Labor Market Modeling AI
+    "AI startup economic forecasting model",
+    "machine learning labor market prediction",
+    "AI company workforce trend modeling",
+    "startup economic modeling structured data",
+    "AI lab sector industry prediction",
 
-    # Why Now triggers
-    "equity research firm initiated coverage 2026",
-    "research firm published sector outlook 2026",
-    "research boutique hiring equity researcher 2026",
-    "research firm expanding coverage new sector",
-    "boutique research firm new analyst hire",
+    # Training data seekers
+    "AI startup needs training data company",
+    "ML company structured dataset license",
+    "AI lab alternative data training",
+    "startup looking for company data training",
+    "machine learning tabular data company signals",
 
-    # Named competitors / pattern anchors
-    "firms like Singular Research equity boutique",
-    "firms like Northcoast Research independent",
-    "firms like Stonegate Capital research",
-    "independent research firm similar to MoffettNathanson",
+    # Funded / Why Now
+    "AI startup raised seed 2025 2026 company prediction",
+    "ML startup series A 2025 2026 financial",
+    "AI company funded Y Combinator company data",
+    "AI startup launched product company analysis 2026",
+    "machine learning startup hiring data scientist 2026",
 
-    # Geographic expansion
-    "equity research boutique London UK independent",
-    "investment research firm Europe boutique",
-    "equity research firm Asia Pacific boutique",
-    "independent research firm Canada boutique",
+    # Geographic
+    "AI lab company prediction London UK",
+    "ML startup financial prediction Europe",
+    "AI company prediction Singapore",
+    "AI startup company data Israel",
 
     # Site-targeted
-    "site:linkedin.com equity research boutique independent",
-    "site:crunchbase.com equity research firm funded",
-    "site:linkedin.com sector intelligence boutique firm",
+    "site:crunchbase.com AI startup company prediction funded",
+    "site:producthunt.com company intelligence AI",
+    "site:ycombinator.com company data AI startup",
+    "site:linkedin.com AI lab company prediction small team",
 ]
+
 
 
 
@@ -135,102 +138,104 @@ SEARCH_QUERIES = [
 
 SEGMENT_CONTEXT = """
 ====================================================================
-HIGH-VELOCITY LEAD GENERATION AGENT
+HIGH-VELOCITY LEAD GENERATION AGENT — SMALL AI LABS
 ====================================================================
 
-Your ONLY goal: Find Research Boutiques (Equity Research, Investment
-Research, and Market Intelligence Shops) with 10-100 employees.
+Your ONLY goal: Find Small AI Labs (5-50 employees) that train models
+on structured company-level or economic data and would license external
+training datasets for $15K-$50K.
 
 STRATEGIC ANCHOR:
-"If they don't SELL insights, they won't BUY our data fast."
+"If they don't train on STRUCTURED COMPANY DATA, they won't buy our dataset."
 
 ====================================================================
 PRIORITY TARGETS
 ====================================================================
 
-1. EQUITY RESEARCH BOUTIQUES
-   Firms like Singular, Northcoast, and Stonegate that publish reports
-   for institutional investors. They need differentiated data to stand
-   out against bulge-bracket research.
+1. AI LABS BUILDING FINANCIAL/INVESTMENT PREDICTION MODELS
+   - Company performance prediction
+   - Stock/equity signal generation
+   - Revenue or growth forecasting
+   - Investment risk scoring
+   They need historical company-level features as training inputs.
 
-2. SECTOR-SPECIFIC INTELLIGENCE SHOPS
-   Boutique firms focusing on one industry:
-   - "Healthcare Data Research"
-   - "Tech Infrastructure Analysts"
-   - "Energy Sector Intelligence"
-   - "Financial Services Research"
-   - "Consumer/Retail Specialists"
-   They live and die by unique data angles.
+2. AI LABS BUILDING COMPANY INTELLIGENCE PRODUCTS
+   - Company scoring or benchmarking tools
+   - Competitive intelligence platforms
+   - M&A target identification
+   - Company health or failure prediction
+   They need longitudinal company data to train classifiers and regressors.
 
-3. ALTERNATIVE DATA AGGREGATORS
-   Small firms that package niche data for hedge funds.
-   They already understand datasets and can integrate fast.
-
-====================================================================
-"WHY NOW" TRIGGERS (find at least one per lead)
-====================================================================
-
-- Firm just initiated coverage on new small-cap stocks
-- Firm published a "Sector Outlook" or thematic report
-- Firm is hiring a "Data Analyst" or "Equity Researcher"
-- Firm expanded coverage to a new sector
-- Firm mentioned "alternative data" or "differentiated research"
-- Firm lost coverage from a larger bank (opportunity to fill gap)
+3. AI LABS DOING ECONOMIC/LABOR MARKET MODELING
+   - Economic forecasting models
+   - Labor market prediction
+   - Sector or industry modeling
+   - Workforce trend analysis
+   They need aggregate workforce signals as macro features.
 
 ====================================================================
-THE ALPHA PITCH (context for qualification)
+HARD EXCLUSIONS — SKIP IMMEDIATELY
 ====================================================================
 
-Our 60M+ company-year records provide "Alpha" because:
-- Hiring velocity signals revenue growth 2-3 quarters ahead
-- Skill-shift patterns reveal technology adoption before earnings
-- Headcount trends across 4.2M companies = sector-level signals
-- Survivorship-bias-free data = clean backtesting
-- 1950-2020 historical depth = no one else has this
-
-Entry product: Growth Intelligence
-- 60M+ company-year records
-- $15,000-$25,000/year license
-- Pre-structured BI views = plug-and-play for analysts
+- AI labs doing computer vision, image, video, or audio only
+- AI labs building chatbots, assistants, or language-only models
+- AI labs focused on NLP without structured data angle
+- AI labs doing robotics or hardware
+- Any company over 100 employees
+- Any company that is a consultancy or services firm
+- Large AI labs (OpenAI, Anthropic, Google, Meta AI, etc.)
 
 ====================================================================
-TIER MAPPING
+SIZE FILTER (STRICT)
 ====================================================================
 
-Growth Intelligence — headcount trends, hiring velocity, scaling patterns
-→ Best for: "How fast is this company growing vs peers?"
-→ Proposed when: firm does equity research, investment analysis
-
-Capability Intelligence — 1.88B skill signals, technology adoption
-→ Best for: "Is this company building AI/cloud capabilities?"
-→ Proposed when: firm covers tech, healthcare innovation, digital transformation
-
-Market Intelligence — role distribution, org structure changes
-→ Best for: "How is this company restructuring post-merger?"
-→ Proposed when: firm does M&A due diligence, competitive analysis
+- 5-50 employees (ideal fast cash)
+- Up to 100 max if very strong fit
+- Founder-led, technical team, no procurement department
+- Must be able to say YES to a data license in 1-3 calls
 
 ====================================================================
-HARD EXCLUSIONS
+"WHY NOW" TRIGGERS (find at least one)
 ====================================================================
 
-- Over 200 employees
-- Survey/panel/UX research firms
-- Generic management consulting
-- Software companies without research product
-- Real-time/HFT data firms
-- Consumer-facing companies
-- Academic institutions
+- Recently raised seed or Series A funding
+- Published a paper or blog about company/economic prediction
+- Hiring ML engineers or data scientists
+- Launched a product involving company analysis or scoring
+- Listed on Product Hunt, Crunchbase, or Y Combinator
+- Mentioned "training data", "alternative data", or "structured datasets"
+
+====================================================================
+THE DATA FIT
+====================================================================
+
+Our 60M+ company-year records are valuable to AI labs because:
+- Pre-structured tabular data ready for ML pipelines
+- 4.2M companies x multiple years = massive feature set
+- Hiring velocity, skill signals, role distribution = predictive features
+- Survivorship-bias-free = clean training data (includes failed companies)
+- 1950-2020 time series = temporal patterns for sequence models
+- Delivery: Parquet, CSV, JSONL = drops into any ML pipeline
+
+====================================================================
+PRICING
+====================================================================
+
+- Training data license: $15,000-$50,000
+- One-time or annual depending on usage
+- Fast close: technical founder evaluates sample, sees value, signs
 
 ====================================================================
 QUALITY STANDARD
 ====================================================================
 
-- Every lead must SELL insights to institutional clients
-- 10-100 employees ideal, up to 200 max
-- Must identify a "Why Now" trigger
-- Must map to Growth or Capability tier
-- If they don't sell research, SKIP
+- Every lead must train models on STRUCTURED COMPANY or ECONOMIC data
+- If they only do NLP/vision/audio -> SKIP
+- If the training data use case is unclear -> SKIP
+- 5-50 employees, founder-led, technical
+- Must feel like: "Send them a Parquet sample and they'll evaluate it this week"
 """
+
 
 
 
@@ -317,27 +322,36 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     known_list = ", ".join(list(known_companies)[:50]) if known_companies else "None yet"
 
-    prompt = f"""You are a High-Velocity Lead Generation Agent for Vivameda.
+    prompt = f"""You are a High-Velocity Lead Generation Agent finding Small AI Labs.
 
-ONLY goal: Find Research Boutiques that SELL insights. 10-100 employees.
+ONLY goal: Find AI labs (5-50 employees) that train models on structured
+company-level or economic data. They would license our dataset for $15K-$50K.
 
-"If they don't SELL insights, they won't BUY our data fast."
+"If they don't train on STRUCTURED COMPANY DATA, they won't buy our dataset."
 
 PRIORITY:
-1. Equity research boutiques publishing reports for institutional investors
-2. Sector-specific intelligence shops (healthcare, tech, energy, consumer)
-3. Alternative data aggregators packaging niche data for hedge funds
+1. AI labs building financial/investment prediction models
+2. AI labs building company intelligence/scoring products
+3. AI labs doing economic/labor market modeling
+
+HARD EXCLUDE:
+- Computer vision / image / video / audio only labs
+- Chatbot / assistant / language-only labs
+- NLP without structured data angle
+- Robotics / hardware
+- Over 100 employees
+- Consultancies / services
+- Large labs (OpenAI, Anthropic, Google, Meta)
 
 For EVERY lead, find a "Why Now" trigger:
-- Initiated new stock coverage
-- Published sector outlook report
-- Hiring data analyst or equity researcher
-- Expanded to new sector
-- Mentioned alternative data publicly
+- Raised seed/Series A recently
+- Published paper on company/economic prediction
+- Hiring ML engineers or data scientists
+- Launched company analysis/scoring product
+- Listed on Product Hunt, Crunchbase, Y Combinator
 
-Map each lead to a tier:
-- Growth Intelligence: scaling analysis, headcount trends
-- Capability Intelligence: tech-edge analysis, skill signals
+Our data fit: 60M+ company-year records, pre-structured tabular data,
+Parquet/CSV/JSONL delivery, drops into any ML pipeline. Survivorship-bias-free.
 
 {SEGMENT_CONTEXT}
 
@@ -350,46 +364,49 @@ Return JSON:
 
 "leads": array, each element:
 {{{{
-  "company": "Firm Name",
+  "company": "Lab Name",
   "website": "domain.com",
-  "segment": "Equity Research Boutique / Sector Intelligence / Alt Data Aggregator",
-  "why_buyer": "Publishes equity research for hedge funds. 25 analysts. Recently initiated coverage on 15 small-cap tech stocks.",
+  "segment": "Financial Prediction AI / Company Intelligence AI / Economic Modeling AI",
+  "why_buyer": "5-person AI lab building company failure prediction model. Raised $2M seed. Founder is ex-Two Sigma. Needs structured company data for training.",
   "evidence_url": "https://...",
-  "buying_signals": "Published Q1 2026 Sector Outlook. Hiring equity researcher. Mentions alternative data.",
+  "buying_signals": "Raised seed funding. Published paper on company prediction. Hiring ML engineers. 8-person team.",
   "lead_score": 9,
-  "recommended_contact_role": "Head of Research / Lead Analyst / Managing Partner",
-  "company_size": "25",
-  "est_data_budget": "$15K-$25K",
+  "recommended_contact_role": "Founder / CTO",
+  "company_size": "8",
+  "est_data_budget": "$15K-$50K",
   "known_subscriptions": "Unknown",
-  "notes": "Why Now: Published sector outlook Q1 2026. Hook: 60M records show hiring velocity signals 2-3 quarters before earnings. Proposed Tier: Growth Intelligence.",
-  "product_fit": "Growth Intelligence",
-  "use_case": "Add workforce alpha signals to equity research reports for subscribers",
+  "notes": "Why Now: Raised $2M seed Q1 2026. Training use case: company failure prediction using workforce features. Send Parquet sample.",
+  "product_fit": "ML Training Data License",
+  "use_case": "Train company prediction model using workforce features as input signals",
   "is_hot": true,
   "tier": 1,
   "country": "US"
 }}}}
 
 "analysis": {{{{
-  "top_3": ["Firm A", "Firm B", "Firm C"],
-  "top_3_reasoning": "Strongest Why Now signals + sell insights + small team",
+  "top_3": ["Lab A", "Lab B", "Lab C"],
+  "top_3_reasoning": "Strongest: train on structured company data + small team + funded + technical founder",
   "emerging_themes": "Patterns from today"
 }}}}
 
 Empty: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "Nothing qualified", "emerging_themes": "None"}}}}}}
 
 OUTPUT per lead:
-1. Firm Name & Target Analysts
-2. Recent Report Topic (the "Hook")
-3. How our 60M records provide "Alpha" for that specific report
-4. Proposed Tier: Growth or Capability
+1. Lab Name & Website
+2. What they build (specific model/product type)
+3. Why they need our data (specific training use case)
+4. "Why Now" signal
+5. Decision maker (Founder/CTO)
+6. Score (1-10)
 
 RULES:
 - 10-15 leads per batch
-- Every lead SELLS insights. No exceptions.
-- Must have Why Now trigger
-- 10-100 employees (200 max)
-- If they don't sell research, SKIP
+- Every lead trains on STRUCTURED COMPANY or ECONOMIC data
+- If vision/audio/chatbot only -> SKIP
+- 5-50 employees, founder-led, technical
+- "Send them a Parquet sample and they'll evaluate it this week"
 """
+
 
 
 
