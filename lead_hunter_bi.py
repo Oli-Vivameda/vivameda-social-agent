@@ -72,56 +72,61 @@ def vinnie_alert(msg: str):
 # Search queries from BI Buyer Intelligence Dossier
 # ---------------------------------------------------------------------------
 SEARCH_QUERIES = [
-    # Financial/Investment Prediction AI
-    "AI startup company prediction financial",
-    "machine learning company performance prediction",
-    "AI lab stock prediction structured data",
-    "ML startup equity signal generation",
-    "AI company revenue forecasting model",
-    "startup investment risk scoring AI",
-    "AI lab financial prediction training data",
-    "machine learning startup company analysis",
+    # Financial/Investment Prediction AI (US)
+    "AI startup company prediction financial US",
+    "machine learning startup equity signal prediction",
+    "AI lab company performance prediction structured data",
+    "startup predicts company growth firmographic data",
+    "AI company revenue forecasting structured features",
+    "AI startup credit risk scoring company data",
+    "startup success prediction AI model",
+    "private market intelligence AI startup",
 
     # Company Intelligence AI
-    "AI startup company scoring benchmarking",
-    "AI company intelligence platform startup",
-    "machine learning company health prediction",
-    "AI startup failure prediction company",
-    "AI lab competitive intelligence scoring",
-    "startup M&A target identification AI",
-    "company analysis AI product startup",
+    "AI company scoring engine startup",
+    "company benchmarking AI platform startup",
+    "AI startup M&A target ranking",
+    "competitive intelligence AI scoring startup",
+    "company health prediction AI startup",
+    "AI startup company classification model",
 
-    # Economic/Labor Market Modeling AI
-    "AI startup economic forecasting model",
-    "machine learning labor market prediction",
-    "AI company workforce trend modeling",
-    "startup economic modeling structured data",
-    "AI lab sector industry prediction",
+    # Economic/Labor Modeling AI
+    "AI startup economic forecasting structured data",
+    "machine learning labor market prediction startup",
+    "AI workforce prediction model startup",
+    "sector forecasting AI company data",
+
+    # Israel AI Labs
+    "AI startup Israel company prediction",
+    "machine learning startup Tel Aviv company data",
+    "AI lab Israel financial prediction",
+    "Israel AI startup structured data training",
+    "AI company Israel investment prediction",
 
     # Training data seekers
-    "AI startup needs training data company",
-    "ML company structured dataset license",
-    "AI lab alternative data training",
-    "startup looking for company data training",
-    "machine learning tabular data company signals",
+    "AI startup needs structured training data company",
+    "machine learning startup feature engineering company data",
+    "AI lab training data structured datasets",
+    "startup looking for company-level training data",
+    "AI company tabular data training features",
+    "machine learning startup data quality problems",
 
     # Funded / Why Now
     "AI startup raised seed 2025 2026 company prediction",
-    "ML startup series A 2025 2026 financial",
-    "AI company funded Y Combinator company data",
-    "AI startup launched product company analysis 2026",
-    "machine learning startup hiring data scientist 2026",
+    "ML startup series A 2025 2026 structured data",
+    "AI company Y Combinator company prediction",
+    "AI startup launched scoring product 2026",
+    "ML startup hiring data scientist company analysis",
 
-    # Geographic
-    "AI lab company prediction London UK",
-    "ML startup financial prediction Europe",
-    "AI company prediction Singapore",
-    "AI startup company data Israel",
+    # Backtesting / benchmarking seekers
+    "AI startup backtesting company signals",
+    "ML company benchmarking historical data",
+    "AI startup feature engineering firmographic",
 
     # Site-targeted
     "site:crunchbase.com AI startup company prediction funded",
-    "site:producthunt.com company intelligence AI",
-    "site:ycombinator.com company data AI startup",
+    "site:ycombinator.com company prediction AI",
+    "site:producthunt.com company scoring AI",
     "site:linkedin.com AI lab company prediction small team",
 ]
 
@@ -136,105 +141,231 @@ SEARCH_QUERIES = [
 
 
 
+
 SEGMENT_CONTEXT = """
 ====================================================================
-HIGH-VELOCITY LEAD GENERATION AGENT — SMALL AI LABS
+REVENUE-FOCUSED LEAD GENERATION AGENT — SMALL AI LABS
 ====================================================================
 
-Your ONLY goal: Find Small AI Labs (5-50 employees) that train models
-on structured company-level or economic data and would license external
-training datasets for $15K-$50K.
+Your only goal: find small AI labs (5-50 employees) that actively train
+or evaluate models on structured company, workforce, or economic data
+and would realistically pay $15K-$50K for external training datasets
+within 2-4 weeks.
 
-STRATEGIC ANCHOR:
-"If they don't train on STRUCTURED COMPANY DATA, they won't buy our dataset."
+If a company is not a clear data buyer, REJECT it.
 
 ====================================================================
-PRIORITY TARGETS
+STRATEGIC CORE RULE (NON-NEGOTIABLE)
 ====================================================================
 
-1. AI LABS BUILDING FINANCIAL/INVESTMENT PREDICTION MODELS
+If they don't build prediction, scoring, or forecasting models using
+structured company/economic data -> REJECT.
+
+This overrides everything.
+
+====================================================================
+GEOGRAPHY PRIORITY
+====================================================================
+
+Focus ONLY on:
+- United States (primary)
+- Israel (very high-quality AI density)
+
+Secondary (only if perfect fit):
+- UK
+- Canada
+
+Reject everything else unless exceptional.
+
+====================================================================
+IDEAL ICP (ALL THREE MANDATORY)
+====================================================================
+
+1. Model Type (MANDATORY) — they build at least one of:
+   - Prediction models
+   - Scoring / ranking systems
+   - Forecasting systems
+   - Classification models
+   - Time-series models
+
+2. Data Type (MANDATORY) — they use or require:
+   - Company-level data
+   - Firmographic data
+   - Workforce / hiring data
+   - Business / economic time series
+   - Structured tabular datasets
+
+3. Product Output (MANDATORY) — they SELL:
+   - Predictions
+   - Scores
+   - Rankings
+   - Insights derived from models
+   NOT dashboards. NOT automation.
+
+====================================================================
+PERFECT BUYER SEGMENTS (PRIORITIZE HARD)
+====================================================================
+
+1. AI for investment / financial prediction
    - Company performance prediction
-   - Stock/equity signal generation
-   - Revenue or growth forecasting
-   - Investment risk scoring
-   They need historical company-level features as training inputs.
+   - Private market intelligence
+   - Equity / credit signals
+   - Startup success prediction
 
-2. AI LABS BUILDING COMPANY INTELLIGENCE PRODUCTS
-   - Company scoring or benchmarking tools
-   - Competitive intelligence platforms
-   - M&A target identification
-   - Company health or failure prediction
-   They need longitudinal company data to train classifiers and regressors.
+2. AI company intelligence platforms
+   - Company scoring engines
+   - Benchmarking tools
+   - M&A target ranking
+   - Competitive intelligence
 
-3. AI LABS DOING ECONOMIC/LABOR MARKET MODELING
-   - Economic forecasting models
-   - Labor market prediction
-   - Sector or industry modeling
-   - Workforce trend analysis
-   They need aggregate workforce signals as macro features.
+3. AI economic / labor modeling
+   - Workforce prediction
+   - Sector forecasting
+   - Macro models using company data
 
 ====================================================================
-HARD EXCLUSIONS — SKIP IMMEDIATELY
+HARD EXCLUSIONS (STRICT — NO EXCEPTIONS)
 ====================================================================
 
-- AI labs doing computer vision, image, video, or audio only
-- AI labs building chatbots, assistants, or language-only models
-- AI labs focused on NLP without structured data angle
-- AI labs doing robotics or hardware
-- Any company over 100 employees
-- Any company that is a consultancy or services firm
-- Large AI labs (OpenAI, Anthropic, Google, Meta AI, etc.)
+Reject immediately if:
+
+Product category:
+- Chatbot / copilot / assistant
+- Agent / workflow automation
+- CRM / support AI
+- Dev tools / infra / MLOps
+- Data labeling / annotation
+- Generic "AI platform"
+- Consulting / services
+
+Technical scope:
+- NLP-only (text analysis only)
+- Computer vision
+- Audio / speech
+- Robotics
+
+Data usage:
+- Only uses client/internal data
+- No evidence of external dataset usage
+
+Company size:
+- Over 100 employees
+- Enterprise AI companies
 
 ====================================================================
-SIZE FILTER (STRICT)
+CRITICAL FILTER (THIS FIXES YOUR PIPELINE)
 ====================================================================
 
-- 5-50 employees (ideal fast cash)
-- Up to 100 max if very strong fit
-- Founder-led, technical team, no procurement department
-- Must be able to say YES to a data license in 1-3 calls
+You MUST identify this explicitly:
+"What exact model do they train?"
+
+If you cannot answer this clearly -> REJECT.
+
+Acceptable answers:
+- "predicts company growth probability using structured firmographic features"
+- "ranks startups based on likelihood to scale"
+- "forecasts sector performance using company-level signals"
+- "classifies companies into risk categories using historical data"
+
+If the answer is vague like "uses AI", "analyzes data", "builds insights"
+-> REJECT
 
 ====================================================================
-"WHY NOW" TRIGGERS (find at least one)
+"WHY NOW" SIGNAL (MANDATORY — at least ONE)
 ====================================================================
 
-- Recently raised seed or Series A funding
-- Published a paper or blog about company/economic prediction
-- Hiring ML engineers or data scientists
-- Launched a product involving company analysis or scoring
-- Listed on Product Hunt, Crunchbase, or Y Combinator
-- Mentioned "training data", "alternative data", or "structured datasets"
+- Raised seed / Series A (last 24 months)
+- Hiring ML / data scientists
+- Launched product involving prediction/scoring
+- YC / Product Hunt / early traction
+- Mentions: training data, structured datasets, feature engineering,
+  forecasting, benchmarking
 
 ====================================================================
-THE DATA FIT
+DATA FIT (YOU MUST EXPLAIN THIS)
 ====================================================================
 
-Our 60M+ company-year records are valuable to AI labs because:
-- Pre-structured tabular data ready for ML pipelines
-- 4.2M companies x multiple years = massive feature set
-- Hiring velocity, skill signals, role distribution = predictive features
-- Survivorship-bias-free = clean training data (includes failed companies)
-- 1950-2020 time series = temporal patterns for sequence models
-- Delivery: Parquet, CSV, JSONL = drops into any ML pipeline
+For every lead, explain EXACTLY how they would use our dataset:
+- Training input
+- Feature enrichment
+- Backtesting
+- Benchmarking
+- Model validation
+
+If you cannot map this -> REJECT
 
 ====================================================================
-PRICING
+SCORING MODEL (ENFORCE STRICTLY)
 ====================================================================
 
-- Training data license: $15,000-$50,000
-- One-time or annual depending on usage
-- Fast close: technical founder evaluates sample, sees value, signs
+Data Fit (0-4):
+  4 = direct, obvious training use case
+  3 = strong
+  <=2 = reject
+
+Speed to Close (0-3):
+  3 = founder-led, small team
+  2 = moderate
+  1 = slow
+
+Why Now (0-2):
+  2 = strong trigger
+  1 = weak
+
+Commercial Relevance (0-1):
+  1 = clear B2B monetization
+
+TOTAL:
+  8-10 -> HIGH PRIORITY
+  6-7  -> SECONDARY
+  <6   -> REJECT
 
 ====================================================================
-QUALITY STANDARD
+GOLD STANDARD (MENTAL MODEL)
 ====================================================================
 
-- Every lead must train models on STRUCTURED COMPANY or ECONOMIC data
-- If they only do NLP/vision/audio -> SKIP
-- If the training data use case is unclear -> SKIP
-- 5-50 employees, founder-led, technical
-- Must feel like: "Send them a Parquet sample and they'll evaluate it this week"
+A perfect lead should feel like:
+"If I send them a 300-company Parquet sample today, their CTO will test it this week."
+
+If that is not true -> reject.
+
+====================================================================
+EXTRA EDGE (IMPORTANT FOR REVENUE)
+====================================================================
+
+Bias towards companies that:
+- Talk about feature engineering
+- Talk about training data problems
+- Complain about data quality / missing data
+- Mention benchmarking or backtesting
+
+These are buyers in pain.
+
+====================================================================
+FINAL STRATEGIC NOTE
+====================================================================
+
+You were previously targeting "AI companies."
+Now you are targeting "AI companies that depend on structured historical
+data to train predictive models."
+
+That is probably <5% of the AI market — but 90% of your buyers.
+
+====================================================================
+VIVAMEDA DATASET CONTEXT
+====================================================================
+
+- ~4.2M companies, ~60M+ company-year records
+- 1950-2020 time series
+- Hiring velocity, growth, churn, seniority shifts, skill signals
+- 1.88B skill-level signals
+- Survivorship-bias-free (includes failed/merged/delisted)
+- 87% role coverage at headcount >= 20
+- 96.5% capability coverage
+- Delivery: Parquet, CSV, JSONL
+- Price: $15K-$50K training data license
 """
+
 
 
 
@@ -322,36 +453,37 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     known_list = ", ".join(list(known_companies)[:50]) if known_companies else "None yet"
 
-    prompt = f"""You are a High-Velocity Lead Generation Agent finding Small AI Labs.
+    prompt = f"""You are a Revenue-Focused Lead Generation Agent finding Small AI Labs.
 
-ONLY goal: Find AI labs (5-50 employees) that train models on structured
-company-level or economic data. They would license our dataset for $15K-$50K.
+Find AI labs (5-50 employees) that train predictive models on structured
+company/economic data. US and Israel primary. UK/Canada secondary.
 
-"If they don't train on STRUCTURED COMPANY DATA, they won't buy our dataset."
+CORE RULE: If they don't build prediction, scoring, or forecasting models
+using structured company/economic data -> REJECT. This overrides everything.
 
-PRIORITY:
-1. AI labs building financial/investment prediction models
-2. AI labs building company intelligence/scoring products
-3. AI labs doing economic/labor market modeling
+CRITICAL FILTER: "What exact model do they train?"
+If you cannot answer clearly -> REJECT.
+"uses AI" or "analyzes data" = REJECT.
+Must be specific: "predicts company growth using firmographic features."
 
-HARD EXCLUDE:
-- Computer vision / image / video / audio only labs
-- Chatbot / assistant / language-only labs
-- NLP without structured data angle
-- Robotics / hardware
-- Over 100 employees
-- Consultancies / services
-- Large labs (OpenAI, Anthropic, Google, Meta)
+PERFECT SEGMENTS:
+1. AI for investment/financial prediction (company performance, equity signals)
+2. AI company intelligence platforms (scoring, benchmarking, M&A ranking)
+3. AI economic/labor modeling (workforce prediction, sector forecasting)
 
-For EVERY lead, find a "Why Now" trigger:
-- Raised seed/Series A recently
-- Published paper on company/economic prediction
-- Hiring ML engineers or data scientists
-- Launched company analysis/scoring product
-- Listed on Product Hunt, Crunchbase, Y Combinator
+HARD EXCLUDE: chatbots, assistants, agents, CRM AI, dev tools, MLOps,
+data labeling, NLP-only, vision, audio, robotics, consulting, services,
+100+ employees, enterprise AI, only uses internal/client data.
 
-Our data fit: 60M+ company-year records, pre-structured tabular data,
-Parquet/CSV/JSONL delivery, drops into any ML pipeline. Survivorship-bias-free.
+SCORING (enforce strictly):
+Data Fit (0-4) + Speed to Close (0-3) + Why Now (0-2) + Commercial Relevance (0-1)
+8-10 = HIGH PRIORITY. 6-7 = SECONDARY. Below 6 = REJECT.
+
+GOLD STANDARD: "If I send them a 300-company Parquet sample today,
+their CTO will test it this week." If not true -> reject.
+
+BIAS TOWARD: companies mentioning feature engineering, training data problems,
+data quality complaints, benchmarking, backtesting. These are buyers in pain.
 
 {SEGMENT_CONTEXT}
 
@@ -367,17 +499,17 @@ Return JSON:
   "company": "Lab Name",
   "website": "domain.com",
   "segment": "Financial Prediction AI / Company Intelligence AI / Economic Modeling AI",
-  "why_buyer": "5-person AI lab building company failure prediction model. Raised $2M seed. Founder is ex-Two Sigma. Needs structured company data for training.",
+  "why_buyer": "8-person AI lab. Predicts startup success using firmographic features. Raised $3M seed. CTO ex-Two Sigma. Needs structured company data.",
   "evidence_url": "https://...",
-  "buying_signals": "Raised seed funding. Published paper on company prediction. Hiring ML engineers. 8-person team.",
+  "buying_signals": "Raised seed. Hiring ML engineers. Product scores companies. Mentions feature engineering on blog.",
   "lead_score": 9,
   "recommended_contact_role": "Founder / CTO",
   "company_size": "8",
   "est_data_budget": "$15K-$50K",
   "known_subscriptions": "Unknown",
-  "notes": "Why Now: Raised $2M seed Q1 2026. Training use case: company failure prediction using workforce features. Send Parquet sample.",
+  "notes": "EXACT MODEL: predicts startup success probability using firmographic and workforce features. DATA FIT: training input for classification model. WHY NOW: raised $3M seed Q4 2025. OUTREACH: Send 300-company Parquet sample.",
   "product_fit": "ML Training Data License",
-  "use_case": "Train company prediction model using workforce features as input signals",
+  "use_case": "Train startup success prediction model using workforce composition as input features",
   "is_hot": true,
   "tier": 1,
   "country": "US"
@@ -385,27 +517,33 @@ Return JSON:
 
 "analysis": {{{{
   "top_3": ["Lab A", "Lab B", "Lab C"],
-  "top_3_reasoning": "Strongest: train on structured company data + small team + funded + technical founder",
+  "top_3_reasoning": "Train on structured company data + small team + funded + CTO would test Parquet this week",
   "emerging_themes": "Patterns from today"
 }}}}
 
 Empty: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "Nothing qualified", "emerging_themes": "None"}}}}}}
 
 OUTPUT per lead:
-1. Lab Name & Website
-2. What they build (specific model/product type)
-3. Why they need our data (specific training use case)
-4. "Why Now" signal
-5. Decision maker (Founder/CTO)
-6. Score (1-10)
+1. Company name + website
+2. Location (US or Israel preferred)
+3. Employee estimate
+4. What they build (SPECIFIC model/product)
+5. EXACT model use case (concrete, not vague)
+6. Why they need our dataset (specific training use)
+7. Why now (trigger)
+8. Decision maker (Founder/CTO)
+9. Score (1-10)
+10. One-line outreach angle
 
 RULES:
 - 10-15 leads per batch
-- Every lead trains on STRUCTURED COMPANY or ECONOMIC data
-- If vision/audio/chatbot only -> SKIP
-- 5-50 employees, founder-led, technical
-- "Send them a Parquet sample and they'll evaluate it this week"
+- Score 6+ only. Below 6 = reject.
+- MUST answer "what exact model do they train?"
+- US + Israel primary. UK/Canada secondary.
+- 5-50 employees, founder-led
+- "Send Parquet sample -> CTO tests this week" = the bar
 """
+
 
 
 
