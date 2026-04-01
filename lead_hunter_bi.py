@@ -72,58 +72,64 @@ def vinnie_alert(msg: str):
 # Search queries from BI Buyer Intelligence Dossier
 # ---------------------------------------------------------------------------
 SEARCH_QUERIES = [
-    # Companies that sell insights/research
-    "firm sells research reports investors",
-    "company sells market intelligence subscriptions",
-    "research firm sells insights financial clients",
-    "boutique sells equity research analysis",
-    "firm sells industry research reports",
-    "company sells sector intelligence analysis",
-    "independent research provider sells reports",
+    # Equity Research boutiques
+    "equity research boutique firm alternative data",
+    "independent equity research firm alpha",
+    "boutique equity research talent workforce",
+    "equity research firm human capital analysis",
+    "independent research firm workforce signals",
+    "sell-side research boutique small team",
 
-    # Companies using alternative/external data
-    "company uses alternative data investment decisions",
-    "firm uses external datasets analysis",
-    "company alternative data signals investment",
-    "research firm external data sources insights",
-    "firm integrates alternative datasets",
+    # M&A Due Diligence
+    "M&A due diligence firm human capital",
+    "M&A advisory boutique workforce analysis",
+    "human capital due diligence M&A firm",
+    "due diligence firm talent assessment",
+    "boutique M&A firm data-driven",
 
-    # Companies needing early/predictive signals
-    "company predictive analytics investment signals",
-    "firm early indicators financial performance",
-    "company leading indicators equity research",
-    "research firm predictive signals analytics",
+    # Executive Search with data angle
+    "executive search firm talent benchmarking",
+    "executive search workforce intelligence",
+    "talent benchmarking firm executive",
+    "leadership advisory firm data-driven",
 
-    # Small data-driven intelligence firms
-    "small intelligence firm data-driven insights",
-    "boutique data firm investment research",
-    "niche research firm data analysis small team",
-    "independent analyst firm data insights",
-    "small firm monetizes data intelligence",
+    # Economic Policy / Think tanks
+    "economic policy research firm workforce",
+    "think tank labor market research",
+    "economic research firm talent trends",
+    "policy research workforce transformation",
+
+    # Niche Strategy Consulting
+    "strategy consulting firm workforce data",
+    "niche consulting firm talent analytics",
+    "boutique consulting firm workforce transformation",
+    "upskilling consulting firm data",
+
+    # Alternative data / alpha seekers
+    "alternative data firm workforce signals",
+    "alpha generation workforce data",
+    "talent flow alternative data investment",
+    "skill-based alpha research firm",
 
     # Geographic expansion
-    "research intelligence firm London UK",
-    "data-driven research firm Europe",
-    "investment research firm Singapore data",
-    "intelligence firm Hong Kong analysis",
+    "equity research boutique London UK",
+    "M&A due diligence firm Europe",
+    "executive search firm Singapore talent",
+    "research firm Hong Kong alternative data",
+    "strategy consulting firm UAE workforce",
 
-    # Discovery / emerging
-    "research firm founded 2024 2025 data-driven",
-    "intelligence startup launched 2025 2026",
-    "data research firm new funding",
-
-    # Competitor-adjacent / ecosystem
-    "alternative data vendor workforce hiring",
-    "company intelligence provider small firm",
-    "sector research firm alternative data",
-    "investment research boutique alternative data",
+    # Why Now signals
+    "research firm hired data scientist 2025 2026",
+    "firm published talent trends report 2026",
+    "boutique firm launched workforce product 2026",
+    "firm expanding alternative data 2026",
 
     # Site-targeted
-    "site:crunchbase.com research intelligence firm funded",
-    "site:crunchbase.com alternative data company seed",
-    "site:linkedin.com research firm sells insights data",
-    "site:datarade.ai intelligence research data provider",
+    "site:linkedin.com equity research boutique alternative data",
+    "site:crunchbase.com M&A due diligence firm",
+    "site:crunchbase.com equity research boutique funded",
 ]
+
 
 
 
@@ -135,91 +141,126 @@ SEARCH_QUERIES = [
 
 SEGMENT_CONTEXT = """
 ====================================================================
-VIVAMEDA LEAD FINDER — BUYING LOGIC, NOT CATEGORIES
+VIVAMEDA SENIOR MARKET INTELLIGENCE RESEARCHER
 ====================================================================
 
-You are identifying high-probability buyers for a B2B data product.
+You are a Senior Market Intelligence Researcher. Your objective is to
+identify high-intent, high-velocity sales leads for Vivameda, a provider
+of longitudinal workforce intelligence.
 
-The product is a longitudinal company-level dataset capturing:
-- Workforce evolution over time
-- Hiring patterns
-- Role distribution changes
-- Capability build-up inside companies
-
-The dataset provides early signals that often appear BEFORE:
-- Financial results
-- Earnings reports
-- Public narratives
+We are prioritizing "Fast Cash" deals — small boutique firms with short
+decision-making cycles that need an immediate analytical edge over
+larger competitors.
 
 ====================================================================
-WHO IS A STRONG CANDIDATE (focus on HOW they operate)
+THE TARGET AVATAR: "THE AGILE BOUTIQUE"
 ====================================================================
 
-Do NOT focus on industry labels. Focus ONLY on how the company
-operates and makes money.
+Size: 10-100 employees
+- Decision-makers are accessible
+- Have discretionary budget
+- Can move fast
 
-A company IS a strong candidate if:
-- They sell insights, research, or intelligence
-- OR they use data to make investment or strategic decisions
-- OR they already work with external or alternative datasets
-- OR they need early signals / predictive inputs
-- OR they differentiate through proprietary data or analysis
+Industry Focus:
+- Equity Research
+- M&A Due Diligence
+- Executive Search
+- Economic Policy
+- Niche Strategy Consulting
 
-====================================================================
-WHO IS NOT A GOOD CANDIDATE
-====================================================================
+Geography: Worldwide (Vivameda covers 100+ countries)
 
-A company is NOT a good candidate if:
-- They primarily sell software tools without data dependency
-- They do consumer research (surveys, UX, panels)
-- They operate in retail, pricing, or product analytics
-- They are generic data providers (company databases, enrichment tools)
-- They rely on project-based consulting instead of reusable data
-- They are very large enterprises with slow decision cycles
+Current Pain Point: They are currently using "snapshot" data and lack
+the historical depth to see "talent flows" or "skill-based alpha" over time.
 
 ====================================================================
-IDEAL CHARACTERISTICS (prioritize strongly)
+SEARCH PARAMETERS & KEY INDICATORS
 ====================================================================
 
-- Small to mid-sized (approx. 10-200 employees)
-- Likely to have direct access to decision makers
-- Already monetizing information, insights, or analysis
-- Can realistically use a new dataset immediately
-- Would benefit from seeing signals earlier than competitors
+Identify firms that mention the following on their websites or LinkedIn:
+
+1. "Alternative Data" or "Alpha"
+   → Indicates they value non-traditional datasets for investment/strategy
+
+2. "Human Capital Due Diligence"
+   → Indicates immediate need for our Market Intelligence (role distribution) layer
+
+3. "Talent Benchmarking"
+   → Indicates need for our Growth Intelligence (headcount/tenure) layer
+
+4. "Workforce Transformation/Upskilling"
+   → Indicates need for our Capability Intelligence (1.8B+ skill signals) layer
 
 ====================================================================
-IMPORTANT RULES
+DATA HOOKS (for outreach context)
 ====================================================================
 
-- Be highly selective — quality over quantity
-- Avoid obvious but slow enterprise targets
-- Avoid companies where the use case is unclear or forced
-- Only include companies where:
-  "They could realistically use this dataset immediately to improve
-  decisions, outputs, or revenue"
+These are Vivameda's key performance metrics:
+
+- Historical Depth: Continuous workforce trends dating back to 1950
+- High-Density Coverage: 87.19% role coverage and 96.47% skill coverage
+  for companies with at least 20 employees
+- Speed to Insight: Pre-structured, "analysis-ready" BI views that
+  eliminate the need for data cleaning
+- Scale: ~4.2M companies, ~60M+ company-year records, 1.88B skill signals
 
 ====================================================================
-PRODUCT DETAILS
+THE "TEASER" OFFER (Fast-Cycle Strategy)
 ====================================================================
 
-- ~4.2M companies, ~60M+ company-year records
-- 1950-2020 observed data, longitudinal time series
-- Hiring velocity, growth, churn, seniority shifts, capability/skill signals
-- Survivorship-bias-free (includes failed/merged/delisted companies)
-- 87% role coverage at headcount >= 20
-- Delivery: Parquet, CSV, JSONL, Snowflake
-- Price: $10K-$20K
+Focus on Growth Intelligence as the entry point:
+- Value: 60M+ company-year records
+- Price: $15,000-$25,000/year license
+- Speed: Position as "plug-and-play" via vw_snapshot_observed view
+  for immediate project use
 
 ====================================================================
-TARGET CONTACTS
+THE "WHY NOW" SIGNAL (CRITICAL)
 ====================================================================
 
-- Founder / CEO (at smaller firms)
-- Head of Research
-- Head of Data / CDO
-- Head of Alternative Data
-- Portfolio Manager (if data-driven)
+For every lead, you MUST identify a "Why Now" signal:
+- Recently hired a Data Scientist or Head of Data
+- Published a report on talent trends or workforce
+- Advised on a recent M&A deal
+- Launched a new research product or data offering
+- Mentioned alternative data or workforce analytics publicly
+- Expanded into a new sector requiring talent intelligence
+
+If you cannot find a "Why Now" signal, note "Signal: General fit"
+but still include the lead if all other criteria are met.
+
+====================================================================
+RECOMMENDED TIER MAPPING
+====================================================================
+
+Growth Intelligence — headcount trends, hiring velocity, tenure patterns
+→ Best for: Equity research, investment analysis, benchmarking
+
+Market Intelligence — role distribution, organizational structure
+→ Best for: M&A due diligence, executive search, competitive analysis
+
+Capability Intelligence — 1.8B+ skill signals, upskilling patterns
+→ Best for: Workforce transformation, talent strategy, technology adoption
+
+====================================================================
+HARD EXCLUSIONS
+====================================================================
+- Large enterprises (500+ employees) with slow procurement
+- Survey/panel/UX research firms
+- Generic consulting without data products
+- Software tools without data dependency
+- Consumer-facing companies
+- Real-time/HFT data firms (our data is historical)
+
+====================================================================
+QUALITY STANDARD
+====================================================================
+- Every lead must be an "Agile Boutique" — small, fast, data-hungry
+- Quality over quantity
+- If the use case is unclear or forced, SKIP
+- Only include firms where the decision-maker can say yes quickly
 """
+
 
 
 
@@ -304,29 +345,19 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     known_list = ", ".join(list(known_companies)[:50]) if known_companies else "None yet"
 
-    prompt = f"""You are finding high-probability buyers for a longitudinal workforce intelligence dataset.
+    prompt = f"""You are a Senior Market Intelligence Researcher for Vivameda.
 
-Think in BUYING LOGIC, not categories. Ask: "Does this company operate in a way
-where workforce evolution signals would immediately improve their decisions,
-outputs, or revenue?"
+Find "Agile Boutique" firms: 10-100 employees, equity research, M&A due diligence,
+executive search, economic policy, or niche strategy consulting. Worldwide.
 
-STRONG CANDIDATE if they:
-- Sell insights, research, or intelligence
-- Use data for investment or strategic decisions
-- Work with external/alternative datasets
-- Need early signals or predictive inputs
-- Differentiate through proprietary data or analysis
+They need historical workforce depth — talent flows, skill-based alpha, headcount
+trends — and are currently stuck on snapshot data.
 
-NOT A CANDIDATE if they:
-- Sell software tools without data dependency
-- Do consumer research (surveys, UX, panels)
-- Operate in retail/pricing/product analytics
-- Are generic data providers (enrichment, company databases)
-- Rely on project-based consulting
-- Are very large with slow decision cycles
+Look for firms mentioning: "alternative data", "alpha", "human capital due diligence",
+"talent benchmarking", "workforce transformation", "upskilling".
 
-Ideal: 10-200 employees. Direct access to decision makers. Already monetizing
-information. Can use a new dataset immediately. Would benefit from earlier signals.
+For each lead, identify a "Why Now" signal: recent hire, published report,
+M&A deal, new product launch, or public mention of workforce/alt data.
 
 {SEGMENT_CONTEXT}
 
@@ -341,18 +372,18 @@ Return JSON:
 {{{{
   "company": "Firm Name",
   "website": "domain.com",
-  "segment": "Research Enhancement / Investment Signal / Data Product Expansion",
-  "why_buyer": "Sells equity research to hedge funds. 20-person team. Uses external datasets. Would use workforce signals as leading indicator before earnings.",
+  "segment": "Equity Research / M&A Due Diligence / Executive Search / Economic Policy / Strategy Consulting",
+  "why_buyer": "Boutique equity research firm. 30 employees. Recently published talent trends report. Uses alternative data for alpha.",
   "evidence_url": "https://...",
-  "buying_signals": "Monetizes insights. Uses alternative data. Small team. Fast decisions.",
+  "buying_signals": "Mentions alternative data. Published workforce report. Small team. Fast decisions.",
   "lead_score": 8,
-  "recommended_contact_role": "Founder / Head of Research / Head of Data",
-  "company_size": "20",
-  "est_data_budget": "$10K-$20K",
+  "recommended_contact_role": "Head of Research / Managing Partner / Director of Data Strategy",
+  "company_size": "30",
+  "est_data_budget": "$15K-$25K",
   "known_subscriptions": "Unknown",
-  "notes": "Angle: research enhancement. Workforce signals appear before earnings. Immediate use case.",
-  "product_fit": "Research Enhancement",
-  "use_case": "Use workforce evolution signals as leading indicator in equity research",
+  "notes": "Why Now: Published talent trends report Q1 2026. Recommended Tier: Growth Intelligence. Hook: 60M+ company-year records, analysis-ready views.",
+  "product_fit": "Growth Intelligence",
+  "use_case": "Backtest talent flow signals against equity returns for client research",
   "is_hot": true,
   "tier": 1,
   "country": "US"
@@ -360,24 +391,26 @@ Return JSON:
 
 "analysis": {{{{
   "top_3": ["Firm A", "Firm B", "Firm C"],
-  "top_3_reasoning": "Why these 3 understand the value instantly and can move quickly",
+  "top_3_reasoning": "Why these 3 are strongest: Why Now signal + size + data hunger",
   "emerging_themes": "Patterns from today"
 }}}}
 
 Empty: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "Nothing qualified", "emerging_themes": "None"}}}}}}
 
-RECOMMENDED ANGLES (use one per lead):
-- "research enhancement" — they sell research, this makes it better
-- "investment signal" — they make investment decisions, this is an early signal
-- "data product expansion" — they sell data, this enriches their product
+OUTPUT REQUIREMENTS per lead:
+1. Company Name & Website
+2. Primary Decision Maker role
+3. "Why Now" Signal (specific, not generic)
+4. Recommended Tier: Growth, Market, or Capability Intelligence
 
 RULES:
-- Quality over quantity. 10-15 leads per batch.
-- Every lead must pass: "Could they use this dataset immediately?"
-- If use case is unclear or forced, SKIP.
-- Think in buying logic, not categories.
-- No generic data companies, no survey firms, no pure SaaS.
+- 10-15 leads per batch. Quality over quantity.
+- Every lead = Agile Boutique (10-100 people, fast decisions, data-hungry).
+- Must identify Why Now signal for each lead.
+- Map to Growth / Market / Capability tier.
+- No large enterprises, no survey firms, no generic consulting.
 """
+
 
 
 
