@@ -488,6 +488,35 @@ def email_csv():
 
 
 
+
+def find_decision_maker(company_name: str, domain: str) -> dict:
+    """Search for decision maker LinkedIn profile using Brave/Google."""
+    result = {"name": "", "title": "", "linkedin": ""}
+    query = f'"{company_name}" CEO OR founder OR "head of research" OR "head of data" site:linkedin.com'
+    
+    try:
+        # Try Brave first
+        results = brave_search(query, count=3)
+        if not results:
+            results = google_search(query, count=3)
+        
+        for r in results:
+            url = r.get("url", "")
+            title_text = r.get("title", "")
+            if "linkedin.com/in/" in url and company_name.lower().split()[0].lower() in title_text.lower():
+                result["linkedin"] = url
+                # Extract name from LinkedIn title (usually "Name - Title - Company")
+                parts = title_text.split(" - ")
+                if parts:
+                    result["name"] = parts[0].strip().replace(" | LinkedIn", "")
+                if len(parts) > 1:
+                    result["title"] = parts[1].strip()
+                break
+    except Exception as e:
+        log.warning(f"Decision maker search failed for {company_name}: {e}")
+    
+    return result
+
 def push_to_pipedrive(leads):
     """Push qualified leads to Pipedrive as Organizations + Leads."""
     if not PIPEDRIVE_API_TOKEN:
@@ -558,6 +587,40 @@ def push_to_pipedrive(leads):
                 continue
 
             lead_id = lead_resp.json().get("data", {}).get("id")
+
+            # Step 2.5: Find decision maker and create Person in Pipedrive
+            dm = find_decision_maker(lead.get("company", ""), lead.get("website", ""))
+            if dm.get("name"):
+                person_data = {
+                    "name": dm["name"],
+                    "org_id": org_id,
+                    "visible_to": "3",
+                }
+                if dm.get("linkedin"):
+                    # Store LinkedIn in a custom note since Pipedrive doesn't have a native LinkedIn field
+                    pass
+                person_resp = requests.post(
+                    f"{base_url}/persons?api_token={PIPEDRIVE_API_TOKEN}",
+                    json=person_data,
+                    timeout=15,
+                )
+                if person_resp.status_code in (200, 201):
+                    person_id = person_resp.json().get("data", {}).get("id")
+                    log.info(f"  Created person: {dm['name']} for {lead.get('company')}")
+                    # Link person to lead
+                    if person_id and lead_id:
+                        requests.patch(
+                            f"{base_url}/leads/{lead_id}?api_token={PIPEDRIVE_API_TOKEN}",
+                            json={"person_id": person_id},
+                            timeout=15,
+                        )
+                # Add DM info to notes
+                if dm.get("name"):
+                    notes_parts.append(f"Decision Maker: {dm['name']} ({dm.get('title', 'N/A')})")
+                if dm.get("linkedin"):
+                    notes_parts.append(f"LinkedIn: {dm['linkedin']}")
+            
+            time.sleep(1)  # Rate limit for search
 
             # Step 3: Add note with all the details
             if lead_id:
