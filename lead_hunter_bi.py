@@ -72,58 +72,59 @@ def vinnie_alert(msg: str):
 # Search queries from BI Buyer Intelligence Dossier
 # ---------------------------------------------------------------------------
 SEARCH_QUERIES = [
-    # Avatar 1: Research Boutiques
-    "equity research firm independent small",
-    "industry research boutique firm",
-    "sector research firm investor clients",
-    "investment research firm boutique",
-    "market intelligence firm research reports",
-    "equity research provider independent",
-    "sell-side research firm boutique",
-    "research firm sells reports investors",
+    # Companies that sell insights/research
+    "firm sells research reports investors",
+    "company sells market intelligence subscriptions",
+    "research firm sells insights financial clients",
+    "boutique sells equity research analysis",
+    "firm sells industry research reports",
+    "company sells sector intelligence analysis",
+    "independent research provider sells reports",
 
-    # Avatar 2: Micro Research / Analyst Platforms
-    "independent research analyst firm",
-    "independent research platform high conviction",
-    "small research firm 2-20 people insights",
-    "analyst research firm boutique independent",
-    "micro research firm founder-led investor",
-    "independent equity analyst firm",
-    "research shop founder-led niche",
+    # Companies using alternative/external data
+    "company uses alternative data investment decisions",
+    "firm uses external datasets analysis",
+    "company alternative data signals investment",
+    "research firm external data sources insights",
+    "firm integrates alternative datasets",
 
-    # Avatar 3: Small Data / Intelligence Firms
-    "market intelligence company data insights",
-    "competitive intelligence firm data platform",
-    "B2B intelligence company insights subscriptions",
-    "data insights firm subscriptions",
-    "intelligence platform company data",
-    "business intelligence firm data products",
-    "consumer insights firm data subscriptions",
+    # Companies needing early/predictive signals
+    "company predictive analytics investment signals",
+    "firm early indicators financial performance",
+    "company leading indicators equity research",
+    "research firm predictive signals analytics",
 
-    # Avatar 4: Lightweight Buy-Side (selective)
-    "small systematic equity fund",
-    "quantitative research firm small team",
-    "small quant fund alternative data",
+    # Small data-driven intelligence firms
+    "small intelligence firm data-driven insights",
+    "boutique data firm investment research",
+    "niche research firm data analysis small team",
+    "independent analyst firm data insights",
+    "small firm monetizes data intelligence",
 
     # Geographic expansion
-    "equity research firm London UK independent",
-    "research boutique firm Europe",
-    "market intelligence firm Singapore",
-    "independent research firm Hong Kong",
-    "research firm UAE Dubai investor",
+    "research intelligence firm London UK",
+    "data-driven research firm Europe",
+    "investment research firm Singapore data",
+    "intelligence firm Hong Kong analysis",
 
-    # Discovery / trigger
-    "research firm founded 2024 2025 2026",
-    "market intelligence startup launched",
-    "independent research firm new",
-    "boutique research firm hiring",
+    # Discovery / emerging
+    "research firm founded 2024 2025 data-driven",
+    "intelligence startup launched 2025 2026",
+    "data research firm new funding",
+
+    # Competitor-adjacent / ecosystem
+    "alternative data vendor workforce hiring",
+    "company intelligence provider small firm",
+    "sector research firm alternative data",
+    "investment research boutique alternative data",
 
     # Site-targeted
-    "site:crunchbase.com independent research firm",
-    "site:crunchbase.com market intelligence company",
-    "site:linkedin.com independent research firm equity",
-    "site:datarade.ai research data provider insights",
+    "site:crunchbase.com research intelligence firm funded",
+    "site:crunchbase.com alternative data company seed",
+    "site:linkedin.com research firm sells insights data",
+    "site:datarade.ai intelligence research data provider",
 ]
+
 
 
 
@@ -134,105 +135,92 @@ SEARCH_QUERIES = [
 
 SEGMENT_CONTEXT = """
 ====================================================================
-VIVAMEDA FAST CASH MULTI-AVATAR LEAD FINDER
+VIVAMEDA LEAD FINDER — BUYING LOGIC, NOT CATEGORIES
 ====================================================================
 
-CORE PRINCIPLE: Every lead must pass this test:
-"Can this company realistically buy a dataset in 1-3 calls
-without heavy validation?" If NO -> reject automatically.
+You are identifying high-probability buyers for a B2B data product.
 
-FINAL CONTROL RULE: Before outputting ANY company, ask:
-"Does this company make money by selling insights or data?"
-If NO -> reject.
+The product is a longitudinal company-level dataset capturing:
+- Workforce evolution over time
+- Hiring patterns
+- Role distribution changes
+- Capability build-up inside companies
 
-====================================================================
-AVATAR 1 — RESEARCH BOUTIQUES (HIGHEST PRIORITY)
-====================================================================
-Definition: Small equity / industry research firms that sell reports to investors.
-Criteria: 10-80 employees, investor-facing, productized research.
-Keywords: equity research, industry research, market intelligence.
-Why: Need differentiation. Buy data fast. Low friction.
+The dataset provides early signals that often appear BEFORE:
+- Financial results
+- Earnings reports
+- Public narratives
 
 ====================================================================
-AVATAR 2 — MICRO RESEARCH / ANALYST PLATFORMS (FASTEST CASH)
+WHO IS A STRONG CANDIDATE (focus on HOW they operate)
 ====================================================================
-Definition: Very small teams (2-20 people) selling high-conviction insights.
-Criteria: Extremely lean, direct access to decision maker, investor audience.
-Keywords: independent research, analyst platform, high conviction research.
-Why: No bureaucracy. Immediate decisions. Desperate for edge.
-NOTE: Even higher priority than Avatar 1 for SPEED of close.
+
+Do NOT focus on industry labels. Focus ONLY on how the company
+operates and makes money.
+
+A company IS a strong candidate if:
+- They sell insights, research, or intelligence
+- OR they use data to make investment or strategic decisions
+- OR they already work with external or alternative datasets
+- OR they need early signals / predictive inputs
+- OR they differentiate through proprietary data or analysis
 
 ====================================================================
-AVATAR 3 — SMALL DATA / INTELLIGENCE FIRMS (MEDIUM-HIGH)
+WHO IS NOT A GOOD CANDIDATE
 ====================================================================
-Definition: Companies selling data or insights (not consulting-heavy).
-Criteria: 10-100 employees, sell subscriptions or data, NOT real-time focused.
-Keywords: data platform, market intelligence, insights platform.
-Exclude: Real-time/trading signal firms, consulting-heavy.
-Why: Already buy datasets. Understand value. Moderate speed.
+
+A company is NOT a good candidate if:
+- They primarily sell software tools without data dependency
+- They do consumer research (surveys, UX, panels)
+- They operate in retail, pricing, or product analytics
+- They are generic data providers (company databases, enrichment tools)
+- They rely on project-based consulting instead of reusable data
+- They are very large enterprises with slow decision cycles
 
 ====================================================================
-AVATAR 4 — LIGHTWEIGHT BUY-SIDE (SELECTIVE ONLY)
+IDEAL CHARACTERISTICS (prioritize strongly)
 ====================================================================
-Definition: Small hedge funds / quant teams. NOT large institutions.
-Criteria: Small team, flexible, not HFT, not real-time dependent.
-Keywords: systematic investing, quantitative research, equity strategies.
-Why: Can move fast if interested. High upside.
-Risk: Can become slow if too technical. BE SELECTIVE.
+
+- Small to mid-sized (approx. 10-200 employees)
+- Likely to have direct access to decision makers
+- Already monetizing information, insights, or analysis
+- Can realistically use a new dataset immediately
+- Would benefit from seeing signals earlier than competitors
 
 ====================================================================
-GLOBAL HARD FILTERS (APPLY TO ALL AVATARS)
+IMPORTANT RULES
 ====================================================================
-REJECT anything matching:
 
-Financial but wrong type:
-- Asset managers, private equity, investment banks
-
-Consulting / services:
-- Market research firms, survey companies, UX research, consulting firms
-
-Real-time / HFT:
-- Real-time data, intraday, high-frequency
-
-Too large:
-- Over 150 employees
+- Be highly selective — quality over quantity
+- Avoid obvious but slow enterprise targets
+- Avoid companies where the use case is unclear or forced
+- Only include companies where:
+  "They could realistically use this dataset immediately to improve
+  decisions, outputs, or revenue"
 
 ====================================================================
-ACCESSIBILITY FILTER (CRITICAL)
+PRODUCT DETAILS
 ====================================================================
-Each lead MUST have:
-- Visible team or decision-maker
-- LinkedIn presence OR valid email
-If not findable -> REJECT.
 
-====================================================================
-SCORING
-====================================================================
-HIGH PRIORITY (contact now):
-- Small, sells research/data, investor-facing, reachable
-
-MEDIUM (pipeline):
-- Slightly larger, less clear data usage but still research-focused
-
-====================================================================
-PRODUCT CONTEXT
-====================================================================
 - ~4.2M companies, ~60M+ company-year records
 - 1950-2020 observed data, longitudinal time series
 - Hiring velocity, growth, churn, seniority shifts, capability/skill signals
 - Survivorship-bias-free (includes failed/merged/delisted companies)
+- 87% role coverage at headcount >= 20
 - Delivery: Parquet, CSV, JSONL, Snowflake
 - Price: $10K-$20K
-- Positioning: "New insight layer they can use in reports immediately"
 
 ====================================================================
 TARGET CONTACTS
 ====================================================================
-- Founder / CEO (at micro firms)
+
+- Founder / CEO (at smaller firms)
 - Head of Research
 - Head of Data / CDO
-- Analyst (at very small firms, they ARE the decision maker)
+- Head of Alternative Data
+- Portfolio Manager (if data-driven)
 """
+
 
 
 
@@ -316,21 +304,29 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     known_list = ", ".join(list(known_companies)[:50]) if known_companies else "None yet"
 
-    prompt = f"""You are Vivameda's FAST CASH multi-avatar lead finder.
+    prompt = f"""You are finding high-probability buyers for a longitudinal workforce intelligence dataset.
 
-Search across 4 avatars:
-1. RESEARCH BOUTIQUES (10-80 people, sell reports to investors) — HIGHEST
-2. MICRO RESEARCH (2-20 people, sell high-conviction insights) — FASTEST CASH
-3. SMALL DATA/INTELLIGENCE FIRMS (10-100 people, sell data/subscriptions) — MEDIUM-HIGH
-4. LIGHTWEIGHT BUY-SIDE (small quant teams, selective only) — SELECTIVE
+Think in BUYING LOGIC, not categories. Ask: "Does this company operate in a way
+where workforce evolution signals would immediately improve their decisions,
+outputs, or revenue?"
 
-CORE TEST: "Can they buy in 1-3 calls?" If NO -> reject.
-FINAL CONTROL: "Do they make money selling insights or data?" If NO -> reject.
+STRONG CANDIDATE if they:
+- Sell insights, research, or intelligence
+- Use data for investment or strategic decisions
+- Work with external/alternative datasets
+- Need early signals or predictive inputs
+- Differentiate through proprietary data or analysis
 
-HARD EXCLUDE: asset managers, PE, banks, consulting, survey, UX research,
-real-time/HFT, over 150 employees.
+NOT A CANDIDATE if they:
+- Sell software tools without data dependency
+- Do consumer research (surveys, UX, panels)
+- Operate in retail/pricing/product analytics
+- Are generic data providers (enrichment, company databases)
+- Rely on project-based consulting
+- Are very large with slow decision cycles
 
-ACCESSIBILITY: Must have visible team or decision-maker on LinkedIn. If not findable -> reject.
+Ideal: 10-200 employees. Direct access to decision makers. Already monetizing
+information. Can use a new dataset immediately. Would benefit from earlier signals.
 
 {SEGMENT_CONTEXT}
 
@@ -345,18 +341,18 @@ Return JSON:
 {{{{
   "company": "Firm Name",
   "website": "domain.com",
-  "segment": "Avatar 1 Research Boutique / Avatar 2 Micro Research / Avatar 3 Data Firm / Avatar 4 Buy-Side",
-  "why_buyer": "Sells sector research to hedge funds. 15-person team. Founder-led. Needs new data edge.",
+  "segment": "Research Enhancement / Investment Signal / Data Product Expansion",
+  "why_buyer": "Sells equity research to hedge funds. 20-person team. Uses external datasets. Would use workforce signals as leading indicator before earnings.",
   "evidence_url": "https://...",
-  "buying_signals": "Sells research subscriptions. Niche focus. Mentions external datasets.",
+  "buying_signals": "Monetizes insights. Uses alternative data. Small team. Fast decisions.",
   "lead_score": 8,
-  "recommended_contact_role": "Founder / Head of Research",
-  "company_size": "15",
+  "recommended_contact_role": "Founder / Head of Research / Head of Data",
+  "company_size": "20",
   "est_data_budget": "$10K-$20K",
   "known_subscriptions": "Unknown",
-  "notes": "Avatar 1. HIGH priority. Sells equity research. Workforce signals differentiate reports.",
-  "product_fit": "Research Enhancement / New Insight Layer",
-  "use_case": "Add workforce signals to sector research reports",
+  "notes": "Angle: research enhancement. Workforce signals appear before earnings. Immediate use case.",
+  "product_fit": "Research Enhancement",
+  "use_case": "Use workforce evolution signals as leading indicator in equity research",
   "is_hot": true,
   "tier": 1,
   "country": "US"
@@ -364,18 +360,25 @@ Return JSON:
 
 "analysis": {{{{
   "top_3": ["Firm A", "Firm B", "Firm C"],
-  "top_3_reasoning": "Why these 3 can close fastest — avatar, size, accessibility",
+  "top_3_reasoning": "Why these 3 understand the value instantly and can move quickly",
   "emerging_themes": "Patterns from today"
 }}}}
 
 Empty: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "Nothing qualified", "emerging_themes": "None"}}}}}}
 
+RECOMMENDED ANGLES (use one per lead):
+- "research enhancement" — they sell research, this makes it better
+- "investment signal" — they make investment decisions, this is an early signal
+- "data product expansion" — they sell data, this enriches their product
+
 RULES:
-- 10-15 leads per batch. Mix of avatars, prioritize Avatar 1 and 2.
-- HIGH = contact now. MEDIUM = pipeline.
-- Every lead: company, website, employee estimate, avatar (1-4), priority, 1-line reasoning.
-- REJECT if: no visible decision-maker, over 150 people, consulting, real-time, or doesn't sell insights/data.
+- Quality over quantity. 10-15 leads per batch.
+- Every lead must pass: "Could they use this dataset immediately?"
+- If use case is unclear or forced, SKIP.
+- Think in buying logic, not categories.
+- No generic data companies, no survey firms, no pure SaaS.
 """
+
 
 
 
