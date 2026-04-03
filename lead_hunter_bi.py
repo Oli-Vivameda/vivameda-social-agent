@@ -859,6 +859,113 @@ def main():
         return
 
     all_leads = []
+
+    # ONE-TIME MANUAL LEADS INJECTION
+    manual_companies = [
+        {"company": "Exact Data", "website": "exactdata.com"},
+        {"company": "Fount Media", "website": "fountmedia.com"},
+        {"company": "Thomson Data", "website": "thomsondata.com"},
+        {"company": "Lake B2B", "website": "lakeb2b.com"},
+        {"company": "Data Axle SMB", "website": "dataaxle.com"},
+        {"company": "Salesfully", "website": "salesfully.com"},
+        {"company": "Email Data Group", "website": "emaildatagroup.net"},
+        {"company": "Lead Forensics", "website": "leadforensics.com"},
+        {"company": "Versium", "website": "versium.com"},
+        {"company": "Alesco Data", "website": "alescodata.com"},
+        {"company": "BoldData", "website": "bolddata.nl"},
+        {"company": "LeadGenius", "website": "leadgenius.com"},
+        {"company": "Coresignal", "website": "coresignal.com"},
+        {"company": "Forager.ai", "website": "forager.ai"},
+        {"company": "Grepsr", "website": "grepsr.com"},
+        {"company": "Lead411", "website": "lead411.com"},
+        {"company": "Datanyze", "website": "datanyze.com"},
+        {"company": "InfoUSA", "website": "infousa.com"},
+        {"company": "DataCaptive", "website": "datacaptive.com"},
+        {"company": "LeadsPlease", "website": "leadsplease.com"},
+    ]
+    
+    manual_leads_file = "leads_bi/.manual_injected.json"
+    already_injected = set()
+    if os.path.exists(manual_leads_file):
+        with open(manual_leads_file) as mf:
+            already_injected = set(json.load(mf))
+    
+    new_manual = [m for m in manual_companies if m["website"] not in already_injected]
+    
+    if new_manual:
+        log.info(f"Injecting {len(new_manual)} manual research targets...")
+        # Research each company using search
+        for mc in new_manual:
+            company = mc["company"]
+            domain = mc["website"]
+            log.info(f"  Researching: {company} ({domain})...")
+            
+            research_results = brave_search(f"{company} {domain} company about", count=5)
+            google_results = google_search(f"{company} {domain} company about", count=5)
+            research_results.extend(google_results)
+            
+            if research_results:
+                try:
+                    qualified = qualify_leads_with_claude(research_results, known)
+                    if qualified:
+                        # Use the first qualified result but override company name and website
+                        lead = qualified[0]
+                        lead["company"] = company
+                        lead["website"] = domain
+                        all_leads.append(lead)
+                    else:
+                        # Create a basic lead entry even if Claude doesn't qualify
+                        all_leads.append({
+                            "company": company,
+                            "website": domain,
+                            "segment": "Manual Research Target",
+                            "why_buyer": "Manually identified data company for outreach.",
+                            "evidence_url": f"https://{domain}",
+                            "buying_signals": "Manual target - requires human review.",
+                            "lead_score": 6,
+                            "recommended_contact_role": "Founder / CEO / Head of Data",
+                            "company_size": "Unknown",
+                            "est_data_budget": "$15K-$50K",
+                            "known_subscriptions": "Unknown",
+                            "notes": "Manually added research target.",
+                            "product_fit": "Data Product / Training Data",
+                            "use_case": "Review and qualify manually",
+                            "is_hot": False,
+                            "tier": 2,
+                            "country": "US",
+                        })
+                except Exception as e:
+                    log.warning(f"  Research failed for {company}: {e}")
+                    all_leads.append({
+                        "company": company,
+                        "website": domain,
+                        "segment": "Manual Research Target",
+                        "why_buyer": "Manually identified - research failed.",
+                        "evidence_url": f"https://{domain}",
+                        "buying_signals": "Manual target.",
+                        "lead_score": 5,
+                        "recommended_contact_role": "Founder / CEO",
+                        "company_size": "Unknown",
+                        "est_data_budget": "$15K-$50K",
+                        "known_subscriptions": "Unknown",
+                        "notes": "Manually added. Auto-research failed.",
+                        "product_fit": "Review needed",
+                        "use_case": "Review manually",
+                        "is_hot": False,
+                        "tier": 3,
+                        "country": "US",
+                    })
+            
+            already_injected.add(domain)
+            time.sleep(1)
+        
+        # Save injected list so we don't repeat
+        os.makedirs(os.path.dirname(manual_leads_file), exist_ok=True)
+        with open(manual_leads_file, "w") as mf:
+            json.dump(list(already_injected), mf)
+        log.info(f"Manual injection complete: {len(new_manual)} companies researched")
+
+
     for i in range(0, len(all_results), 15):
         batch = all_results[i:i+15]
         log.info(f"Qualifying batch {i//15 + 1} ({len(batch)} results)...")
