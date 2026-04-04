@@ -862,6 +862,24 @@ def main():
 
     # ONE-TIME MANUAL LEADS INJECTION
     manual_companies = [
+        # CYPRUS QUANT FIRMS
+        {"company": "Pinely", "website": "pinely.com", "country": "Cyprus"},
+        {"company": "QST Financial", "website": "qstfinancial.com", "country": "Cyprus"},
+        {"company": "FinYX Investments", "website": "finyx.com", "country": "Cyprus"},
+        {"company": "Quant Infinity", "website": "quantinfinity.com", "country": "Cyprus"},
+        {"company": "Alfa Algorithms", "website": "alfaalgorithms.com", "country": "Cyprus"},
+        {"company": "AIP Algorithmic Investment Platform", "website": "aip.com.cy", "country": "Cyprus"},
+        {"company": "Alber Blanc Capital", "website": "alberblanc.com", "country": "Cyprus"},
+        {"company": "Boltzmann Research", "website": "boltzmannresearch.com", "country": "Cyprus"},
+        {"company": "Victoria Quant", "website": "victoriaquant.com", "country": "Cyprus"},
+        {"company": "Quant Tekel", "website": "quanttekel.com", "country": "Cyprus"},
+        {"company": "V-Quant Trading", "website": "v-quant.com", "country": "Cyprus"},
+        {"company": "AENAON Markets", "website": "aenaonmarkets.com", "country": "Cyprus"},
+        {"company": "MasterFunders", "website": "masterfunders.com", "country": "Cyprus"},
+        {"company": "Olive Tree Capital Markets", "website": "otcm.com.cy", "country": "Cyprus"},
+        {"company": "FXPro", "website": "fxpro.com", "country": "Cyprus"},
+        {"company": "Exness", "website": "exness.com", "country": "Cyprus"},
+        # PREVIOUS DATA COMPANIES
         {"company": "Exact Data", "website": "exactdata.com"},
         {"company": "Fount Media", "website": "fountmedia.com"},
         {"company": "Thomson Data", "website": "thomsondata.com"},
