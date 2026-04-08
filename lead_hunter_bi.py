@@ -51,7 +51,7 @@ MODEL = "claude-sonnet-4-20250514"
 
 LEADS_CSV = "leads_bi/pipeline.csv"
 LEADS_HISTORY = "leads_bi/.lead_history.json"
-LEADS_PER_RUN = 25
+LEADS_PER_RUN = 5
 MIN_SCORE = 4
 
 VINNIE_PHONE = "35799909204"
@@ -72,65 +72,65 @@ def vinnie_alert(msg: str):
 # Search queries from BI Buyer Intelligence Dossier
 # ---------------------------------------------------------------------------
 SEARCH_QUERIES = [
-    # People Analytics / Talent Intelligence
-    "people analytics startup ML company data",
-    "talent intelligence platform AI startup",
-    "workforce planning AI company ML models",
-    "workforce analytics startup machine learning",
-    "people analytics company training data",
-    "talent intelligence AI startup funded",
+    # AI investment research platforms
+    "AI investment research platform startup",
+    "AI powered equity research startup",
+    "AI investment analyst copilot startup",
+    "AI research automation investment startup",
+    "AI financial research platform company analysis",
+    "automated investment research AI startup",
 
-    # Company Intelligence / Firmographic
-    "company intelligence platform AI startup",
-    "firmographic scoring AI company startup",
-    "company benchmarking platform ML startup",
-    "company scoring engine AI machine learning",
-    "competitive intelligence AI startup data",
+    # AI company intelligence
+    "AI company intelligence platform startup",
+    "AI company analysis tool startup",
+    "AI company insights platform startup",
+    "AI company comparison tool startup",
+    "company intelligence AI startup seed",
 
-    # Credit Risk / ESG / Financial
-    "credit risk modeling AI company data startup",
-    "ESG scoring platform AI structured data",
-    "credit risk AI startup company data",
-    "ESG analytics AI company machine learning",
-    "financial risk AI startup structured data",
+    # AI diligence / deal sourcing
+    "AI due diligence platform startup",
+    "AI deal sourcing tool startup",
+    "AI M&A diligence platform startup",
+    "AI private equity research tool startup",
+    "AI venture capital research platform",
 
-    # Market Intelligence / Alt Data
-    "market intelligence platform AI startup",
-    "alternative data aggregation company ML",
-    "market intelligence AI company structured data",
-    "alt data startup machine learning company",
+    # AI financial analysis
+    "AI financial modeling tool startup",
+    "AI financial analysis platform company",
+    "AI earnings analysis startup",
+    "AI fundamental analysis platform",
 
-    # HR Tech with ML component
-    "HR tech AI startup machine learning analytics",
-    "HR analytics AI company workforce data",
-    "workforce prediction AI startup HR",
+    # Decision intelligence
+    "decision intelligence AI startup company",
+    "AI decision support company analysis",
+    "AI analyst copilot company insights",
+    "AI research copilot investment startup",
 
-    # Training data seekers
-    "AI startup training data company-level structured",
-    "ML company needs structured dataset historical",
-    "AI startup feature engineering company data",
-    "startup data acquisition structured datasets",
-    "AI company proprietary data structured historical",
+    # Data dependency signals
+    "AI startup aggregates company data",
+    "AI startup external data sources company",
+    "AI startup proprietary datasets company analysis",
+    "AI startup structured data company insights",
 
     # Geographic
-    "AI startup people analytics US funded",
-    "talent intelligence startup UK London",
-    "company intelligence AI startup Israel",
-    "workforce AI startup EU Europe funded",
+    "AI investment research startup US",
+    "AI company analysis startup Israel",
+    "AI research platform startup UK London",
+    "AI company intelligence startup EU",
 
-    # Funded / Why Now
-    "AI startup raised seed series A 2025 2026 people analytics",
-    "talent intelligence startup funding 2025 2026",
-    "company intelligence AI funded 2025 2026",
-    "workforce analytics startup hiring ML engineer",
+    # Funded / recent
+    "AI investment research startup funded 2025 2026",
+    "AI company analysis startup seed 2025 2026",
+    "AI research copilot startup Y Combinator",
+    "AI company intelligence startup launched 2025 2026",
 
     # Site-targeted
-    "site:crunchbase.com people analytics AI startup funded",
-    "site:crunchbase.com talent intelligence startup series A",
-    "site:crunchbase.com company intelligence AI funded",
-    "site:linkedin.com head of ML people analytics startup",
-    "site:ycombinator.com company data AI workforce",
+    "site:crunchbase.com AI investment research startup funded",
+    "site:ycombinator.com AI company analysis research",
+    "site:producthunt.com AI investment research company",
+    "site:linkedin.com AI company intelligence startup small",
 ]
+
 
 
 
@@ -147,125 +147,148 @@ SEARCH_QUERIES = [
 
 SEGMENT_CONTEXT = """
 ====================================================================
-AI/ML DATA BUYER LEAD AGENT
+AI COMPANY INTELLIGENCE LEAD AGENT
 ====================================================================
 
-Target: AI/ML companies that would buy structured historical company
-data for model training.
+Identify early-stage AI companies that build systems which analyze
+companies, generate insights, or support investment/economic decisions,
+where a structured company intelligence layer would directly improve
+their outputs.
 
 ====================================================================
-COMPANY PROFILE
+CORE DEFINITION (STRICT)
 ====================================================================
 
-Companies building products in:
-- People analytics
-- Talent intelligence
-- Workforce planning
-- HR tech (with ML/analytics component)
-- Company intelligence
-- Firmographic scoring
-- Credit risk modeling
-- ESG scoring
-- Company benchmarking
-- Market intelligence platforms
-- Alternative data aggregation
+Target ONLY companies that build AI systems that reason about
+COMPANIES AS ENTITIES.
 
-Stage: Seed through Series C
-- Small enough that one person decides on data purchases
-- Large enough to have budget
-
-Team size: 10-200 people
-
-MUST have ML engineers, data scientists, or AI researchers on team.
-Ideally already buying or licensing external datasets.
+This includes:
+- Analyzing companies
+- Comparing companies
+- Generating insights about companies
+- Supporting investment or strategic decisions
 
 ====================================================================
-HARD EXCLUSIONS
+IDEAL COMPANY PROFILE
 ====================================================================
 
-- Companies that only sell real-time data or live dashboards
-- Pure recruiting/ATS platforms with no analytical or ML component
-- Companies larger than 500 people (too slow to close)
-- Direct workforce data competitors:
-  Revelio Labs, Lightcast, People Data Labs, LinkedIn Talent Insights,
-  Burning Glass, Eightfold AI (at scale)
+Size: 3 to 40 employees
+Stage: Seed to Series A
+Structure: Founder-led or small product team
+
+Product Type (MUST MATCH AT LEAST ONE):
+1. AI investment research platform
+2. AI financial analysis / modeling tool
+3. AI-driven company intelligence system
+4. AI diligence / deal sourcing tool
+5. AI system generating company insights or reports
 
 ====================================================================
-TARGET PERSONA
+OUTPUT FILTER (CRITICAL)
 ====================================================================
 
-Title:
-- CTO
-- VP Engineering
-- Head of Data
-- Head of ML
-- ML Lead
-- Chief Data Officer
-- Founder (if technical)
+The product MUST output at least one of:
+- Company insights
+- Investment recommendations
+- Company comparisons (comps)
+- Research summaries
+- Decision support outputs
 
-The person who can evaluate a dataset sample and approve a $10K-$20K
-purchase without a procurement process.
+If the product does NOT output insights about companies -> REJECT
 
 ====================================================================
-GEOGRAPHIES
+DATA DEPENDENCY SIGNAL (VERY IMPORTANT)
 ====================================================================
 
-- US (primary)
-- UK
-- EU
-- Israel
+Target companies that clearly rely on:
+- External company data
+- Multiple data sources
+- Structured inputs
+- "Proprietary datasets"
+- "Data-driven insights"
 
-These are where AI/ML companies cluster and where data purchasing is normal.
-
-====================================================================
-SEARCH SIGNALS (look for these)
-====================================================================
-
-- Job postings mentioning "training data", "data acquisition",
-  "ML engineer", "data pipeline"
-- Website mentions "proprietary data", "structured data",
-  "historical data", "longitudinal", "company intelligence"
-- Blog posts or papers about using company-level or workforce data
-- Recently raised funding (means budget to spend on data)
-- Mentions feature engineering, model training, backtesting
+Strong indicators:
+- "we aggregate data from..."
+- "AI-powered research"
+- "automated analysis"
+- "decision intelligence"
 
 ====================================================================
-VIVAMEDA DATASET CONTEXT
+PERFECT FIT INDICATORS
+====================================================================
+
+Prioritize companies that mention:
+- "investment workflows"
+- "research automation"
+- "AI analysts"
+- "company intelligence"
+- Compare companies
+- Generate structured outputs
+
+====================================================================
+HARD EXCLUSION FILTERS (NO EXCEPTIONS)
+====================================================================
+
+Category-based exclusions:
+- Marketing / lead generation tools
+- Intent data platforms
+- Recruiting / HR tools
+- ESG / reporting / compliance software
+- CRM / sales tools
+- Generic LLM wrappers
+- Horizontal AI (voice, image, etc.)
+- HFT / trading infrastructure
+- Data brokers / contact databases
+
+Behavior-based exclusions:
+- Only analyzes people, documents, content, or websites
+- Does NOT analyze companies structurally
+
+If they don't care about companies as entities -> REJECT
+
+====================================================================
+POSITIONING FIT CHECK (FINAL FILTER)
+====================================================================
+
+For each company, ask:
+"Would this company benefit from understanding how companies evolve over time?"
+
+YES -> keep
+NO -> reject
+
+====================================================================
+TARGET ARCHETYPE (IDEAL MATCH)
+====================================================================
+
+The perfect company:
+- Builds AI "analysts" or "copilots"
+- Helps users understand companies
+- Relies on incomplete or lagging data
+- Would improve significantly with structural, longitudinal,
+  company-level signals from our dataset
+
+====================================================================
+VIVAMEDA DATASET
 ====================================================================
 
 - ~4.2M companies, ~60M+ company-year records
 - 1950-2020 time series, company-year grain
 - Hiring velocity, growth, churn, seniority shifts, skill signals
 - 1.88B skill-level signals
-- Survivorship-bias-free (includes failed/merged/delisted companies)
-- 87% role coverage at headcount >= 20
-- 96.5% capability coverage
-- Pre-structured, analysis-ready BI views
+- Survivorship-bias-free
+- Pre-structured BI views
 - Delivery: Parquet, CSV, JSONL
-- Price: $10K-$20K (up to $50K for training data license)
+- Price: $10K-$20K
 
 ====================================================================
-WHY OUR DATA FITS AI/ML USE CASES
+QUALITY RULE
 ====================================================================
 
-- Pre-structured tabular data ready for ML pipelines
-- 4.2M companies x multiple years = massive feature set
-- Hiring velocity, skill signals, role distribution = predictive features
-- Survivorship-bias-free = clean training data
-- Time series = temporal patterns for sequence models
-- Parquet/CSV/JSONL = drops into any ML pipeline
-- Historical depth back to 1950 = no one else has this
-
-====================================================================
-QUALITY STANDARD
-====================================================================
-
-- Every lead must have ML/data science on their team
-- Must build a product where company-level data is a training input
-- If they only do NLP/vision/audio without company data angle -> SKIP
-- If they are a competitor selling workforce data -> SKIP
-- Must be closeable in 1-3 calls
+Quality over quantity.
+Return max 5 companies per run but ONLY if high-confidence matches.
+If nothing qualifies, return empty. Do NOT pad with weak leads.
 """
+
 
 
 
@@ -355,31 +378,32 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     known_list = ", ".join(list(known_companies)[:50]) if known_companies else "None yet"
 
-    prompt = f"""You are an AI/ML Data Buyer Lead Agent for Vivameda.
+    prompt = f"""You are finding early-stage AI companies that analyze COMPANIES AS ENTITIES.
 
-Find AI/ML companies (10-200 employees, Seed to Series C) that would buy
-structured historical company data for model training. $10K-$50K deals.
+STRICT: They must build AI systems that reason about companies — analyzing,
+comparing, generating insights, or supporting investment/strategic decisions.
 
-PRODUCT AREAS: people analytics, talent intelligence, workforce planning,
-company intelligence, firmographic scoring, credit risk modeling, ESG scoring,
-company benchmarking, market intelligence, alt data aggregation.
+3-40 employees. Seed to Series A. Founder-led.
 
-MUST HAVE: ML engineers, data scientists, or AI researchers on team.
-IDEALLY: already buying or licensing external datasets.
+PRODUCT MUST output: company insights, investment recommendations,
+company comparisons, research summaries, or decision support.
 
-TARGET PERSONA: CTO, VP Engineering, Head of Data, Head of ML, Founder (technical).
-Person who evaluates a dataset sample and approves $10K-$20K without procurement.
+If the product does NOT output insights about companies -> REJECT.
 
-GEOGRAPHIES: US, UK, EU, Israel.
+DATA SIGNAL: They rely on external company data, multiple sources,
+structured inputs. Look for "AI-powered research", "automated analysis",
+"decision intelligence", "we aggregate data from..."
 
-SEARCH SIGNALS:
-- Job postings: "training data", "data acquisition", "ML engineer"
-- Website: "proprietary data", "structured data", "historical data"
-- Blog/papers about company-level or workforce data in models
-- Recently raised funding
+PERFECT FIT: AI "analysts" or "copilots" that help users understand companies.
+They rely on incomplete/lagging data. Our longitudinal company signals
+would directly improve their outputs.
 
-EXCLUDE: real-time only, pure ATS/recruiting, 500+ employees,
-competitors (Revelio Labs, Lightcast, People Data Labs).
+HARD EXCLUDE: marketing tools, intent data, recruiting/HR, ESG/compliance,
+CRM/sales, generic LLM wrappers, horizontal AI, HFT, data brokers,
+tools that only analyze people/documents/content/websites.
+
+FINAL CHECK: "Would this company benefit from understanding how companies
+evolve over time?" If NO -> reject.
 
 {SEGMENT_CONTEXT}
 
@@ -394,18 +418,18 @@ Return JSON:
 {{{{
   "company": "Company Name",
   "website": "domain.com",
-  "segment": "People Analytics / Talent Intelligence / Company Intelligence / Credit Risk / ESG / Market Intelligence",
-  "why_buyer": "Builds talent intelligence platform. 40 employees. Series A funded. Has ML team. Uses external workforce datasets for model training.",
+  "segment": "AI Investment Research / AI Company Intelligence / AI Diligence / AI Financial Analysis",
+  "why_buyer": "12-person AI startup building investment research copilot. Generates company comparisons for PE analysts. Relies on external data sources. Seed funded.",
   "evidence_url": "https://...",
-  "buying_signals": "Raised $8M Series A. Hiring ML engineers. Website mentions structured data and proprietary models. Blog about workforce prediction.",
+  "buying_signals": "AI-powered research platform. Aggregates external company data. Generates structured insights. 8-person team. Seed stage.",
   "lead_score": 9,
-  "recommended_contact_role": "CTO / Head of Data / Head of ML",
-  "company_size": "40",
-  "est_data_budget": "$10K-$50K",
+  "recommended_contact_role": "Founder / CTO",
+  "company_size": "12",
+  "est_data_budget": "$10K-$20K",
   "known_subscriptions": "Unknown",
-  "notes": "What they build: talent intelligence platform scoring companies on workforce health. Why our data fits: 60M company-year records as training features for their scoring model. Signal: raised Series A, hiring ML engineers.",
-  "product_fit": "ML Training Data License",
-  "use_case": "Train workforce scoring model using historical company-level features",
+  "notes": "Builds AI analyst for PE due diligence. Outputs company comparisons. Relies on lagging data. Our longitudinal signals would directly improve their company analysis quality.",
+  "product_fit": "Company Intelligence Layer",
+  "use_case": "Enrich AI company analysis with longitudinal workforce evolution signals",
   "is_hot": true,
   "tier": 1,
   "country": "US"
@@ -413,28 +437,21 @@ Return JSON:
 
 "analysis": {{{{
   "top_3": ["Company A", "Company B", "Company C"],
-  "top_3_reasoning": "Has ML team + uses company data + funded + technical founder can evaluate sample",
+  "top_3_reasoning": "Analyze companies as entities + small team + rely on external data + our signals improve their output",
   "emerging_themes": "Patterns from today"
 }}}}
 
 Empty: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "Nothing qualified", "emerging_themes": "None"}}}}}}
 
-OUTPUT per lead:
-1. Company name + website
-2. What they build (one line)
-3. Why our data fits (one line)
-4. Contact name and title (from decision maker search)
-5. LinkedIn URL
-6. Score (1-10)
-
 RULES:
-- 10-15 leads per batch
-- Every lead has ML/data science on team
-- Must build product where company data = training input
-- 10-200 employees, Seed to Series C
-- US, UK, EU, Israel
-- Closeable in 1-3 calls
+- MAX 5 companies per run. ONLY high-confidence matches.
+- Every lead must analyze companies as entities
+- Product must output company insights
+- 3-40 employees, Seed to Series A
+- If nothing qualifies, return empty. Do NOT pad.
+- Quality over quantity. Always.
 """
+
 
 
 
