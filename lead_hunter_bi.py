@@ -332,6 +332,27 @@ def google_search(query: str, count: int = 10) -> list[dict]:
         return []
 
 
+
+def fetch_page(url: str, max_chars: int = 3000) -> str:
+    """Fetch a web page and return text content, truncated."""
+    try:
+        resp = httpx.get(url, timeout=10, follow_redirects=True, headers={
+            "User-Agent": "Mozilla/5.0 (compatible; VivamedalBot/1.0)"
+        })
+        if resp.status_code != 200:
+            return ""
+        text = resp.text
+        # Strip HTML tags roughly
+        import re
+        text = re.sub(r'<script[^>]*>.*?</script>', '', text, flags=re.DOTALL)
+        text = re.sub(r'<style[^>]*>.*?</style>', '', text, flags=re.DOTALL)
+        text = re.sub(r'<[^>]+>', ' ', text)
+        text = re.sub(r'\s+', ' ', text).strip()
+        return text[:max_chars]
+    except Exception as e:
+        log.warning(f"Failed to fetch {url}: {e}")
+        return ""
+
 def extract_domain(url: str) -> str:
     from urllib.parse import urlparse
     parsed = urlparse(url)
@@ -739,6 +760,10 @@ def main():
             if any(domain.endswith(sd) for sd in skip_domains):
                 continue
             seen_domains.add(domain)
+            # Fetch actual page content for deep qualification
+            page_text = fetch_page(r["url"])
+            if page_text:
+                r["page_content"] = page_text[:2000]
             all_results.append(r)
 
         time.sleep(1)
