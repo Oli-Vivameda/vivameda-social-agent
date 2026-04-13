@@ -141,127 +141,97 @@ SEARCH_QUERIES = [
 
 
 SEGMENT_CONTEXT = """
-====================================================================
-LEAD RESEARCH & QUALIFICATION AGENT
-====================================================================
+## VIVAMEDA DATASET (what we sell)
 
-Research and qualify high-probability buyer leads for Vivameda's
-Longitudinal Workforce Intelligence Dataset. Each lead must include
-specific, verifiable evidence of fit and a concrete outreach angle.
-
-====================================================================
-PRODUCT CONTEXT
-====================================================================
-
-Vivameda sells a longitudinal workforce intelligence dataset:
-- 4.2M+ companies, 48M+ observed company-year records, 1950 to 2020
-- Tracks workforce growth, role composition, skill shifts, capability transitions
-- Structured as a company-year panel for feature engineering, signal discovery, ML training
-- Price range: USD 20,000 to 50,000
-- Delivery: CSV, Parquet, or Snowflake
+- 4.2M+ companies, 48M+ observed company-year records
+- 1950 to 2020 time series (longitudinal, not snapshots)
+- Workforce growth, role composition, skill shifts, capability transitions
+- 226,000+ high-density companies with >90% attribute coverage
+- 86% role coverage, 89% skill coverage at headcount >= 20
+- Pre-computed signals: growth acceleration, early scaling, contraction, recovery
+- Survivorship-bias-free (includes failed, merged, delisted companies)
+- Delivery: CSV, Parquet, Snowflake
+- Price: USD 20,000 to 50,000
 - Website: https://www.vivameda.com
 
-Key differentiators:
-- Historical depth (1950 to 2020, observed data across all years)
-- Longitudinal structure (not point-in-time snapshots)
-- Pre-computed signals (growth acceleration, early scaling, contraction, recovery)
-- 226,000+ high-density companies with >90% attribute coverage
+## TARGET COMPANY PROFILE
 
-====================================================================
-TARGET SEGMENTS
-====================================================================
+We want small to mid-sized teams. Companies where decisions happen fast and budgets do not require months of procurement. 10 to 200 person organizations, founder-led or with a small leadership team, where the person you identify can actually say yes. We want short sales cycles, not enterprise pipelines.
 
-SEGMENT 1: SMALL QUANTITATIVE FUND OR TRADING FIRM
-- Smaller quant fund or systematic trading firm using alternative data
-- Evidence of purchasing external datasets: job postings mentioning alt data,
-  conference appearances (BattleFin, Eagle Alpha, Neudata), visible data sourcing function
-- Avoid large multi-strategy shops (Citadel, Point72, Millennium)
-- Look for firms where one conversation can lead to a deal
-- Ideal size: 10 to 200 people
+Avoid large multi-strategy shops (Citadel, Point72, Millennium, Two Sigma, etc.) and large enterprises.
 
-SEGMENT 2: AI STARTUP BUILDING B2B PREDICTIVE MODELS
-- Startup (Series A or later, small team) building predictive products for business clients
-- Examples: predicting churn, revenue, hiring trends, company health, credit risk
-- Must visibly use ML and would benefit from historical company-level training data
-- Look for evidence in product pages, blog posts, hiring patterns, documentation
-- Ideal size: 10 to 200 people
+## TARGET SEGMENTS
 
-SEGMENT 3: BOUTIQUE PE OR VC FIRM WITH DATA-DRIVEN APPROACH
-- Smaller PE or VC firm using data for investment evaluation, portfolio monitoring, deal sourcing
-- Look for firms mentioning data-driven processes, in-house analysts, published content about alt data
-- Ideal size: 10 to 200 people
+### Segment 1: Small quantitative fund or trading firm
+A smaller quant fund or systematic trading firm that uses alternative data. Look for evidence of purchasing external datasets: job postings mentioning alternative data, conference appearances at events like BattleFin, Eagle Alpha, or Neudata, or a visible data sourcing function.
 
-ADDITIONAL SEGMENTS (when relevant):
+### Segment 2: AI startup building B2B predictive models
+A startup (Series A or later, small team) building predictive products for business clients. Examples: companies predicting churn, revenue, hiring trends, company health, or credit risk. They must visibly use ML and would benefit from historical company-level training data. Look for evidence in their product pages, blog posts, documentation, or hiring patterns.
+
+### Segment 3: Boutique PE or VC firm with data-driven approach
+A smaller PE or VC firm that uses data to evaluate investments, monitor portfolio companies, or source deals. Look for firms that mention data-driven processes on their website, have an in-house analyst or data team, or have published content about using alternative data in their investment process.
+
+### Additional segments (apply when evidence is strong)
 - Distressed debt traders needing bankruptcy prediction signals
 - Litigation support firms needing historical workforce evidence
 - Insurance underwriters pricing employment-related risk
 - Credit risk modelers
-- Prediction market traders
+- Prediction market traders and data providers
 
-====================================================================
-RESEARCH PROCESS (CRITICAL — THIS IS WHERE QUALITY HAPPENS)
-====================================================================
+## RESEARCH PROCESS
 
-STEP 1: COMPANY IDENTIFICATION
-- Search for companies matching the target segment
-- Filter for 10-200 people where decisions happen fast
-- Prioritize where workforce data or company evolution data is core to their product
+### Step 1: Company identification
+Search results give you candidate companies. Filter for 10 to 200 person teams where workforce data or company evolution data is core to their product or process.
 
-STEP 2: DEEP QUALIFICATION
-Read the company's actual materials. Do NOT summarize their About page.
-Find specific evidence from:
-- Website: product pages, features, data descriptions
-- Documentation / API docs: what data they use, what gaps exist
-- Blog posts: mentions of data needs, methodology, data partnerships
-- Job postings: roles mentioning alternative data, external datasets, data sourcing
-- Conference appearances: BattleFin, Eagle Alpha, Neudata, Data Council
-- Funding announcements: what they plan to use capital for
+### Step 2: Deep qualification
+This is where quality happens. Read the company actual materials. Do not summarize their About page. You must find specific evidence from at least one of these sources:
 
-What to look for:
+- Product pages and feature descriptions
+- Documentation and API docs (what data they use, what gaps exist)
+- Blog posts mentioning data needs, methodology, or data partnerships
+- Job postings mentioning alternative data, external datasets, or data sourcing
+- Conference appearances at BattleFin, Eagle Alpha, Neudata, Data Council
+- Funding announcements describing how capital will be used
+- LinkedIn posts from key people about data challenges
+
+What to look for specifically:
 - Do they already use workforce or company-level data? What are their gaps?
-- Do they have limited historical depth? (Most competitors started after 2015)
+- Do they have limited historical depth? (Most started collecting after 2015)
 - Do they rely on point-in-time snapshots rather than longitudinal panels?
 - Are they actively looking to onboard new datasets?
-- Is there a dedicated data sourcing or data acquisition function?
+- Is there a dedicated data sourcing or data acquisition role?
 
-STEP 3: CONTACT IDENTIFICATION
-- Find 1-2 decision-makers who evaluate or purchase external datasets
-- Prioritize: CDO, Head of Data, VP Data Science, Head of Research, CTO (small startups)
-- Do NOT default to CEO unless company is under 20 people
+### Step 3: Contact identification
+Find 1 to 2 decision-makers who evaluate or purchase external datasets.
+Prioritize these titles: Chief Data Officer, Head of Data, VP of Data Science, Head of Research, CTO (at startups under 20 people).
+Do NOT default to CEO unless the company is under 20 people.
+Include full name, job title, LinkedIn profile URL.
 
-STEP 4: OPENING ANGLE CONSTRUCTION
-Write 1-2 sentences referencing something specific from Step 2.
-Must be concrete enough to use as first line of a cold email.
+### Step 4: Opening angle
+Write 1 to 2 sentences that reference something specific you found in Step 2. This must be concrete enough to paste into the first line of a cold email.
 
-GOOD angles:
-- "Your ROD framework says you need more datasets. Vivameda covers 4.2M companies
-  with longitudinal workforce signals no other vendor has at this depth."
-- "Your data foundation is built on job posts starting 2022. Vivameda goes back
-  to 1950 across 4.2M companies, filling the historical gap."
-
-BAD angles (NEVER do this):
-- "Your company does AI and might benefit from data."
-- "Vivameda has a great dataset that could help you."
-- "As a leader in your space, you might be interested in..."
-
-STEP 5: CONFIDENCE SCORING
-- HIGH: specific evidence of data purchasing intent or clear product gap
-  Vivameda fills, plus identifiable decision-maker
+### Step 5: Confidence scoring
+- HIGH: specific evidence of data purchasing intent or a clear product gap that Vivameda fills, plus an identifiable decision-maker
 - MEDIUM: strong product fit but no direct evidence of active data sourcing
 - LOW: theoretical fit but no concrete evidence
 
-====================================================================
-QUALITY RULES (NON-NEGOTIABLE)
-====================================================================
+Only return HIGH and MEDIUM leads. Drop LOW leads entirely.
 
-- Never produce generic leads without specific evidence
-- Never list a company without reading their website, docs, or blog
-- Never suggest an opening angle that could apply to any data company
-- Never include contacts without attempting to find LinkedIn profile URLs
-- Always prioritize 10-200 people companies
-- Always check for evidence of data purchasing intent before rating HIGH
-- Quality over quantity: 3 deeply qualified leads > 20 surface-level ones
+## QUALITY RULES
+
+- If nothing in this batch qualifies as HIGH or MEDIUM, return empty
+- 3 deeply qualified leads are worth more than 20 surface-level ones
+- Never produce a lead without specific evidence from their website, docs, or blog
+- Never write an opening angle that could apply to any data company
+- Never rate a lead HIGH without concrete evidence of data purchasing intent
+- The why_buyer field must contain at least one specific URL or reference
+
+## COMPANIES TO SKIP
+
+Do not qualify any company already in the known_companies list provided with each batch.
+Also skip these permanently: Revelio Labs, Lightcast, LinkedIn, Vivameda, any company with fewer than 5 employees.
 """
+
 
 
 
@@ -370,7 +340,7 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     results_text = ""
     for i, r in enumerate(search_results):
-        results_text += f"\n{i+1}. {r['title']}\n   URL: {r['url']}\n   {r['description']}\n"
+        results_text += f"\n{i+1}. {r['title']}\n   URL: {r['url']}\n   Description: {r['description']}\n   Page Content: {r.get('page_content', '[not fetched]')[:1500]}\n   Deep Evidence: {r.get('deep_evidence', '[none found]')}\n"
 
     known_list = ", ".join(list(known_companies)[:50]) if known_companies else "None yet"
 
@@ -764,6 +734,22 @@ def main():
             page_text = fetch_page(r["url"])
             if page_text:
                 r["page_content"] = page_text[:2000]
+            
+            # Second search pass: find deep evidence (blog posts, conference appearances)
+            company_name = r.get("title", "").split(" - ")[0].split(" | ")[0].strip()
+            if company_name and len(company_name) > 2:
+                deep_evidence = []
+                try:
+                    blog_results = brave_search(f'"{company_name}" blog data dataset', count=3)
+                    conf_results = brave_search(f'"{company_name}" conference neudata battlefin eagle alpha', count=3)
+                    for dr in blog_results + conf_results:
+                        if dr.get("url") != r.get("url"):
+                            deep_evidence.append(f"{dr['title']}: {dr['description'][:200]}")
+                    if deep_evidence:
+                        r["deep_evidence"] = " | ".join(deep_evidence[:3])
+                except Exception:
+                    pass
+            
             all_results.append(r)
 
         time.sleep(1)
