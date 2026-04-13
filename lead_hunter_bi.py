@@ -52,7 +52,7 @@ MODEL = "claude-sonnet-4-20250514"
 LEADS_CSV = "leads_bi/pipeline.csv"
 LEADS_HISTORY = "leads_bi/.lead_history.json"
 LEADS_PER_RUN = 5
-MIN_SCORE = 4
+MIN_SCORE = 5
 
 VINNIE_PHONE = "35799909204"
 VINNIE_APIKEY = "wdXW78gEZEFt"
@@ -123,6 +123,11 @@ SEARCH_QUERIES = [
     "site:linkedin.com chief data officer quant fund small",
     "site:medium.com alternative data workforce company signals",
     "site:ycombinator.com company data AI prediction",
+
+    # Documentation pattern queries (finds specific data gaps)
+    "site:docs.* company data workforce API",
+    "site:docs.* data sources companies coverage",
+    '"our data" company workforce historical coverage',
 ]
 
 
@@ -726,6 +731,7 @@ def main():
                 "crunchbase.com", "pitchbook.com", "wikipedia.org", "github.com",
                 "medium.com", "forbes.com", "techcrunch.com", "bloomberg.com",
                 "revelio.com", "lightcast.io", "peopledatalabs.com",
+                "vivameda.com", "revelioresearch.com", "revealera.com",
             ]
             if any(domain.endswith(sd) for sd in skip_domains):
                 continue
@@ -900,7 +906,12 @@ def main():
     final_leads = []
     for lead in all_leads:
         domain = lead.get("website", "").lower().replace("https://", "").replace("http://", "").replace("www.", "").strip("/")
-        if domain and domain not in known and lead.get("lead_score", 0) >= MIN_SCORE:
+        confidence = lead.get("confidence", "").upper()
+        score = lead.get("lead_score", 0)
+        # Accept HIGH (8-10) or MEDIUM (5-7), reject LOW
+        if confidence.startswith("LOW"):
+            continue
+        if domain and domain not in known and score >= MIN_SCORE:
             final_leads.append(lead)
             known.add(domain)
 
