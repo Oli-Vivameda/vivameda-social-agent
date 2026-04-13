@@ -72,64 +72,59 @@ def vinnie_alert(msg: str):
 # Search queries from BI Buyer Intelligence Dossier
 # ---------------------------------------------------------------------------
 SEARCH_QUERIES = [
-    # AI investment research platforms
-    "AI investment research platform startup",
-    "AI powered equity research startup",
-    "AI investment analyst copilot startup",
-    "AI research automation investment startup",
-    "AI financial research platform company analysis",
-    "automated investment research AI startup",
+    # Segment 1: Small Quant Funds
+    "small quant fund alternative data workforce",
+    "systematic trading firm alternative data sourcing",
+    "quant fund BattleFin conference alternative data",
+    "quant fund Neudata alternative data evaluation",
+    "small hedge fund chief data officer alternative data",
+    "quant fund hiring data sourcing analyst",
+    "systematic fund external datasets workforce",
+    "quantitative fund Eagle Alpha alternative data",
 
-    # AI company intelligence
-    "AI company intelligence platform startup",
-    "AI company analysis tool startup",
-    "AI company insights platform startup",
-    "AI company comparison tool startup",
-    "company intelligence AI startup seed",
+    # Segment 2: AI Startups B2B Predictive
+    "AI startup company prediction model training data",
+    "AI startup B2B predictive model company data",
+    "startup predicts company health workforce data",
+    "AI startup credit risk prediction company features",
+    "startup company intelligence ML training data",
+    "AI startup workforce data predictive model",
+    "startup building company scoring ML model",
+    "AI startup churn prediction company-level data",
 
-    # AI diligence / deal sourcing
-    "AI due diligence platform startup",
-    "AI deal sourcing tool startup",
-    "AI M&A diligence platform startup",
-    "AI private equity research tool startup",
-    "AI venture capital research platform",
+    # Segment 3: Boutique PE/VC Data-Driven
+    "boutique PE firm data-driven investment evaluation",
+    "VC firm data-driven deal sourcing",
+    "PE firm alternative data portfolio monitoring",
+    "boutique VC data analyst investment research",
+    "PE firm workforce data due diligence",
 
-    # AI financial analysis
-    "AI financial modeling tool startup",
-    "AI financial analysis platform company",
-    "AI earnings analysis startup",
-    "AI fundamental analysis platform",
+    # Additional Segments
+    "distressed debt trader bankruptcy prediction data",
+    "litigation support firm workforce evidence historical",
+    "insurance underwriter employment risk data",
+    "credit risk modeler company data historical",
 
-    # Decision intelligence
-    "decision intelligence AI startup company",
-    "AI decision support company analysis",
-    "AI analyst copilot company insights",
-    "AI research copilot investment startup",
-
-    # Data dependency signals
-    "AI startup aggregates company data",
-    "AI startup external data sources company",
-    "AI startup proprietary datasets company analysis",
-    "AI startup structured data company insights",
+    # Evidence-rich searches
+    "company blog alternative data needs gaps datasets",
+    "startup documentation data sources company-level",
+    "company hiring alternative data analyst sourcing",
+    "firm conference BattleFin Neudata Eagle Alpha speaker",
+    "startup raised funding data acquisition company",
 
     # Geographic
-    "AI investment research startup US",
-    "AI company analysis startup Israel",
-    "AI research platform startup UK London",
-    "AI company intelligence startup EU",
-
-    # Funded / recent
-    "AI investment research startup funded 2025 2026",
-    "AI company analysis startup seed 2025 2026",
-    "AI research copilot startup Y Combinator",
-    "AI company intelligence startup launched 2025 2026",
+    "quant fund alternative data US small",
+    "AI startup company prediction Israel",
+    "PE firm data-driven UK London boutique",
+    "AI startup company data EU funded",
 
     # Site-targeted
-    "site:crunchbase.com AI investment research startup funded",
-    "site:ycombinator.com AI company analysis research",
-    "site:producthunt.com AI investment research company",
-    "site:linkedin.com AI company intelligence startup small",
+    "site:crunchbase.com AI startup company prediction funded",
+    "site:linkedin.com chief data officer quant fund small",
+    "site:medium.com alternative data workforce company signals",
+    "site:ycombinator.com company data AI prediction",
 ]
+
 
 
 
@@ -147,147 +142,127 @@ SEARCH_QUERIES = [
 
 SEGMENT_CONTEXT = """
 ====================================================================
-AI COMPANY INTELLIGENCE LEAD AGENT
+LEAD RESEARCH & QUALIFICATION AGENT
 ====================================================================
 
-Identify early-stage AI companies that build systems which analyze
-companies, generate insights, or support investment/economic decisions,
-where a structured company intelligence layer would directly improve
-their outputs.
+Research and qualify high-probability buyer leads for Vivameda's
+Longitudinal Workforce Intelligence Dataset. Each lead must include
+specific, verifiable evidence of fit and a concrete outreach angle.
 
 ====================================================================
-CORE DEFINITION (STRICT)
+PRODUCT CONTEXT
 ====================================================================
 
-Target ONLY companies that build AI systems that reason about
-COMPANIES AS ENTITIES.
+Vivameda sells a longitudinal workforce intelligence dataset:
+- 4.2M+ companies, 48M+ observed company-year records, 1950 to 2020
+- Tracks workforce growth, role composition, skill shifts, capability transitions
+- Structured as a company-year panel for feature engineering, signal discovery, ML training
+- Price range: USD 20,000 to 50,000
+- Delivery: CSV, Parquet, or Snowflake
+- Website: https://www.vivameda.com
 
-This includes:
-- Analyzing companies
-- Comparing companies
-- Generating insights about companies
-- Supporting investment or strategic decisions
-
-====================================================================
-IDEAL COMPANY PROFILE
-====================================================================
-
-Size: 3 to 40 employees
-Stage: Seed to Series A
-Structure: Founder-led or small product team
-
-Product Type (MUST MATCH AT LEAST ONE):
-1. AI investment research platform
-2. AI financial analysis / modeling tool
-3. AI-driven company intelligence system
-4. AI diligence / deal sourcing tool
-5. AI system generating company insights or reports
+Key differentiators:
+- Historical depth (1950 to 2020, observed data across all years)
+- Longitudinal structure (not point-in-time snapshots)
+- Pre-computed signals (growth acceleration, early scaling, contraction, recovery)
+- 226,000+ high-density companies with >90% attribute coverage
 
 ====================================================================
-OUTPUT FILTER (CRITICAL)
+TARGET SEGMENTS
 ====================================================================
 
-The product MUST output at least one of:
-- Company insights
-- Investment recommendations
-- Company comparisons (comps)
-- Research summaries
-- Decision support outputs
+SEGMENT 1: SMALL QUANTITATIVE FUND OR TRADING FIRM
+- Smaller quant fund or systematic trading firm using alternative data
+- Evidence of purchasing external datasets: job postings mentioning alt data,
+  conference appearances (BattleFin, Eagle Alpha, Neudata), visible data sourcing function
+- Avoid large multi-strategy shops (Citadel, Point72, Millennium)
+- Look for firms where one conversation can lead to a deal
+- Ideal size: 10 to 200 people
 
-If the product does NOT output insights about companies -> REJECT
+SEGMENT 2: AI STARTUP BUILDING B2B PREDICTIVE MODELS
+- Startup (Series A or later, small team) building predictive products for business clients
+- Examples: predicting churn, revenue, hiring trends, company health, credit risk
+- Must visibly use ML and would benefit from historical company-level training data
+- Look for evidence in product pages, blog posts, hiring patterns, documentation
+- Ideal size: 10 to 200 people
 
-====================================================================
-DATA DEPENDENCY SIGNAL (VERY IMPORTANT)
-====================================================================
+SEGMENT 3: BOUTIQUE PE OR VC FIRM WITH DATA-DRIVEN APPROACH
+- Smaller PE or VC firm using data for investment evaluation, portfolio monitoring, deal sourcing
+- Look for firms mentioning data-driven processes, in-house analysts, published content about alt data
+- Ideal size: 10 to 200 people
 
-Target companies that clearly rely on:
-- External company data
-- Multiple data sources
-- Structured inputs
-- "Proprietary datasets"
-- "Data-driven insights"
-
-Strong indicators:
-- "we aggregate data from..."
-- "AI-powered research"
-- "automated analysis"
-- "decision intelligence"
-
-====================================================================
-PERFECT FIT INDICATORS
-====================================================================
-
-Prioritize companies that mention:
-- "investment workflows"
-- "research automation"
-- "AI analysts"
-- "company intelligence"
-- Compare companies
-- Generate structured outputs
+ADDITIONAL SEGMENTS (when relevant):
+- Distressed debt traders needing bankruptcy prediction signals
+- Litigation support firms needing historical workforce evidence
+- Insurance underwriters pricing employment-related risk
+- Credit risk modelers
+- Prediction market traders
 
 ====================================================================
-HARD EXCLUSION FILTERS (NO EXCEPTIONS)
+RESEARCH PROCESS (CRITICAL — THIS IS WHERE QUALITY HAPPENS)
 ====================================================================
 
-Category-based exclusions:
-- Marketing / lead generation tools
-- Intent data platforms
-- Recruiting / HR tools
-- ESG / reporting / compliance software
-- CRM / sales tools
-- Generic LLM wrappers
-- Horizontal AI (voice, image, etc.)
-- HFT / trading infrastructure
-- Data brokers / contact databases
+STEP 1: COMPANY IDENTIFICATION
+- Search for companies matching the target segment
+- Filter for 10-200 people where decisions happen fast
+- Prioritize where workforce data or company evolution data is core to their product
 
-Behavior-based exclusions:
-- Only analyzes people, documents, content, or websites
-- Does NOT analyze companies structurally
+STEP 2: DEEP QUALIFICATION
+Read the company's actual materials. Do NOT summarize their About page.
+Find specific evidence from:
+- Website: product pages, features, data descriptions
+- Documentation / API docs: what data they use, what gaps exist
+- Blog posts: mentions of data needs, methodology, data partnerships
+- Job postings: roles mentioning alternative data, external datasets, data sourcing
+- Conference appearances: BattleFin, Eagle Alpha, Neudata, Data Council
+- Funding announcements: what they plan to use capital for
 
-If they don't care about companies as entities -> REJECT
+What to look for:
+- Do they already use workforce or company-level data? What are their gaps?
+- Do they have limited historical depth? (Most competitors started after 2015)
+- Do they rely on point-in-time snapshots rather than longitudinal panels?
+- Are they actively looking to onboard new datasets?
+- Is there a dedicated data sourcing or data acquisition function?
 
-====================================================================
-POSITIONING FIT CHECK (FINAL FILTER)
-====================================================================
+STEP 3: CONTACT IDENTIFICATION
+- Find 1-2 decision-makers who evaluate or purchase external datasets
+- Prioritize: CDO, Head of Data, VP Data Science, Head of Research, CTO (small startups)
+- Do NOT default to CEO unless company is under 20 people
 
-For each company, ask:
-"Would this company benefit from understanding how companies evolve over time?"
+STEP 4: OPENING ANGLE CONSTRUCTION
+Write 1-2 sentences referencing something specific from Step 2.
+Must be concrete enough to use as first line of a cold email.
 
-YES -> keep
-NO -> reject
+GOOD angles:
+- "Your ROD framework says you need more datasets. Vivameda covers 4.2M companies
+  with longitudinal workforce signals no other vendor has at this depth."
+- "Your data foundation is built on job posts starting 2022. Vivameda goes back
+  to 1950 across 4.2M companies, filling the historical gap."
 
-====================================================================
-TARGET ARCHETYPE (IDEAL MATCH)
-====================================================================
+BAD angles (NEVER do this):
+- "Your company does AI and might benefit from data."
+- "Vivameda has a great dataset that could help you."
+- "As a leader in your space, you might be interested in..."
 
-The perfect company:
-- Builds AI "analysts" or "copilots"
-- Helps users understand companies
-- Relies on incomplete or lagging data
-- Would improve significantly with structural, longitudinal,
-  company-level signals from our dataset
-
-====================================================================
-VIVAMEDA DATASET
-====================================================================
-
-- ~4.2M companies, ~60M+ company-year records
-- 1950-2020 time series, company-year grain
-- Hiring velocity, growth, churn, seniority shifts, skill signals
-- 1.88B skill-level signals
-- Survivorship-bias-free
-- Pre-structured BI views
-- Delivery: Parquet, CSV, JSONL
-- Price: $10K-$20K
+STEP 5: CONFIDENCE SCORING
+- HIGH: specific evidence of data purchasing intent or clear product gap
+  Vivameda fills, plus identifiable decision-maker
+- MEDIUM: strong product fit but no direct evidence of active data sourcing
+- LOW: theoretical fit but no concrete evidence
 
 ====================================================================
-QUALITY RULE
+QUALITY RULES (NON-NEGOTIABLE)
 ====================================================================
 
-Quality over quantity.
-Return max 5 companies per run but ONLY if high-confidence matches.
-If nothing qualifies, return empty. Do NOT pad with weak leads.
+- Never produce generic leads without specific evidence
+- Never list a company without reading their website, docs, or blog
+- Never suggest an opening angle that could apply to any data company
+- Never include contacts without attempting to find LinkedIn profile URLs
+- Always prioritize 10-200 people companies
+- Always check for evidence of data purchasing intent before rating HIGH
+- Quality over quantity: 3 deeply qualified leads > 20 surface-level ones
 """
+
 
 
 
@@ -378,32 +353,38 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     known_list = ", ".join(list(known_companies)[:50]) if known_companies else "None yet"
 
-    prompt = f"""You are finding early-stage AI companies that analyze COMPANIES AS ENTITIES.
+    prompt = f"""You are a Lead Research & Qualification Agent for Vivameda.
 
-STRICT: They must build AI systems that reason about companies — analyzing,
-comparing, generating insights, or supporting investment/strategic decisions.
+Research and qualify HIGH-PROBABILITY buyer leads. Each lead must include
+specific, verifiable evidence of fit and a concrete outreach angle.
 
-3-40 employees. Seed to Series A. Founder-led.
+PRODUCT: Longitudinal workforce intelligence dataset. 4.2M+ companies,
+48M+ company-year records, 1950-2020. USD 20,000-50,000. CSV/Parquet/Snowflake.
 
-PRODUCT MUST output: company insights, investment recommendations,
-company comparisons, research summaries, or decision support.
+KEY DIFFERENTIATORS: Historical depth (1950-2020), longitudinal structure
+(not snapshots), pre-computed signals, 226K+ high-density companies.
 
-If the product does NOT output insights about companies -> REJECT.
+SEGMENTS:
+1. Small quant funds using alt data (10-200 people, avoid large multi-strats)
+2. AI startups building B2B predictive models (Series A+, small team)
+3. Boutique PE/VC with data-driven approach (10-200 people)
+Also: distressed debt, litigation support, insurance, credit risk, prediction markets
 
-DATA SIGNAL: They rely on external company data, multiple sources,
-structured inputs. Look for "AI-powered research", "automated analysis",
-"decision intelligence", "we aggregate data from..."
+DEEP QUALIFICATION REQUIRED:
+- Read their actual website, docs, blog posts, job postings
+- Find SPECIFIC evidence: data gaps, alt data mentions, conference appearances,
+  data sourcing roles, methodology discussions
+- Identify the exact gap Vivameda fills (limited history? snapshot-only? no workforce data?)
 
-PERFECT FIT: AI "analysts" or "copilots" that help users understand companies.
-They rely on incomplete/lagging data. Our longitudinal company signals
-would directly improve their outputs.
+OPENING ANGLE MUST BE SPECIFIC:
+- Reference something concrete they said, built, or published
+- "Your data starts at 2022. Vivameda goes back to 1950." = GOOD
+- "You might benefit from our data." = REJECT
 
-HARD EXCLUDE: marketing tools, intent data, recruiting/HR, ESG/compliance,
-CRM/sales, generic LLM wrappers, horizontal AI, HFT, data brokers,
-tools that only analyze people/documents/content/websites.
-
-FINAL CHECK: "Would this company benefit from understanding how companies
-evolve over time?" If NO -> reject.
+CONFIDENCE:
+- HIGH: specific evidence of data purchasing intent + decision-maker identified
+- MEDIUM: strong product fit but no direct data sourcing evidence
+- LOW: theoretical fit only
 
 {SEGMENT_CONTEXT}
 
@@ -418,18 +399,18 @@ Return JSON:
 {{{{
   "company": "Company Name",
   "website": "domain.com",
-  "segment": "AI Investment Research / AI Company Intelligence / AI Diligence / AI Financial Analysis",
-  "why_buyer": "12-person AI startup building investment research copilot. Generates company comparisons for PE analysts. Relies on external data sources. Seed funded.",
-  "evidence_url": "https://...",
-  "buying_signals": "AI-powered research platform. Aggregates external company data. Generates structured insights. 8-person team. Seed stage.",
+  "segment": "Small Quant Fund / AI Startup B2B Predictive / Boutique PE-VC Data-Driven",
+  "why_buyer": "3-5 sentences with SPECIFIC evidence. Must reference at least one concrete source: a blog post, job posting, documentation page, conference appearance, or funding announcement. Example: Per their docs at docs.company.com/data, their foundation is built on job posts starting 2022. They have no historical depth. Vivameda fills this gap with 48M records back to 1950.",
+  "evidence_url": "https://specific-page-you-found.com",
+  "buying_signals": "Specific signals: CDO role exists, spoke at BattleFin, blog mentions needing more datasets, hiring data scientist.",
   "lead_score": 9,
-  "recommended_contact_role": "Founder / CTO",
-  "company_size": "12",
-  "est_data_budget": "$10K-$20K",
+  "recommended_contact_role": "CDO / Head of Data / VP Data Science / CTO",
+  "company_size": "25",
+  "est_data_budget": "$20K-$50K",
   "known_subscriptions": "Unknown",
-  "notes": "Builds AI analyst for PE due diligence. Outputs company comparisons. Relies on lagging data. Our longitudinal signals would directly improve their company analysis quality.",
-  "product_fit": "Company Intelligence Layer",
-  "use_case": "Enrich AI company analysis with longitudinal workforce evolution signals",
+  "notes": "SEGMENT: AI Startup. CONFIDENCE: HIGH. OPENING ANGLE: Your data foundation covers 2.6M companies from 2022. Vivameda adds 4.2M companies back to 1950 with longitudinal workforce signals. GAP: no historical depth, snapshot-only.",
+  "product_fit": "Training Data / Signal Discovery / Feature Engineering",
+  "use_case": "Fill historical gap in company-level data for predictive model training",
   "is_hot": true,
   "tier": 1,
   "country": "US"
@@ -437,20 +418,21 @@ Return JSON:
 
 "analysis": {{{{
   "top_3": ["Company A", "Company B", "Company C"],
-  "top_3_reasoning": "Analyze companies as entities + small team + rely on external data + our signals improve their output",
+  "top_3_reasoning": "Specific evidence of data purchasing intent + clear product gap + identifiable decision-maker",
   "emerging_themes": "Patterns from today"
 }}}}
 
 Empty: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "Nothing qualified", "emerging_themes": "None"}}}}}}
 
 RULES:
-- MAX 5 companies per run. ONLY high-confidence matches.
-- Every lead must analyze companies as entities
-- Product must output company insights
-- 3-40 employees, Seed to Series A
+- Max 5 leads per run. ONLY high-confidence matches.
+- Each lead must have SPECIFIC evidence from their website/docs/blog.
+- Opening angle must reference something concrete. Generic = reject.
+- 10-200 employees. Small enough for fast decisions.
+- 3 deeply qualified leads > 20 surface-level ones.
 - If nothing qualifies, return empty. Do NOT pad.
-- Quality over quantity. Always.
 """
+
 
 
 
