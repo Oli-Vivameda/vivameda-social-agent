@@ -245,6 +245,62 @@ Only return HIGH and MEDIUM leads. Drop LOW leads entirely.
 - Never rate a lead HIGH without concrete evidence of data purchasing intent
 - The why_buyer field must contain at least one specific URL or reference
 
+## CRITICAL QUALIFYING LOGIC: DATA CONSUMER vs DATA TOOL
+
+Before qualifying ANY lead, determine whether the company CONSUMES external
+data as a product input or PROCESSES data their users bring.
+
+### BUYER (consumes external data):
+The company's product depends on external datasets to function. They integrate
+third-party data into their models, pipelines, or analysis. Without external
+data, their product is weaker or incomplete.
+
+Examples: ExtractAlpha (buys datasets to build trading signals), Sumble (needs
+company data to train AI models), Wokelo (needs company data for diligence
+reports), Churned (uses company signals to predict churn).
+
+### NOT A BUYER (processes user's own data):
+The company builds a tool that visualizes, analyzes, or processes whatever data
+the user uploads. They are a canvas, not a consumer. They don't need external
+datasets because their users bring their own.
+
+Examples: Tableau, Golden Analytics, Metabase, Power BI, Looker. These companies
+will never buy our dataset because their product works on any data the user provides.
+
+### THE TEST:
+Ask: "If I removed all external datasets from this company's product, would their
+product still work?"
+- If YES -> they are a TOOL. SKIP.
+- If NO -> they are a CONSUMER. QUALIFY.
+
+### NEGATIVE EXAMPLE: Golden Analytics
+Golden Analytics launched with $7M seed funding to build an AI-native BI platform.
+They use "AI" and "data" in their description. But they are a dashboard tool.
+Users upload their own CSV and get visualizations. They don't integrate external
+datasets. They are a Tableau replacement, NOT a data buyer. SKIP.
+
+The presence of "AI," "data," "analytics," or "machine learning" in a company
+description does NOT make them a buyer. The question is ALWAYS: does their
+product depend on external company-level data?
+
+### POSITIVE EXAMPLE: Fast Data Science
+Builds customer churn prediction models. Their blog states they use "data points
+available at the snapshot date" as model features. Adding workforce contraction
+data as a feature would improve their predictions. VALID LEAD because their
+product directly benefits from external company-level data as a feature input.
+
+### UPDATED QUALIFYING QUESTIONS (answer in order):
+1. Does the company's product DEPEND on external company-level data?
+   (Not just "could use" but "needs")
+2. Would our workforce evolution data become a feature, signal, or input in their product?
+3. Can the decision-maker approve a $20-50K data purchase without enterprise procurement?
+4. Is there specific evidence (blog, job posting, product page, conference) that they source external datasets?
+
+Scoring:
+- All four YES = HIGH confidence
+- Three YES = MEDIUM confidence
+- Two or fewer YES = SKIP entirely
+
 ## QUALITY BENCHMARK: REAL EXAMPLES (study these carefully)
 
 ### Example A: Anomaly Capital Management (Quant Fund, MEDIUM)
