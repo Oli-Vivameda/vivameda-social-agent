@@ -128,6 +128,20 @@ SEARCH_QUERIES = [
     "site:docs.* company data workforce API",
     "site:docs.* data sources companies coverage",
     '"our data" company workforce historical coverage',
+
+    # Career-path evidence queries (Ibrahim pattern)
+    "site:linkedin.com YipitData alumni quant fund",
+    "site:linkedin.com Revelio Labs alumni startup",
+    "site:linkedin.com alternative data analyst moved to fund",
+    
+    # Podcast/interview methodology queries
+    "podcast interview CEO startup churn prediction data",
+    "podcast founder AI company data methodology",
+    
+    # Platform adjacency queries  
+    "VC firm talent data platform scrapes analyzes",
+    "investment firm proprietary data engine workforce",
+    "fund data platform company intelligence built",
 ]
 
 
@@ -230,6 +244,51 @@ Only return HIGH and MEDIUM leads. Drop LOW leads entirely.
 - Never write an opening angle that could apply to any data company
 - Never rate a lead HIGH without concrete evidence of data purchasing intent
 - The why_buyer field must contain at least one specific URL or reference
+
+## QUALITY BENCHMARK: REAL EXAMPLES (study these carefully)
+
+### Example A: Anomaly Capital Management (Quant Fund, MEDIUM)
+A data scientist (Christopher Goessling) moved from YipitData to this quant fund.
+At YipitData his role was "identifying, screening, licensing, cleaning, and analyzing
+alternative data." A data scientist moving from an alt data provider INTO a quant fund
+strongly suggests active data sourcing function. This is the kind of career-path
+evidence that makes a lead actionable.
+OPENING: "Given your background at YipitData sourcing alternative data, I'd love to
+show you how a 70-year workforce panel could help Anomaly build structural signals
+like capability transitions before they show up in fundamentals."
+
+### Example B: Churned (AI Startup B2B Predictive, HIGH)
+11-50 person AI startup building churn prediction models. Founders explained in a
+podcast that they use ML models (not rule-based) to predict customer churn. Their
+models use product usage and financial data. INSIGHT: when a customer's headcount
+declines or hiring slows, it signals financial stress leading to subscription
+cancellations. Workforce data = early indicator BEFORE it shows in usage/payment.
+OPENING: "Your churn models use product usage and financial signals. Have you explored
+adding company-level workforce data as an early indicator of customer health before it
+shows up in usage or payment patterns?"
+
+### Example C: Ensemble VC (Data-Driven VC, HIGH)
+11-50 person VC that "continuously scrapes, analyzes, and refreshes billions of
+datapoints across the global talent ecosystem." They already built an in-house
+alternative data engine focused on workforce signals. But they only have current
+data — no historical depth. Vivameda adds 70 years of company evolution.
+OPENING: "Your platform already scrapes billions of talent ecosystem datapoints. I'd
+like to show you how a 70-year company-level workforce panel could add capability
+transition and hiring discipline features to your scoring models."
+
+### What makes these examples exceptional:
+1. Career-path evidence: tracking where data professionals moved FROM (YipitData → quant fund = data buyer)
+2. Podcast/interview mining: finding specific statements about methodology and data needs
+3. Gap identification: they have current data but no historical depth — Vivameda fills exactly this
+4. Feature-level pitch: not "you might like our data" but "headcount decline = churn early indicator"
+5. Platform adjacency: they already built a talent data engine, so they understand the value instantly
+
+### Research patterns to replicate:
+- Check team pages for ex-alt-data-provider employees (YipitData, Revelio, Lightcast alumni = data buyers)
+- Find podcast interviews where founders discuss methodology and data inputs
+- Look for "our platform scrapes/analyzes/aggregates" language = already built data infrastructure
+- Identify the specific feature our data would add to their existing product
+- Match company size (11-50) with founder-led structure = fast purchasing decision
 
 ## COMPANIES TO SKIP
 
