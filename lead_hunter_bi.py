@@ -306,6 +306,51 @@ acquired by Progress Software (1,800+ employees, public company = too large).
 RAG platforms, search platforms, and knowledge management tools are TOOLS, not
 data CONSUMERS. SKIP all of them.
 
+### NEGATIVE EXAMPLE: Mercor ($10B AI hiring/labeling marketplace)
+Mercor connects human experts with AI labs for RLHF training. $10B valuation,
+200+ employees, $492M raised. The agent might qualify them because they are
+"AI" and work with "data." Wrong. They are a labor marketplace, not a data
+consumer. They don't buy external datasets — they sell human labor to AI labs.
+Also way too large for a $20K deal. SKIP all AI hiring/labeling/annotation
+platforms: Mercor, Scale AI, Appen, Surge, Micro1, Labelbox.
+
+### NEGATIVE EXAMPLE: Obviant (defense acquisition intelligence)
+Obviant builds intelligence for defense acquisition — budgets, congressional
+hearings, policy documents. The agent might qualify them because they do
+"intelligence" and "analytics." Wrong. They serve defense/government customers
+with long procurement cycles. Our workforce data has no defense acquisition
+use case. SKIP all defense intelligence, government analytics, and policy
+research platforms.
+
+### NEGATIVE EXAMPLE: AfterQuery ($300M AI training data vendor)
+AfterQuery SELLS expert-generated training datasets to AI labs. $300M valuation,
+$100M+ ARR, 100K contractors. The agent might qualify them because they work
+with "training data" and "AI." Wrong. They are a DATA VENDOR like us — they
+sell data, they don't buy it. They would see us as a peer or competitor, not
+a customer. SKIP all companies that SELL training data or data annotation
+services. They are vendors, not buyers.
+
+### KEY LESSON FROM THESE FOUR FAILURES:
+The agent was fooled by surface-level keywords: "AI", "data", "intelligence",
+"analytics", "training data." None of these words make a company a BUYER.
+
+THE REAL QUESTIONS:
+1. Does their PRODUCT depend on structured company-level data as INPUT?
+2. Are they SMALL enough for a $20K deal (under 200 people)?
+3. Do they BUY external datasets, or do they SELL data/labor?
+4. Is company evolution / workforce intelligence relevant to what they build?
+
+If any answer is NO → SKIP.
+
+Additional categories to ALWAYS SKIP:
+- AI hiring/labeling platforms (Mercor, Scale AI, Appen, Surge)
+- Defense/government intelligence platforms
+- Companies that SELL training data (AfterQuery, Scale AI)
+- RAG/search platforms that process user-uploaded data (Nuclia, Elasticsearch)
+- Dashboard/BI tools (Tableau, Golden Analytics, Metabase)
+- Companies valued over $500M (too large, too slow)
+- Companies with 200+ employees
+
 ### POSITIVE EXAMPLE: Fast Data Science
 Builds customer churn prediction models. Their blog states they use "data points
 available at the snapshot date" as model features. Adding workforce contraction
@@ -885,6 +930,9 @@ def main():
                 "revelio.com", "lightcast.io", "peopledatalabs.com",
                 "vivameda.com", "revelioresearch.com", "revealera.com",
                 "nuclia.com", "progress.com",
+                "mercor.com", "mercor.ai", "afterquery.com", "afterquery.ai",
+                "obviant.com", "scale.com", "appen.com", "surge.ai",
+                "labelbox.com", "micro1.ai",
             ]
             if any(domain.endswith(sd) for sd in skip_domains):
                 continue
