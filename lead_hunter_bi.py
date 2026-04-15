@@ -73,11 +73,11 @@ def vinnie_alert(msg: str):
 # ---------------------------------------------------------------------------
 SEARCH_QUERIES = [
     # PEOPLE-FIRST: find the decision makers, then find their companies
-    "head of alternative data" hiring OR joined OR appointed 2025 2026",
-    "chief data officer" startup joined 2025 2026",
-    "head of data science" fund OR quant OR investment joined 2025 2026",
-    "VP data" startup company intelligence 2025 2026",
-    "data scientist" quant fund alternative data linkedin",
+    head of alternative data hiring OR joined OR appointed 2025 2026,
+    chief data officer startup joined 2025 2026,
+    head of data science fund OR quant OR investment joined 2025 2026,
+    VP data startup company intelligence 2025 2026,
+    data scientist quant fund alternative data linkedin,
 
     # SIGNAL-FIRST: find companies showing buying intent
     "looking for workforce data provider",
@@ -116,10 +116,10 @@ SEARCH_QUERIES = [
     "site:producthunt.com company analytics scoring launched",
 
     # COMPETITOR CUSTOMERS: who uses our competitors' data?
-    "uses Revelio Labs" OR "Revelio Labs customer" OR "switched from Revelio",
-    "uses Lightcast data" OR "Lightcast customer" OR "alternative to Lightcast",
-    "uses LinkedIn Talent Insights" OR "alternative to LinkedIn Talent Insights",
-    "Burning Glass alternative" OR "workforce data alternative",
+    uses Revelio Labs OR Revelio Labs customer OR switched from Revelio,
+    uses Lightcast data OR Lightcast customer OR alternative to Lightcast,
+    uses LinkedIn Talent Insights OR alternative to LinkedIn Talent Insights,
+    Burning Glass alternative OR workforce data alternative,
 
     # JOB BOARDS: companies hiring for data roles = they buy data
     "hiring alternative data analyst startup 2026",
