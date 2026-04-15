@@ -601,102 +601,90 @@ def qualify_leads_with_claude(search_results: list[dict], known_companies: set) 
 
     results_text = ""
     for i, r in enumerate(search_results):
-        results_text += f"\n{i+1}. {r['title']}\n   URL: {r['url']}\n   Description: {r['description']}\n   Page Content: {r.get('page_content', '[not fetched]')[:1500]}\n   Deep Evidence: {r.get('deep_evidence', '[none found]')}\n"
+        results_text += f"\n{i+1}. {r['title']}\n   URL: {r['url']}\n   Description: {r['description']}\n   === HOMEPAGE ===\n   {r.get('page_content', '[not fetched]')[:1500]}\n   === SUBPAGES (product/about/data/docs) ===\n   {r.get('subpages', '[none found]')[:2000]}\n   === DEEP EVIDENCE (blogs/hiring/methodology) ===\n   {r.get('deep_evidence', '[none found]')[:2000]}\n"
 
     known_list = ", ".join(list(known_companies)[:50]) if known_companies else "None yet"
 
-    prompt = f"""NEW MISSION: Find AI/ML companies that will buy a $20K dataset within 2-4 weeks.
+    prompt = f"""You are a Lead Research & Qualification Agent for Vivameda.
 
-This is NOT a research exercise. Every lead must be a company that can realistically
-close a $20K one-time data purchase within 30 days. If you cannot find clear evidence
-they need structured company-level data, do not include them.
+You have been given DEEP RESEARCH on each candidate: their homepage, product/about/data
+subpages, blog posts, hiring pages, and methodology pages. Use ALL of this to qualify.
 
-WHAT WE SELL:
-Vivameda Longitudinal Workforce Intelligence Dataset. 4.2M companies, 48M company-year
-records, 1950-2020. Headcount, growth rates, role composition, skill shifts, capability
-transitions, pre-computed signals. Parquet/CSV/Snowflake. One-time $20K (Growth Intelligence).
+PRODUCT: Longitudinal workforce intelligence. 4.2M companies, 48M records, 1950-2020.
+Headcount, growth, roles, skills, capability transitions. $20K-$50K. Parquet/CSV/Snowflake.
 
-WHO BUYS THIS IN UNDER 30 DAYS:
-Small AI/ML companies (10-100 people) actively building a product that requires structured
-historical company-level data. Founder or CTO can approve $20K without procurement committee.
+FOR EACH CANDIDATE, do this analysis:
 
-SPECIFIC PROFILES TO HUNT:
-1. AI companies building company intelligence, scoring, or firmographic prediction.
-   They model what happens to companies over time. Our data = their training set.
-2. AI companies building predictive analytics for investors (PE diligence, VC deal sourcing,
-   credit risk). They need company evolution data to predict growth/decline/default.
-3. AI companies building HR tech or people analytics with ML. They need historical workforce
-   benchmarks — what does normal growth look like, what does pre-layoff pattern look like.
-4. AI companies building autonomous research agents or RAG-based analysis tools. They need
-   structured datasets to query against. Our data = knowledge layer their agents pull from.
-5. Small quant firms (under 50 people) that cannot afford Revelio Labs ($85K/year) but need
-   workforce signals. We are the budget alternative with deeper history.
+1. DATA CONSUMER TEST: Does their product DEPEND on external company-level data?
+   If they process user-uploaded data (dashboards, BI tools, RAG) → SKIP
+   If their product needs external company/workforce data to function → CONTINUE
 
-QUALIFYING SIGNALS (search for these specifically):
-- Job postings: "alternative data," "training data," "feature engineering," "company-level data"
-- Blog/docs: data ingestion, data partnerships, external data sources
-- YC companies (current + last 3 batches) in these verticals
-- Companies listing Crunchbase/PitchBook/LinkedIn as data sources (we complement/replace)
-- "Data" or "integrations" page showing they actively onboard external datasets
-- Founders/CTOs posting on LinkedIn/X about needing company data or workforce signals
+2. EVIDENCE CHECK: From the homepage, subpages, and deep evidence provided, find:
+   - What data sources they currently use (and gaps)
+   - Job postings for data roles
+   - Blog posts about data methodology
+   - Conference appearances
+   - Product pages showing data integrations
 
-DISQUALIFY IMMEDIATELY:
-- Over 200 people (too slow)
-- Purely real-time product with no historical component
-- Pure recruiting/ATS with no ML layer
-- Competitors: Revelio Labs, Lightcast, People Data Labs, LinkUp
-- No visible ML or AI component
-- Decision maker is not founder, CTO, or Head of Data
+3. GAP IDENTIFICATION: What specific gap does Vivameda fill?
+   - Limited historical depth? (most start after 2015)
+   - Snapshot-only, no longitudinal view?
+   - Missing workforce/company evolution signals?
 
-DATA CONSUMER TEST (critical):
-Ask: "If I removed all external datasets, would their product still work?"
-If YES -> they are a TOOL (like Tableau). SKIP.
-If NO -> they are a CONSUMER. QUALIFY.
+4. OPENING ANGLE: Write 1-2 sentences referencing something specific from the research.
+   If you found a blog post, reference it. If you found a data gap, name it.
+   If you found nothing specific, write the best angle based on their product.
+
+ALWAYS SKIP:
+- Dashboard/BI tools, RAG/search platforms, AI hiring/labeling platforms
+- Companies that SELL training data or annotation
+- Defense/government platforms
+- Pure recruiting/ATS without ML
+- Over 200 employees
+- Competitors: Revelio Labs, Lightcast, People Data Labs
 
 {SEGMENT_CONTEXT}
 
 ALREADY KNOWN (skip): {known_list}
 
-SEARCH RESULTS (with page content and deep evidence):
+RESEARCH RESULTS (homepage + subpages + deep evidence for each candidate):
 {results_text}
 
-Return ONLY valid JSON. No markdown, no preamble.
+Return ONLY valid JSON:
 
 {{{{"leads": [{{{{
   "company": "Company Name",
-  "website": "https://domain.com",
-  "segment": "Company Intelligence AI / Investor Analytics / HR Tech ML / Research Agent / Small Quant",
-  "why_buyer": "3-5 sentences with SPECIFIC evidence. Must reference a blog post, docs page, job posting, or conference. Include URL. Example: Per their docs at docs.company.com/data, their model uses company-level features but only covers 2022-present. Vivameda fills the historical gap back to 1950.",
-  "evidence_url": "https://specific-page-proving-fit.com",
-  "buying_signals": "Specific: job posting for alt data analyst, blog about feature engineering, docs showing data sources, founder LinkedIn post about data needs",
-  "suggested_opening_angle": "1-2 sentences. Must reference something specific. Example: Your docs show you use company-level features starting 2022. Vivameda adds 4.2M companies back to 1950 as a training data layer.",
-  "confidence": "HIGH or MEDIUM with one-sentence justification",
-  "recommended_contact_role": "Specific name if found, otherwise: Founder / CTO / Head of Data",
-  "company_size": "Estimated headcount",
-  "est_data_budget": "$20K one-time",
-  "use_case": "Specific: training data for company scoring model / feature layer for churn prediction / knowledge base for research agent",
+  "website": "domain.com",
+  "segment": "Company Intelligence / Quant Fund / AI Predictive / PE-VC",
+  "why_buyer": "3-5 sentences with specific evidence from the research provided. Reference specific pages, data gaps, or methodology mentions you found in the subpages or deep evidence.",
+  "evidence_url": "URL of the strongest evidence page",
+  "buying_signals": "Specific signals found in research",
+  "suggested_opening_angle": "1-2 sentences referencing something specific. Paste-ready for cold email.",
+  "confidence": "HIGH or MEDIUM with justification",
+  "recommended_contact_role": "Specific name if found in research, otherwise title",
+  "company_size": "Estimated",
+  "est_data_budget": "$20K-$50K",
+  "use_case": "Specific use case based on their product",
   "country": "HQ country",
-  "lead_score": 8
+  "lead_score": 7
 }}}}],
 "analysis": {{{{
-  "top_3": ["Company A", "Company B", "Company C"],
-  "top_3_reasoning": "Why these close fastest: evidence of data need + small team + funded + founder decides",
-  "emerging_themes": "Patterns from today"
+  "top_3": ["A", "B", "C"],
+  "top_3_reasoning": "Strongest evidence of data need + smallest team + clearest gap",
+  "emerging_themes": ""
 }}}}
 }}}}
 
 If nothing qualifies: {{{{"leads": [], "analysis": {{"top_3": [], "top_3_reasoning": "No qualifying leads", "emerging_themes": ""}}}}}}
 
 QUALITY BAR:
-- HIGH: found specific evidence (blog, docs, job posting, conference) they need structured company data
-- MEDIUM: product clearly requires this data but no explicit evidence of active sourcing
-- Do NOT deliver LOW confidence leads. They waste time.
-
-VOLUME: 15-20 leads per batch. Five HIGH > twenty MEDIUM.
-
-SEARCH STRATEGY: Multi-hop research. Find company -> search their blog, docs, job postings,
-founder social posts. One-page-fetch leads are not good enough.
+- HIGH: found specific evidence in subpages/blogs/hiring of data purchasing intent
+- MEDIUM: product clearly needs this data but no explicit evidence found
+- Include MEDIUM leads — the human will do final verification
+- 5-10 leads per batch. Quality matters but don't reject everything.
+- If a company looks like a plausible buyer, INCLUDE IT at MEDIUM confidence.
 """
+
 
 
 
@@ -1010,23 +998,46 @@ def main():
             if any(domain.endswith(sd) for sd in skip_domains):
                 continue
             seen_domains.add(domain)
-            # Fetch actual page content for deep qualification
+            # MULTI-PAGE RESEARCH: fetch homepage + key subpages
             page_text = fetch_page(r["url"])
             if page_text:
                 r["page_content"] = page_text[:2000]
             
-            # Second search pass: find deep evidence (blog posts, conference appearances)
+            # Try to fetch product/about/data pages for deeper context
+            domain_url = r["url"].rstrip("/")
+            base_url = "/".join(domain_url.split("/")[:3])  # https://domain.com
+            extra_content = []
+            for subpath in ["/about", "/product", "/platform", "/data", "/docs", "/how-it-works", "/solutions", "/api", "/integrations"]:
+                try:
+                    sub_text = fetch_page(base_url + subpath, max_chars=1500)
+                    if sub_text and len(sub_text) > 200:
+                        extra_content.append(sub_text[:1000])
+                except Exception:
+                    pass
+                if len(extra_content) >= 3:
+                    break
+            if extra_content:
+                r["subpages"] = " ||| ".join(extra_content)
+            
+            # TARGETED deep evidence search
             company_name = r.get("title", "").split(" - ")[0].split(" | ")[0].strip()
             if company_name and len(company_name) > 2:
                 deep_evidence = []
                 try:
-                    blog_results = brave_search(f'"{company_name}" blog data dataset', count=3)
-                    conf_results = brave_search(f'"{company_name}" conference neudata battlefin eagle alpha', count=3)
-                    for dr in blog_results + conf_results:
+                    # Search for data methodology, partnerships, and hiring
+                    data_results = brave_search(f'"{company_name}" data sources methodology external datasets', count=3)
+                    hiring_results = brave_search(f'"{company_name}" hiring "data scientist" OR "alternative data" OR "head of data"', count=3)
+                    blog_results = brave_search(f'"{company_name}" blog data OR dataset OR partnership OR integration', count=3)
+                    for dr in data_results + hiring_results + blog_results:
                         if dr.get("url") != r.get("url"):
-                            deep_evidence.append(f"{dr['title']}: {dr['description'][:200]}")
+                            # Fetch the actual evidence page
+                            evidence_text = fetch_page(dr["url"], max_chars=1000)
+                            if evidence_text and len(evidence_text) > 100:
+                                deep_evidence.append(f"SOURCE: {dr['url']}\nCONTENT: {evidence_text[:500]}")
+                            else:
+                                deep_evidence.append(f"{dr['title']}: {dr['description'][:200]}")
                     if deep_evidence:
-                        r["deep_evidence"] = " | ".join(deep_evidence[:3])
+                        r["deep_evidence"] = " ||| ".join(deep_evidence[:4])
                 except Exception:
                     pass
             
@@ -1167,8 +1178,8 @@ def main():
         log.info(f"Manual injection complete: {len(new_manual)} companies researched")
 
 
-    for i in range(0, len(all_results), 15):
-        batch = all_results[i:i+15]
+    for i in range(0, len(all_results), 8):
+        batch = all_results[i:i+8]
         log.info(f"Qualifying batch {i//15 + 1} ({len(batch)} results)...")
         try:
             leads = qualify_leads_with_claude(batch, known)
