@@ -296,6 +296,16 @@ The presence of "AI," "data," "analytics," or "machine learning" in a company
 description does NOT make them a buyer. The question is ALWAYS: does their
 product depend on external company-level data?
 
+### NEGATIVE EXAMPLE: Nuclia / Progress Agentic RAG
+Nuclia builds RAG-as-a-Service that "indexes unstructured data from internal
+and external sources." The agent qualified them because they mention "indexing
+external data sources." This was wrong. "External sources" means their CUSTOMERS'
+external sources — PDFs, videos, documents that users upload. Nuclia itself does
+not buy datasets. They are a platform that processes other people's data. Also
+acquired by Progress Software (1,800+ employees, public company = too large).
+RAG platforms, search platforms, and knowledge management tools are TOOLS, not
+data CONSUMERS. SKIP all of them.
+
 ### POSITIVE EXAMPLE: Fast Data Science
 Builds customer churn prediction models. Their blog states they use "data points
 available at the snapshot date" as model features. Adding workforce contraction
@@ -874,6 +884,7 @@ def main():
                 "medium.com", "forbes.com", "techcrunch.com", "bloomberg.com",
                 "revelio.com", "lightcast.io", "peopledatalabs.com",
                 "vivameda.com", "revelioresearch.com", "revealera.com",
+                "nuclia.com", "progress.com",
             ]
             if any(domain.endswith(sd) for sd in skip_domains):
                 continue
