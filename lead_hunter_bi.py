@@ -72,162 +72,91 @@ def vinnie_alert(msg: str):
 # Search queries from BI Buyer Intelligence Dossier
 # ---------------------------------------------------------------------------
 SEARCH_QUERIES = [
-    # Company intelligence / scoring AI
-    "AI startup company intelligence scoring prediction",
-    "AI company building firmographic prediction model",
-    "startup company scoring engine ML training data",
-    "AI startup company evolution prediction structured data",
-    "company intelligence AI startup funded seed series A",
+    # PEOPLE-FIRST: find the decision makers, then find their companies
+    "head of alternative data" hiring OR joined OR appointed 2025 2026",
+    "chief data officer" startup joined 2025 2026",
+    "head of data science" fund OR quant OR investment joined 2025 2026",
+    "VP data" startup company intelligence 2025 2026",
+    "data scientist" quant fund alternative data linkedin",
 
-    # Investor analytics (PE, VC, credit)
-    "AI startup PE due diligence predictive analytics",
-    "AI startup VC deal sourcing company data",
-    "AI credit risk prediction company-level data startup",
-    "AI startup investment research company signals",
-    "predictive analytics startup investor company data",
+    # SIGNAL-FIRST: find companies showing buying intent
+    "looking for workforce data provider",
+    "need historical company data for backtesting",
+    "seeking alternative data vendor workforce",
+    "evaluating workforce datasets for investment",
+    "RFP alternative data workforce company",
+    "company data vendor comparison 2026",
+    "workforce data evaluation criteria buy",
 
-    # HR tech / people analytics with ML
-    "people analytics startup ML historical workforce",
-    "HR tech AI startup workforce benchmarking data",
-    "AI startup workforce prediction model training",
-    "people analytics AI company workforce signals",
+    # CONFERENCE ATTENDEE LISTS: people who attend alt data events are buyers
+    "BattleFin 2025 2026 attendees participants",
+    "Neudata 2025 2026 data buyer conference",
+    "Eagle Alpha alternative data festival participants",
+    "alternative data conference NYC London 2026 attendees",
+    "Data Council 2026 speakers attendees",
 
-    # Research agents / RAG tools
-    "AI research agent startup company data structured",
-    "autonomous research agent AI company knowledge",
-    "RAG startup company intelligence structured data",
-    "AI analyst copilot company data startup",
+    # CRUNCHBASE: recently funded companies in our verticals
+    "site:crunchbase.com company intelligence seed 2025 2026",
+    "site:crunchbase.com workforce analytics seed series-a 2025 2026",
+    "site:crunchbase.com alternative data startup seed 2025 2026",
+    "site:crunchbase.com predictive analytics company data seed 2025 2026",
+    "site:crunchbase.com investment research AI startup funded",
 
-    # Small quant funds (budget alternative to Revelio)
-    "small quant fund alternative data workforce budget",
-    "systematic fund workforce signals historical backtesting",
-    "quant fund hiring data sourcing analyst small team",
-    "alternative data evaluation quant fund small",
+    # Y COMBINATOR: current and recent batch companies
+    "site:ycombinator.com/companies company intelligence",
+    "site:ycombinator.com/companies workforce analytics",
+    "site:ycombinator.com/companies alternative data",
+    "site:ycombinator.com/companies investment research AI",
+    "site:ycombinator.com/companies company scoring prediction",
+    "Y Combinator W26 S25 company data AI batch",
 
-    # YC and accelerator companies
-    "site:ycombinator.com company intelligence AI",
-    "site:ycombinator.com company data prediction",
-    "site:ycombinator.com workforce analytics AI",
-    "Y Combinator batch 2025 2026 company intelligence AI",
-    "YC startup company scoring prediction AI",
+    # PRODUCT HUNT: recently launched products in our space
+    "site:producthunt.com company intelligence launched 2025 2026",
+    "site:producthunt.com investment research AI launched",
+    "site:producthunt.com company analytics scoring launched",
 
-    # Data sourcing evidence
-    "AI startup job posting alternative data training data",
-    "startup hiring feature engineering company data",
-    "AI startup blog data partnerships external datasets",
-    "startup documentation data sources company coverage",
-    "AI startup integrations page external data",
+    # COMPETITOR CUSTOMERS: who uses our competitors' data?
+    "uses Revelio Labs" OR "Revelio Labs customer" OR "switched from Revelio",
+    "uses Lightcast data" OR "Lightcast customer" OR "alternative to Lightcast",
+    "uses LinkedIn Talent Insights" OR "alternative to LinkedIn Talent Insights",
+    "Burning Glass alternative" OR "workforce data alternative",
 
-    # Founder/CTO social signals
-    "founder CTO LinkedIn company data workforce signals need",
-    "startup founder posting about training data needs",
+    # JOB BOARDS: companies hiring for data roles = they buy data
+    "hiring alternative data analyst startup 2026",
+    "hiring data sourcing manager fund 2026",
+    "hiring head of data startup company intelligence 2026",
+    "job alternative data procurement analyst 2026",
+    "careers data acquisition structured datasets startup",
 
-    # Geographic
-    "AI startup company prediction US funded 2025 2026",
-    "AI company intelligence startup Israel",
-    "company scoring AI startup UK London",
-    "AI startup company data EU funded",
+    # SPECIFIC COMPANY TYPES (narrow, not broad)
+    "company failure prediction startup small team",
+    "startup predicts which companies will grow",
+    "AI estimates company revenue from workforce data",
+    "startup tracks company hiring as investment signal",
+    "workforce signal equity alpha startup",
+    "company evolution tracking startup product",
+    "talent flow analysis investment startup",
+    "organizational change detection startup AI",
 
-    # Documentation pattern (finds specific gaps)
-    "site:docs.* company data workforce API",
-    "site:docs.* data sources companies coverage",
-    '"our data" company workforce historical coverage',
+    # BLOG/CONTENT: people writing about needing our type of data
+    "blog need historical workforce data investment",
+    "blog company-level training data hard to find",
+    "blog alternative data workforce signals alpha",
+    "blog backtesting workforce features equity returns",
+    "medium.com workforce data investment signal quality",
 
-    # Career-path evidence
-    "site:linkedin.com YipitData alumni quant fund",
-    "site:linkedin.com Revelio Labs alumni startup",
-    "site:linkedin.com alternative data analyst moved to fund",
+    # DATARADE/MARKETPLACES: who's browsing for workforce data?
+    "site:datarade.ai workforce company data buyer",
+    "site:databricks.com marketplace workforce company data",
+    "site:snowflake.com marketplace workforce intelligence",
+    "AWS Data Exchange workforce company data provider",
 
-    # Platform adjacency
-    "VC firm talent data platform scrapes analyzes",
-    "investment firm proprietary data engine workforce",
-    "fund data platform company intelligence built",
-
-    # Evidence-rich
-    "company blog alternative data needs gaps datasets",
-    "startup documentation data sources company-level",
-    "firm conference BattleFin Neudata Eagle Alpha speaker",
-    "startup raised funding data acquisition company",
-
-    # Site-targeted
-    "site:crunchbase.com AI startup company prediction funded",
-    "site:crunchbase.com company intelligence AI seed series A",
-    "site:producthunt.com company scoring AI intelligence",
-    "site:linkedin.com chief data officer quant fund small",
-
-    # === NEW: Problem-based queries (what buyers search for) ===
-    
-    # Buyers looking for data
-    "looking for company-level historical data",
-    "need workforce data for backtesting",
-    "seeking alternative data workforce hiring signals",
-    "buy company data structured longitudinal",
-    "license workforce dataset company-level",
-    "company data gap historical depth coverage",
-    "where to find historical company workforce data",
-    "workforce data provider comparison review 2026",
-
-    # Buyers describing their problem
-    "limited historical data company analysis",
-    "need more datasets alternative data fund",
-    "data quality problem company-level features",
-    "training data gap company prediction model",
-    "point-in-time snapshot limitation company data",
-    "survivorship bias problem company dataset",
-    "backtesting workforce signals equity returns",
-
-    # Specific product categories that buy data
-    "company health scoring startup API",
-    "startup failure prediction model data",
-    "employee churn prediction company features",
-    "talent flow analytics investment signal",
-    "workforce composition alpha signal equity",
-    "hiring velocity leading indicator revenue",
-    "headcount growth predictor stock performance",
-
-    # Buyers at conferences / events
-    "alternative data conference 2026 attendee speaker",
-    "BattleFin 2026 attendees exhibitors",
-    "Neudata 2026 alternative data buyers",
-    "Eagle Alpha alternative data festival 2026",
-    "alternative data buyer conference speaker panel",
-
-    # Funded startups in adjacent spaces
-    "startup raised funding company intelligence 2025 2026",
-    "startup series A company analytics intelligence 2026",
-    "seed funded startup company data prediction 2026",
-    "funded startup workforce analytics 2025 2026",
-    "new startup company benchmarking scoring funded",
-
-    # Job postings revealing data buyers
-    "hiring alternative data analyst 2026",
-    "job posting data sourcing company-level datasets",
-    "hiring head of data alternative data fund",
-    "job data acquisition structured datasets 2026",
-    "careers page alternative data sourcing analyst",
-
-    # Niche verticals that need company evolution data
-    "private credit risk model company data startup",
-    "supply chain risk scoring company signals",
-    "ESG workforce diversity scoring company data",
-    "M&A target screening workforce signals",
-    "portfolio monitoring company health indicators",
-    "venture capital portfolio analytics workforce",
-    "PE operating partner workforce benchmarking",
-
-    # Companies using competitor data (we can complement/replace)
-    "uses Revelio Labs data looking for alternative",
-    "Lightcast alternative workforce data comparison",
-    "LinkedIn Talent Insights alternative company data",
-    "Crunchbase data not enough company analysis",
-    "PitchBook alternative company-level data deeper",
-
-    # Direct outreach-style discovery
-    "startup CTO blog post about finding training data",
-    "fund manager alternative data evaluation process",
-    "head of data blog buying external datasets",
-    "startup founder data acquisition strategy",
+    # ANGEL LIST / WELLFOUND: funded startups in our space
+    "site:wellfound.com company intelligence startup funded",
+    "site:wellfound.com alternative data startup hiring",
+    "site:wellfound.com workforce analytics startup",
 ]
+
 
 
 
