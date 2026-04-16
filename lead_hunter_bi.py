@@ -342,6 +342,118 @@ sell data, they don't buy it. They would see us as a peer or competitor, not
 a customer. SKIP all companies that SELL training data or data annotation
 services. They are vendors, not buyers.
 
+### QUALITY BENCHMARK: ADVANCED RESEARCH EXAMPLES
+
+The following 6 examples represent the highest quality standard for lead research.
+Every lead below has: specific evidence from actual web pages, named decision-makers
+with LinkedIn, paste-ready opening angles, and full research trails. MATCH THIS LEVEL.
+
+### Example: Moonfire Ventures (VC, HIGH)
+Evidence: Firm positions itself as "a technology company that does venture capital" —
+more ML engineers than investors on a ~14-person team. Published post titled
+"Building the machine for data-driven investing." Has a dedicated Head of AI & ML
+(Jonas Vetterle) and CTO Managing Partner (Mike Arpaia, ex-Facebook).
+Angle: "Moonfire's entire identity is 'the machine for data-driven investing' run
+by a dedicated Head of AI & ML and a CTO Managing Partner — position Vivameda as
+the longitudinal workforce training set their pre-seed sourcing model can't scrape
+from public sources."
+Research trail: moonfire.com/ → moonfire.com/stories/jonas-vetterle-head-of-ai-ml/
+→ "Building the machine for data-driven investing" post.
+
+### Example: Correlation Ventures (VC, HIGH)
+Evidence: Analytical co-investment fund trained on 20+ years of US VC financings.
+Dedicated analytics org: Managing Director of Analytics (Anu Pathria, ex-Burning
+Glass founder), Partner of Analytics, Data Engineer, Senior Analyst. Process is
+"data-driven fundraising" built on "the world's most complete VC dataset."
+Angle: "Correlation's fund is an analytical co-investment model run by an MD of
+Analytics who co-founded Burning Glass — Vivameda's longitudinal workforce panel
+is the complementary training input their financings-only dataset is missing."
+
+### Example: Middesk (AI B2B Predictive, HIGH)
+Evidence: Credit Assessment page states "Payment history doesn't tell you if the
+business is still operating." Product core: "Purpose-built ML models detect risk
+patterns. AI agents investigate ownership networks." Open reqs for ML Engineer and
+Data Scientist. Launched Signal product fusing "authoritative and alternative data."
+Angle: "'Payment history doesn't tell you if the business is still operating.'
+Vivameda's headcount trajectory per company-year answers that gap directly —
+operating business hires show up first in our panel."
+Decision makers: Kurt Ruppel (Co-Founder & CTO), Kyle Mack (Co-Founder & CEO).
+
+### Example: Keyplay (AI B2B Predictive, HIGH)
+Evidence: Product page explicitly lists "hiring signals by role and recruiting
+velocity" as scoring ingredients. Their differentiator is "measuring growth
+activity rather than funding." Story page describes model customization and signal
+composition as core product.
+Angle: "Your product page calls out 'recruiting velocity' and 'hiring signals by
+role' as core scoring ingredients — Vivameda's company-year panel is the longitudinal
+version of exactly that signal, across 70 years and 4M+ companies."
+Decision maker: Adam Schoenfeld (Co-founder & CEO).
+
+### Example: Sturdy.ai (AI B2B Predictive, HIGH)
+Evidence: Revenue threat detection platform. Their churn framework lists
+"Executive Sponsor Changes: Detecting when a champion leaves" as a top churn signal
+— but they detect it from customer conversations, not company-level data.
+Angle: "Their model reads customer conversations. Churn framework names executive
+sponsor changes as a top signal — but only catches it once it lands in a customer
+email. Vivameda's workforce panel fires that signal directly from company-level data."
+
+### Example: PredictLeads (AI-ML teams, HIGH)
+Evidence: Crawls job postings across 2.2M+ companies, 9.2M jobs. Blog post
+"Job Openings Data as a Leading Indicator of Company Growth." ML-extracted company
+signals since 2016.
+Angle: "ML-extracted company signals across 2.2M companies, 9.2M jobs since 2016 —
+Vivameda has 70 years of historical depth, pre-dating the web-scraped era."
+Decision maker: Matic Perovsek (Founder, CTO, Data Scientist).
+
+### WHAT MAKES THESE EXAMPLES GOLD:
+
+1. EVIDENCE IS SPECIFIC AND ATTRIBUTED
+   - Not "they use ML" but "their credit assessment page says X"
+   - Every claim has a URL or quote backing it
+   - Read product pages, blog posts, team pages, job reqs
+
+2. DECISION-MAKERS ARE NAMED AND LINKED
+   - Full name + title + LinkedIn URL
+   - Prioritize technical co-founders, Heads of Data/AI, CTOs
+   - Check for ex-Burning Glass, ex-YipitData, ex-Revelio signals
+
+3. OPENING ANGLES ARE PASTE-READY
+   - Quote something the company actually said
+   - Name the exact gap Vivameda fills
+   - Write it so the recipient can't say "this is generic"
+
+4. CONFIDENCE NOTES EXPLAIN WHY
+   - "Dedicated Head of AI & ML, CTO Managing Partner, ML-stack"
+   - "Productized ML" / "Uses job posts as core signal"
+   - Short phrases that summarize the buying signals
+
+### RESEARCH PATTERNS TO REPLICATE (CRITICAL):
+
+Pattern 1: Find the engineering/ML team page
+- VCs/funds with dedicated AI/ML engineers = data buyers
+- "Head of AI & ML" or "Technology Partner" = the right contact
+- Engineering:Investor ratio > 1 = highly technical firm
+
+Pattern 2: Read the product/methodology page
+- Extract the exact phrases they use about their data
+- Identify what they DON'T have (historical depth, snapshot-only, limited coverage)
+- Find the buzzwords: "proprietary platform", "ML ensemble", "training set"
+
+Pattern 3: Check job boards
+- Active reqs for "Data Engineer", "ML Engineer", "Data Scientist" = operational
+  capacity to ingest new datasets
+- Active reqs for "Data Sourcing" = explicit signal
+
+Pattern 4: Follow the content trail
+- Blog posts about methodology reveal gaps
+- Medium/Substack posts from founders about data challenges
+- Newsletter archives showing their current thinking
+
+Pattern 5: Check for signal-level products
+- Firms selling "risk scores", "predictive models", "scoring APIs" over company
+  data are buyers
+- "Signal" products often explicitly mention external/alt data consumption
+
 ### KEY LESSON FROM THESE FOUR FAILURES:
 The agent was fooled by surface-level keywords: "AI", "data", "intelligence",
 "analytics", "training data." None of these words make a company a BUYER.
