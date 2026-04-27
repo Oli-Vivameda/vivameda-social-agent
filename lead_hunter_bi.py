@@ -185,364 +185,148 @@ SEARCH_QUERIES = [
 
 
 SEGMENT_CONTEXT = """
-## VIVAMEDA DATASET (what we sell)
-
-- 4.2M+ companies, 48M+ observed company-year records
-- 1950 to 2020 time series (longitudinal, not snapshots)
-- Workforce growth, role composition, skill shifts, capability transitions
-- 226,000+ high-density companies with >90% attribute coverage
-- 86% role coverage, 89% skill coverage at headcount >= 20
-- Pre-computed signals: growth acceleration, early scaling, contraction, recovery
-- Survivorship-bias-free (includes failed, merged, delisted companies)
-- Delivery: CSV, Parquet, Snowflake
-- Price: USD 20,000 to 50,000
-- Website: https://www.vivameda.com
-
-## TARGET COMPANY PROFILE
-
-We want small to mid-sized teams. Companies where decisions happen fast and budgets do not require months of procurement. 10 to 200 person organizations, founder-led or with a small leadership team, where the person you identify can actually say yes. We want short sales cycles, not enterprise pipelines.
-
-Avoid large multi-strategy shops (Citadel, Point72, Millennium, Two Sigma, etc.) and large enterprises.
-
-## TARGET SEGMENTS
-
-### Segment 1: Small quantitative fund or trading firm
-A smaller quant fund or systematic trading firm that uses alternative data. Look for evidence of purchasing external datasets: job postings mentioning alternative data, conference appearances at events like BattleFin, Eagle Alpha, or Neudata, or a visible data sourcing function.
-
-### Segment 2: AI startup building B2B predictive models
-A startup (Series A or later, small team) building predictive products for business clients. Examples: companies predicting churn, revenue, hiring trends, company health, or credit risk. They must visibly use ML and would benefit from historical company-level training data. Look for evidence in their product pages, blog posts, documentation, or hiring patterns.
-
-### Segment 3: Boutique PE or VC firm with data-driven approach
-A smaller PE or VC firm that uses data to evaluate investments, monitor portfolio companies, or source deals. Look for firms that mention data-driven processes on their website, have an in-house analyst or data team, or have published content about using alternative data in their investment process.
-
-### Additional segments (apply when evidence is strong)
-- Distressed debt traders needing bankruptcy prediction signals
-- Litigation support firms needing historical workforce evidence
-- Insurance underwriters pricing employment-related risk
-- Credit risk modelers
-- Prediction market traders and data providers
-
-## RESEARCH PROCESS
-
-### Step 1: Company identification
-Search results give you candidate companies. Filter for 10 to 200 person teams where workforce data or company evolution data is core to their product or process.
-
-### Step 2: Deep qualification
-This is where quality happens. Read the company actual materials. Do not summarize their About page. You must find specific evidence from at least one of these sources:
-
-- Product pages and feature descriptions
-- Documentation and API docs (what data they use, what gaps exist)
-- Blog posts mentioning data needs, methodology, or data partnerships
-- Job postings mentioning alternative data, external datasets, or data sourcing
-- Conference appearances at BattleFin, Eagle Alpha, Neudata, Data Council
-- Funding announcements describing how capital will be used
-- LinkedIn posts from key people about data challenges
-
-What to look for specifically:
-- Do they already use workforce or company-level data? What are their gaps?
-- Do they have limited historical depth? (Most started collecting after 2015)
-- Do they rely on point-in-time snapshots rather than longitudinal panels?
-- Are they actively looking to onboard new datasets?
-- Is there a dedicated data sourcing or data acquisition role?
-
-### Step 3: Contact identification
-Find 1 to 2 decision-makers who evaluate or purchase external datasets.
-Prioritize these titles: Chief Data Officer, Head of Data, VP of Data Science, Head of Research, CTO (at startups under 20 people).
-Do NOT default to CEO unless the company is under 20 people.
-Include full name, job title, LinkedIn profile URL.
-
-### Step 4: Opening angle
-Write 1 to 2 sentences that reference something specific you found in Step 2. This must be concrete enough to paste into the first line of a cold email.
-
-### Step 5: Confidence scoring
-- HIGH: specific evidence of data purchasing intent or a clear product gap that Vivameda fills, plus an identifiable decision-maker
-- MEDIUM: strong product fit but no direct evidence of active data sourcing
-- LOW: theoretical fit but no concrete evidence
-
-Only return HIGH and MEDIUM leads. Drop LOW leads entirely.
-
-## QUALITY RULES
-
-- If nothing in this batch qualifies as HIGH or MEDIUM, return empty
-- 3 deeply qualified leads are worth more than 20 surface-level ones
-- Never produce a lead without specific evidence from their website, docs, or blog
-- Never write an opening angle that could apply to any data company
-- Never rate a lead HIGH without concrete evidence of data purchasing intent
-- The why_buyer field must contain at least one specific URL or reference
-
-## CRITICAL QUALIFYING LOGIC: DATA CONSUMER vs DATA TOOL
-
-Before qualifying ANY lead, determine whether the company CONSUMES external
-data as a product input or PROCESSES data their users bring.
-
-### BUYER (consumes external data):
-The company's product depends on external datasets to function. They integrate
-third-party data into their models, pipelines, or analysis. Without external
-data, their product is weaker or incomplete.
-
-Examples: ExtractAlpha (buys datasets to build trading signals), Sumble (needs
-company data to train AI models), Wokelo (needs company data for diligence
-reports), Churned (uses company signals to predict churn).
-
-### NOT A BUYER (processes user's own data):
-The company builds a tool that visualizes, analyzes, or processes whatever data
-the user uploads. They are a canvas, not a consumer. They don't need external
-datasets because their users bring their own.
-
-Examples: Tableau, Golden Analytics, Metabase, Power BI, Looker. These companies
-will never buy our dataset because their product works on any data the user provides.
-
-### THE TEST:
-Ask: "If I removed all external datasets from this company's product, would their
-product still work?"
-- If YES -> they are a TOOL. SKIP.
-- If NO -> they are a CONSUMER. QUALIFY.
-
-### NEGATIVE EXAMPLE: Golden Analytics
-Golden Analytics launched with $7M seed funding to build an AI-native BI platform.
-They use "AI" and "data" in their description. But they are a dashboard tool.
-Users upload their own CSV and get visualizations. They don't integrate external
-datasets. They are a Tableau replacement, NOT a data buyer. SKIP.
-
-The presence of "AI," "data," "analytics," or "machine learning" in a company
-description does NOT make them a buyer. The question is ALWAYS: does their
-product depend on external company-level data?
-
-### NEGATIVE EXAMPLE: Nuclia / Progress Agentic RAG
-Nuclia builds RAG-as-a-Service that "indexes unstructured data from internal
-and external sources." The agent qualified them because they mention "indexing
-external data sources." This was wrong. "External sources" means their CUSTOMERS'
-external sources — PDFs, videos, documents that users upload. Nuclia itself does
-not buy datasets. They are a platform that processes other people's data. Also
-acquired by Progress Software (1,800+ employees, public company = too large).
-RAG platforms, search platforms, and knowledge management tools are TOOLS, not
-data CONSUMERS. SKIP all of them.
-
-### NEGATIVE EXAMPLE: Mercor ($10B AI hiring/labeling marketplace)
-Mercor connects human experts with AI labs for RLHF training. $10B valuation,
-200+ employees, $492M raised. The agent might qualify them because they are
-"AI" and work with "data." Wrong. They are a labor marketplace, not a data
-consumer. They don't buy external datasets — they sell human labor to AI labs.
-Also way too large for a $20K deal. SKIP all AI hiring/labeling/annotation
-platforms: Mercor, Scale AI, Appen, Surge, Micro1, Labelbox.
-
-### NEGATIVE EXAMPLE: Obviant (defense acquisition intelligence)
-Obviant builds intelligence for defense acquisition — budgets, congressional
-hearings, policy documents. The agent might qualify them because they do
-"intelligence" and "analytics." Wrong. They serve defense/government customers
-with long procurement cycles. Our workforce data has no defense acquisition
-use case. SKIP all defense intelligence, government analytics, and policy
-research platforms.
-
-### NEGATIVE EXAMPLE: AfterQuery ($300M AI training data vendor)
-AfterQuery SELLS expert-generated training datasets to AI labs. $300M valuation,
-$100M+ ARR, 100K contractors. The agent might qualify them because they work
-with "training data" and "AI." Wrong. They are a DATA VENDOR like us — they
-sell data, they don't buy it. They would see us as a peer or competitor, not
-a customer. SKIP all companies that SELL training data or data annotation
-services. They are vendors, not buyers.
-
-### QUALITY BENCHMARK: ADVANCED RESEARCH EXAMPLES
-
-The following 6 examples represent the highest quality standard for lead research.
-Every lead below has: specific evidence from actual web pages, named decision-makers
-with LinkedIn, paste-ready opening angles, and full research trails. MATCH THIS LEVEL.
-
-### Example: Moonfire Ventures (VC, HIGH)
-Evidence: Firm positions itself as "a technology company that does venture capital" —
-more ML engineers than investors on a ~14-person team. Published post titled
-"Building the machine for data-driven investing." Has a dedicated Head of AI & ML
-(Jonas Vetterle) and CTO Managing Partner (Mike Arpaia, ex-Facebook).
-Angle: "Moonfire's entire identity is 'the machine for data-driven investing' run
-by a dedicated Head of AI & ML and a CTO Managing Partner — position Vivameda as
-the longitudinal workforce training set their pre-seed sourcing model can't scrape
-from public sources."
-Research trail: moonfire.com/ → moonfire.com/stories/jonas-vetterle-head-of-ai-ml/
-→ "Building the machine for data-driven investing" post.
-
-### Example: Correlation Ventures (VC, HIGH)
-Evidence: Analytical co-investment fund trained on 20+ years of US VC financings.
-Dedicated analytics org: Managing Director of Analytics (Anu Pathria, ex-Burning
-Glass founder), Partner of Analytics, Data Engineer, Senior Analyst. Process is
-"data-driven fundraising" built on "the world's most complete VC dataset."
-Angle: "Correlation's fund is an analytical co-investment model run by an MD of
-Analytics who co-founded Burning Glass — Vivameda's longitudinal workforce panel
-is the complementary training input their financings-only dataset is missing."
-
-### Example: Middesk (AI B2B Predictive, HIGH)
-Evidence: Credit Assessment page states "Payment history doesn't tell you if the
-business is still operating." Product core: "Purpose-built ML models detect risk
-patterns. AI agents investigate ownership networks." Open reqs for ML Engineer and
-Data Scientist. Launched Signal product fusing "authoritative and alternative data."
-Angle: "'Payment history doesn't tell you if the business is still operating.'
-Vivameda's headcount trajectory per company-year answers that gap directly —
-operating business hires show up first in our panel."
-Decision makers: Kurt Ruppel (Co-Founder & CTO), Kyle Mack (Co-Founder & CEO).
-
-### Example: Keyplay (AI B2B Predictive, HIGH)
-Evidence: Product page explicitly lists "hiring signals by role and recruiting
-velocity" as scoring ingredients. Their differentiator is "measuring growth
-activity rather than funding." Story page describes model customization and signal
-composition as core product.
-Angle: "Your product page calls out 'recruiting velocity' and 'hiring signals by
-role' as core scoring ingredients — Vivameda's company-year panel is the longitudinal
-version of exactly that signal, across 70 years and 4M+ companies."
-Decision maker: Adam Schoenfeld (Co-founder & CEO).
-
-### Example: Sturdy.ai (AI B2B Predictive, HIGH)
-Evidence: Revenue threat detection platform. Their churn framework lists
-"Executive Sponsor Changes: Detecting when a champion leaves" as a top churn signal
-— but they detect it from customer conversations, not company-level data.
-Angle: "Their model reads customer conversations. Churn framework names executive
-sponsor changes as a top signal — but only catches it once it lands in a customer
-email. Vivameda's workforce panel fires that signal directly from company-level data."
-
-### Example: PredictLeads (AI-ML teams, HIGH)
-Evidence: Crawls job postings across 2.2M+ companies, 9.2M jobs. Blog post
-"Job Openings Data as a Leading Indicator of Company Growth." ML-extracted company
-signals since 2016.
-Angle: "ML-extracted company signals across 2.2M companies, 9.2M jobs since 2016 —
-Vivameda has 70 years of historical depth, pre-dating the web-scraped era."
-Decision maker: Matic Perovsek (Founder, CTO, Data Scientist).
-
-### WHAT MAKES THESE EXAMPLES GOLD:
-
-1. EVIDENCE IS SPECIFIC AND ATTRIBUTED
-   - Not "they use ML" but "their credit assessment page says X"
-   - Every claim has a URL or quote backing it
-   - Read product pages, blog posts, team pages, job reqs
-
-2. DECISION-MAKERS ARE NAMED AND LINKED
-   - Full name + title + LinkedIn URL
-   - Prioritize technical co-founders, Heads of Data/AI, CTOs
-   - Check for ex-Burning Glass, ex-YipitData, ex-Revelio signals
-
-3. OPENING ANGLES ARE PASTE-READY
-   - Quote something the company actually said
-   - Name the exact gap Vivameda fills
-   - Write it so the recipient can't say "this is generic"
-
-4. CONFIDENCE NOTES EXPLAIN WHY
-   - "Dedicated Head of AI & ML, CTO Managing Partner, ML-stack"
-   - "Productized ML" / "Uses job posts as core signal"
-   - Short phrases that summarize the buying signals
-
-### RESEARCH PATTERNS TO REPLICATE (CRITICAL):
-
-Pattern 1: Find the engineering/ML team page
-- VCs/funds with dedicated AI/ML engineers = data buyers
-- "Head of AI & ML" or "Technology Partner" = the right contact
-- Engineering:Investor ratio > 1 = highly technical firm
-
-Pattern 2: Read the product/methodology page
-- Extract the exact phrases they use about their data
-- Identify what they DON'T have (historical depth, snapshot-only, limited coverage)
-- Find the buzzwords: "proprietary platform", "ML ensemble", "training set"
-
-Pattern 3: Check job boards
-- Active reqs for "Data Engineer", "ML Engineer", "Data Scientist" = operational
-  capacity to ingest new datasets
-- Active reqs for "Data Sourcing" = explicit signal
-
-Pattern 4: Follow the content trail
-- Blog posts about methodology reveal gaps
-- Medium/Substack posts from founders about data challenges
-- Newsletter archives showing their current thinking
-
-Pattern 5: Check for signal-level products
-- Firms selling "risk scores", "predictive models", "scoring APIs" over company
-  data are buyers
-- "Signal" products often explicitly mention external/alt data consumption
-
-### KEY LESSON FROM THESE FOUR FAILURES:
-The agent was fooled by surface-level keywords: "AI", "data", "intelligence",
-"analytics", "training data." None of these words make a company a BUYER.
-
-THE REAL QUESTIONS:
-1. Does their PRODUCT depend on structured company-level data as INPUT?
-2. Are they SMALL enough for a $20K deal (under 200 people)?
-3. Do they BUY external datasets, or do they SELL data/labor?
-4. Is company evolution / workforce intelligence relevant to what they build?
-
-If any answer is NO → SKIP.
-
-Additional categories to ALWAYS SKIP:
-- AI hiring/labeling platforms (Mercor, Scale AI, Appen, Surge)
-- Defense/government intelligence platforms
-- Companies that SELL training data (AfterQuery, Scale AI)
-- RAG/search platforms that process user-uploaded data (Nuclia, Elasticsearch)
-- Dashboard/BI tools (Tableau, Golden Analytics, Metabase)
-- Companies valued over $500M (too large, too slow)
-- Companies with 200+ employees
-
-### POSITIVE EXAMPLE: Fast Data Science
-Builds customer churn prediction models. Their blog states they use "data points
-available at the snapshot date" as model features. Adding workforce contraction
-data as a feature would improve their predictions. VALID LEAD because their
-product directly benefits from external company-level data as a feature input.
-
-### UPDATED QUALIFYING QUESTIONS (answer in order):
-1. Does the company's product DEPEND on external company-level data?
-   (Not just "could use" but "needs")
-2. Would our workforce evolution data become a feature, signal, or input in their product?
-3. Can the decision-maker approve a $20-50K data purchase without enterprise procurement?
-4. Is there specific evidence (blog, job posting, product page, conference) that they source external datasets?
-
-Scoring:
-- All four YES = HIGH confidence
-- Three YES = MEDIUM confidence
-- Two or fewer YES = SKIP entirely
-
-## QUALITY BENCHMARK: REAL EXAMPLES (study these carefully)
-
-### Example A: Anomaly Capital Management (Quant Fund, MEDIUM)
-A data scientist (Christopher Goessling) moved from YipitData to this quant fund.
-At YipitData his role was "identifying, screening, licensing, cleaning, and analyzing
-alternative data." A data scientist moving from an alt data provider INTO a quant fund
-strongly suggests active data sourcing function. This is the kind of career-path
-evidence that makes a lead actionable.
-OPENING: "Given your background at YipitData sourcing alternative data, I'd love to
-show you how a 70-year workforce panel could help Anomaly build structural signals
-like capability transitions before they show up in fundamentals."
-
-### Example B: Churned (AI Startup B2B Predictive, HIGH)
-11-50 person AI startup building churn prediction models. Founders explained in a
-podcast that they use ML models (not rule-based) to predict customer churn. Their
-models use product usage and financial data. INSIGHT: when a customer's headcount
-declines or hiring slows, it signals financial stress leading to subscription
-cancellations. Workforce data = early indicator BEFORE it shows in usage/payment.
-OPENING: "Your churn models use product usage and financial signals. Have you explored
-adding company-level workforce data as an early indicator of customer health before it
-shows up in usage or payment patterns?"
-
-### Example C: Ensemble VC (Data-Driven VC, HIGH)
-11-50 person VC that "continuously scrapes, analyzes, and refreshes billions of
-datapoints across the global talent ecosystem." They already built an in-house
-alternative data engine focused on workforce signals. But they only have current
-data — no historical depth. Vivameda adds 70 years of company evolution.
-OPENING: "Your platform already scrapes billions of talent ecosystem datapoints. I'd
-like to show you how a 70-year company-level workforce panel could add capability
-transition and hiring discipline features to your scoring models."
-
-### What makes these examples exceptional:
-1. Career-path evidence: tracking where data professionals moved FROM (YipitData → quant fund = data buyer)
-2. Podcast/interview mining: finding specific statements about methodology and data needs
-3. Gap identification: they have current data but no historical depth — Vivameda fills exactly this
-4. Feature-level pitch: not "you might like our data" but "headcount decline = churn early indicator"
-5. Platform adjacency: they already built a talent data engine, so they understand the value instantly
-
-### Research patterns to replicate:
-- Check team pages for ex-alt-data-provider employees (YipitData, Revelio, Lightcast alumni = data buyers)
-- Find podcast interviews where founders discuss methodology and data inputs
-- Look for "our platform scrapes/analyzes/aggregates" language = already built data infrastructure
-- Identify the specific feature our data would add to their existing product
-- Match company size (11-50) with founder-led structure = fast purchasing decision
-
-## COMPANIES TO SKIP
-
-Do not qualify any company already in the known_companies list provided with each batch.
-Also skip these permanently: Revelio Labs, Lightcast, LinkedIn, Vivameda, any company with fewer than 5 employees.
+### THE AVATAR: COMPANIES THAT BUILD AI MODELS ON COMPANY DATA
+
+Vivameda sells longitudinal company-evolution data (4.2M companies, 48M company-year
+records, 1950-2020) as TRAINING SUBSTRATE for any AI/ML model that reasons about
+companies. The avatar is ONE thing said many ways:
+
+  "Companies that build AI models on top of company data."
+
+This includes:
+- AI investment research / equity analyst platforms
+- AI due diligence agents (PE, M&A, consulting)
+- AI deal sourcing platforms with proprietary ML
+- B2B predictive AI startups scoring companies (credit risk, churn, growth)
+- Quant funds running ML on company-level alt data
+- Data-driven VCs with proprietary sourcing models
+- Synthetic-population / company-simulation startups
+- Workforce-signal startups feeding investor models
+
+A buyer has ALL of these properties:
+1. Their product trains, fine-tunes, or grounds models on external company data
+2. Output is a SIGNAL/SCORE/PREDICTION/INSIGHT about a company's future state
+3. 10-100 employees, Seed to Series B, founder/CTO has buying authority
+4. Budget for $5K-$20K data deals (rough heuristic; not procurement-bound)
+5. Has explicit data-quality concerns: "training corpus", "ground truth",
+   "fine-tuning", "evaluation benchmark", "data layer", "pre-training"
+
+### THE DATA CONSUMER TEST (CRITICAL)
+
+Ask: "If I removed all external company datasets, would their product still work?"
+- YES they still work -> they are a TOOL or AGGREGATOR -> SKIP
+- NO their product breaks -> they are a DATA CONSUMER -> QUALIFY
+
+### GOLD-STANDARD EXAMPLES (POSITIVE)
+
+These are real qualified buyers. MATCH THIS LEVEL of evidence and angle.
+
+Example: Bridgetown Research (HIGH)
+Evidence: Series A $19M (Accel + Lightspeed + Sequoia, Feb 2025). Seattle/Bangalore.
+Founded Dec 2023 by Harsh Sahai (ex-McKinsey, ex-Amazon ML research scientist).
+"AI agents that crawl the internet and analyze datasets" + voice agents that
+interview industry experts. They sell to PE, VC, consulting, corporate strategy.
+Angle: "Bridgetown's agents synthesize secondary research with primary expert
+interviews, but every output needs structural grounding. Vivameda provides 70 years
+of company evolution as the longitudinal substrate their analysis layer is missing."
+Decision maker: Harsh Sahai (CEO/Co-founder).
+
+Example: DiligenceSquared (HIGH)
+Evidence: YC F25, $5M seed (Relentless / ex-Index Ventures Damir Becirovic, Oct 2025).
+Co-founders Frederik Hansen (ex-Blackstone principal) and Soren Biltoft (ex-BCG PE
+practice). AI voice-agent platform delivering McKinsey-grade commercial diligence
+for $50K vs the $500K-$1M traditional cost.
+Angle: "DiligenceSquared replaces $500K McKinsey reports with AI voice agents at
+$50K. Their next moat is the data their agents reason over. Vivameda is the
+longitudinal company corpus that turns voice-agent transcripts into defensible
+diligence insights."
+Decision makers: Frederik Hansen (CEO), Soren Biltoft, Harshil Rastogi (ex-Google).
+
+Example: Brightwave (HIGH)
+Evidence: $15M Series A. Founded by Mike Conover, ex-Databricks principal scientist
+(led the Dolly LLM team). AI research analyst for investment professionals — reads
+filings and generates investment theses.
+Angle: "Brightwave grounds AI research analyst output in filings. Filings tell you
+what a company reported. Vivameda's longitudinal workforce panel tells you what a
+company actually became — a complementary feature layer for investment thesis
+generation."
+Decision maker: Mike Conover (Co-founder, ex-Databricks).
+
+Example: Grasp (HIGH)
+Evidence: $7M Series A. Multi-agent AI analyst that automates IB and management
+consulting workflows. Small team, founder-led.
+Angle: "Multi-agent IB analyst output is only as good as its company-data
+substrate. Vivameda is 4.2M companies with 70 years of structural evolution data
+— the substrate Grasp's agents need to produce defensible analysis."
+
+Example: Aaru (HIGH)
+Evidence: $50M+ multi-tier Series A 2025, blended valuation ~$1B. Founded March
+2024 by Cameron Fink, Ned Koh, John Kessler. Generates "thousands of AI agents
+that simulate human behavior using both public and proprietary data." Pre-trains
+synthetic populations on company-level behavioral data.
+Angle: "Aaru pre-trains synthetic populations on public + proprietary data.
+Workforce-evolution patterns over 70 years are the missing structural input —
+synthetic agents that understand how companies hire, grow, and contract."
+Decision makers: Cameron Fink, Ned Koh, John Kessler.
+
+Example: Linq Alpha (HIGH)
+Evidence: AI co-pilot for hedge fund analysts. Builds private LLM-driven research
+tools for buy-side. Small Seed/Series A team. Felix Wang (ex-Hedgeye) co-founder.
+Angle: "Linq Alpha trains private LLMs for hedge fund research. The longitudinal
+company-year panel is the entity-resolved feature layer their research tools need
+to ground predictions across decades, not just the last 10 years of public filings."
+Decision maker: Felix Wang (Co-founder/CEO, ex-Hedgeye).
+
+Example: Daloopa (HIGH)
+Evidence: Series B reported 2024. AI extracts financial data from filings to power
+equity research models. Founded by Thomas Li.
+Angle: "Daloopa already trains models on company financials extracted from filings.
+Vivameda adds the next axis: workforce composition and capability transitions across
+70 years — features that filings don't structure."
+Decision maker: Thomas Li (CEO/Co-founder).
+
+### NEGATIVE EXAMPLES (DO NOT QUALIFY)
+
+Skip these patterns - they look adjacent but FAIL the Data Consumer test:
+
+- Golden Analytics: dashboard tool over customer data, not company training data
+- Nuclia / Progress: RAG infrastructure (processes user docs, not company data)
+- Mercor: AI hiring marketplace (matches humans, not models on companies)
+- Obviant: defense procurement intelligence (gov data, not company evolution)
+- AfterQuery: AI training data vendor for foundation labs (PEER not buyer)
+- Crunchr / HRBench: HR dashboards (consume internal HR data, not external panels)
+- Humwork / agent platforms: human-in-the-loop infra (no model training on companies)
+- Babbl Labs: video intelligence vendor (sells data, peer not buyer)
+- Live Data Technologies: present-tense workforce data vendor (PEER)
+- Databar / SyncGTM / Apollo: GTM/sales enrichment (resells data, partnership not sale)
+
+### KEY LESSON FROM THESE FAILURES
+
+Surface keywords are not enough. "AI" + "data" + "intelligence" can describe both
+buyers AND tools/peers/aggregators. Always run the Data Consumer test.
+
+### RESEARCH PATTERNS TO REPLICATE
+
+Pattern 1 - Engineering/ML team page: dedicated Heads of AI/ML, CTO co-founder,
+ML Engineer reqs = data buyer
+
+Pattern 2 - Product/methodology page: extract exact phrases about their data;
+identify gaps (no historical depth, snapshot-only, limited coverage)
+
+Pattern 3 - Job postings: open reqs for "Data Engineer", "ML Engineer",
+"Data Scientist", "Data Sourcing Manager" = operational capacity to ingest
+
+Pattern 4 - Content trail: blog posts, Substack, podcast appearances about
+data challenges, methodology, training corpus needs
+
+Pattern 5 - Funding signal: Seed-Series B in last 12 months; founder-led;
+pricing on website suggests <$50K ACV (so $5-20K data deal fits in budget)
+
+Pattern 6 - Founder background: ex-McKinsey/BCG/Bain, ex-FAANG ML, ex-PE/IB
+analysts, ex-data-vendor employees (YipitData, Revelio, Burning Glass alumni)
 """
+
+
 
 
 
