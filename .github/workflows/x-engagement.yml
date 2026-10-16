@@ -1,7 +1,7 @@
 name: X Engagement
 
 on:
-  schedule:
+  # Scheduled engagement disabled by owner request, 16 October 2026.
     # DISABLED 2026-10-16: automated likes/replies breach X automation rules.
     # - cron: '0 9 * * 1-5'  # DISABLED
     # - cron: '0 13 * * 1-5'  # DISABLED
