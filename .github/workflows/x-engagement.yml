@@ -2,13 +2,10 @@ name: X Engagement
 
 on:
   schedule:
-    # 3 runs per day, weekdays only
-    # 09:00 UTC (11:00 Cyprus)
-    - cron: '0 9 * * 1-5'
-    # 13:00 UTC (15:00 Cyprus)
-    - cron: '0 13 * * 1-5'
-    # 18:00 UTC (20:00 Cyprus)
-    - cron: '0 18 * * 1-5'
+    # DISABLED 2026-10-16: automated likes/replies breach X automation rules.
+    # - cron: '0 9 * * 1-5'  # DISABLED
+    # - cron: '0 13 * * 1-5'  # DISABLED
+    # - cron: '0 18 * * 1-5'  # DISABLED
   workflow_dispatch:
 
 jobs:
